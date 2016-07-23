@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC  
+    "-//mybatis.org//DTD Config 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">  
+<configuration>
+	<typeAliases>
+		<typeAlias alias="User" type="com.blog.core.entity.User"/>
+		<typeAlias alias="AboutUS" type="com.blog.core.entity.AboutUS"/>
+		<typeAlias alias="UserPasswordRecord" type="com.blog.core.entity.UserPasswordRecord"/>
+		<typeAlias alias="EmailAuthToken" type="com.blog.core.entity.EmailAuthToken"/>
+		<typeAlias alias="PUser" type="com.blog.core.entity.PUser"/>
+		<typeAlias alias="Article" type="com.blog.core.entity.Article"/>
+		<typeAlias alias="ArticleType" type="com.blog.core.entity.ArticleType"/>
+		<typeAlias alias="ArticleContent" type="com.blog.core.entity.ArticleContent"/>
+		<typeAlias alias="ArticleComment" type="com.blog.core.entity.ArticleComment"/>
+	</typeAliases>
+    <mappers>  
+    	<mapper resource="sqlmap/user.xml"/>  
+        <mapper resource="sqlmap/aboutUS.xml"/>  
+        <mapper resource="sqlmap/userPasswordRecord.xml"/>  
+        <mapper resource="sqlmap/emailAuthToken.xml"/>  
+        <mapper resource="sqlmap/pUser.xml"/>  
+        <mapper resource="sqlmap/article.xml"/> 
+        <mapper resource="sqlmap/articleType.xml"/> 
+        <mapper resource="sqlmap/articleContent.xml"/> 
+        <mapper resource="sqlmap/articleComment.xml"/> 
+    </mappers>
+</configuration>

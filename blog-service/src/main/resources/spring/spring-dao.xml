@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+							http://www.springframework.org/schema/context
+							http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<bean id="userDao" class="com.blog.service.dao.impl.UserDaoImpl" autowire="byName"/>
+
+	<bean id="userPasswordRecordDao" class="com.blog.service.dao.impl.UserPasswordRecordDaoImpl" autowire="byName"/>
+	
+	<bean id="aboutUSDao" class="com.blog.service.dao.impl.AboutUSDaoImpl" autowire="byName"/>
+
+	<bean id="emailAuthTokenDao" class="com.blog.service.dao.impl.EmailAuthTokenDaoImpl" autowire="byName"/>
+	
+	<bean id="pUser" class="com.blog.service.dao.impl.PUserDaoImpl" autowire="byName"/>
+	
+	<bean id="articleDao" class="com.blog.service.dao.impl.ArticleDaoImpl" autowire="byName"/>
+
+	<bean id="articleTypeDao" class="com.blog.service.dao.impl.ArticleTypeDaoImpl" autowire="byName"/>
+
+	<bean id="articleContentDao" class="com.blog.service.dao.impl.ArticleContentDaoImpl" autowire="byName"/>
+	
+	<bean id="articleCommentDao" class="com.blog.service.dao.impl.ArticleCommentDaoImpl" autowire="byName"/>
+	
+</beans>

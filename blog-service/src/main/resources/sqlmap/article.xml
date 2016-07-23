@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="article">
+
+	<resultMap id="article" type="Article">
+		<id property="id" column="id"/>
+		<result property="userId" column="user_id"/>
+		<result property="title" column="title"/>
+		<result property="type" column="type"/>
+		<result property="commentCount" column="comment_count"/>
+		<result property="recommend" column="recommend"/>
+		<result property="permission" column="permission"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="createAt" column="create_at"/>
+		<result property="updateAt" column="update_at"/>
+	</resultMap>
+	
+	<resultMap id="articleVo" type="com.blog.core.vo.ArticleVo">
+		<id property="id" column="id"/>
+		<result property="userId" column="user_id"/>
+		<result property="email" column="email"/>
+		<result property="nickname" column="nickname"/>
+		<result property="title" column="title"/>
+		<result property="type" column="type"/>
+		<result property="commentCount" column="comment_count"/>
+		<result property="recommend" column="recommend"/>
+		<result property="createAt" column="create_at"/>
+		<result property="updateAt" column="update_at"/>
+	</resultMap>
+	
+    <select id="findAll" resultMap="article">
+            select * from article
+    </select>
+    
+    <select id="findArticlesByConditions" parameterType="Map" resultMap="articleVo" >
+    	select a.*,u.email,u.nickname from article a left join user u on (u.id = a.user_id) where 1=1
+    	<if test="title != null">
+    		and a.title like #{title}
+    	</if>
+    	<if test="id != null">
+    		and a.id = #{id}
+    	</if>
+    	<if test="type != null">
+    		and a.type = #{type}
+    	</if>
+    	<if test="userId != null">
+    		and a.user_id = #{userId}
+    	</if>
+    	<if test="permission != null">
+    		and a.permission = #{permission}
+    	</if>
+    	<if test="isDelete != null">
+    		and a.is_delete = #{isDelete}
+    	</if>
+    	order by a.recommend desc,id desc
+    	limit #{start} , #{offset}
+    </select>
+    
+    <select id="totalArticlesByConditions" parameterType="Map" resultType="Long">
+    	select count(*) from article a where 1=1
+    	<if test="title != null">
+    		and a.title like #{title}
+    	</if>
+    	<if test="id != null">
+    		and a.id = #{id}
+    	</if>
+    	<if test="type != null">
+    		and a.type = #{type}
+    	</if>
+    	<if test="userId != null">
+    		and a.user_id = #{userId}
+    	</if>
+    	<if test="permission != null">
+    		and a.permission = #{permission}
+    	</if>
+    	<if test="isDelete != null">
+    		and a.is_delete = #{isDelete}
+    	</if>
+    	order by a.recommend desc,id desc
+    </select>
+    
+    <select id="findArticleById" parameterType="Long" resultMap="article">
+    	select * from article a where a.id = #{id}
+    </select>
+    
+    <insert id="save" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
+		insert into article(user_id,title,type,comment_count,recommend,permission,is_delete,create_at,update_at) 
+		values(#{userId},#{title},#{type},#{commentCount},#{recommend},#{permission},#{isDelete},#{createAt},#{updateAt}) 
+    </insert>
+    
+    <update id="update" parameterType="Article">
+    	update article set title=#{title},type=#{type},permission=#{permission},update_at=#{updateAt} where id = #{id}
+    </update>
+    
+</mapper>

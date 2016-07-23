@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="articleComment">
+
+	<resultMap id="articleComment" type="ArticleComment">
+		<id property="id" column="id"/>
+		<result property="userId" column="user_id"/>
+		<result property="articleId" column="article_id"/>
+		<result property="content" column="content"/>
+		<result property="createAt" column="create_at"/>
+	</resultMap>
+	
+	<insert id="insert" parameterType="articleComment" useGeneratedKeys="true" keyProperty="id">
+		insert into article_comment(user_id,article_id,content,create_at)
+		values(#{userId},#{articleId},#{content},#{createAt});
+	</insert>
+	
+    <select id="findArticleCommentByArticleId" parameterType="Long" resultMap="articleComment">
+            select * from article_comment where article_id = #{articleId}
+            order by id desc
+    </select>
+    
+</mapper>

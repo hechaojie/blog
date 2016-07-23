@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="emailAuthToken">
+    
+    <resultMap id="emailAuthToken" type="EmailAuthToken">
+    	<id property="id" column="id"/>
+    	<result property="userId" column="user_id"/>
+    	<result property="email" column="email"/>
+    	<result property="token" column="token"/>
+    	<result property="type" column="type"/>
+    	<result property="isVerify" column="is_verify"/>
+    	<result property="validAt" column="valid_at"/>
+    	<result property="verifyAt" column="verify_at"/>
+    	<result property="createAt" column="create_at"/>
+    </resultMap>
+    
+    <insert id="save" parameterType="EmailAuthToken" useGeneratedKeys="true" keyProperty="id">
+    	insert into email_auth_token(user_id,email,token,type,is_verify,valid_at,verify_at,create_at)
+    	values(#{userId},#{email},#{token},#{type},#{isVerify},#{validAt},#{verifyAt},#{createAt})
+    </insert>
+    
+    <select id="findByToken" parameterType="String" resultMap="emailAuthToken">
+    	select * from email_auth_token eat where eat.token = #{token}
+    </select>
+    
+    <update id="update" parameterType="EmailAuthToken">
+    	update email_auth_token set is_verify = #{isVerify},valid_at = #{validAt},verify_at = #{verifyAt} where id = #{id}
+    </update>
+    
+</mapper>

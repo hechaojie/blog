@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        ">
+
+	<dubbo:application name="blog-front" />
+	
+	<dubbo:registry protocol="zookeeper" address="${zookeeper}" />
+	
+	<dubbo:reference id="userService" interface="com.blog.core.service.UserService" />
+	
+	<dubbo:reference id="articleService" interface="com.blog.core.service.ArticleService" />
+	
+	<dubbo:reference id="articleTypeService" interface="com.blog.core.service.ArticleTypeService" />
+	
+	<dubbo:reference id="articleCommentService" interface="com.blog.core.service.ArticleCommentService" />
+
+	<dubbo:reference id="aboutUSService" interface="com.blog.core.service.AboutUSService" />
+
+	<dubbo:reference id="emailService" interface="com.blog.core.service.EmailService" />
+	
+
+</beans>

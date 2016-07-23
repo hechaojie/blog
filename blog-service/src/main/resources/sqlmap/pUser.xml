@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pUser">
+
+    <resultMap id="pUser" type="PUser">
+    	<id property="id" column="id"/>
+    	<result property="username" column="username"/>
+    	<result property="password" column="password"/>
+    	<result property="isDelete" column="is_delete"/>
+    	<result property="createAt" column="create_at"/>
+    	<result property="updateAt" column="update_at"/>
+    </resultMap>
+    
+    <insert id="save" parameterType="PUser" useGeneratedKeys="true" keyProperty="id">
+    	insert into puser(username,password,is_delete,create_at,update_at)
+    	values(#{username},#{password},#{isDelete},#{createAt},#{updateAt});
+    </insert>
+    
+    <select id="findAll" resultMap="pUser">
+            select * from puser
+    </select>
+    
+    <select id="findPUsersByConditions" parameterType="Map" resultMap="pUser">
+    	select * from puser u where 1=1
+    	<if test="username != null">
+    		and u.username = #{username}
+    	</if>
+    	<if test="id != null">
+    		and u.id = #{id}
+    	</if>
+    	order by id desc
+    	limit #{start} , #{offset}
+    </select>
+    
+    <select id="findPUserById" parameterType="Long" resultMap="pUser">
+    	select * from puser u where u.id = #{id}
+    </select>
+    
+    <select id="findPUserByUsername" parameterType="String" resultMap="pUser">
+    	select * from puser u where u.username = #{username}
+    </select>
+    
+    <update id="updatePUserPasswd" parameterType="map">
+    	update puser set password = #{password} where id = #{id}
+    </update>
+    
+</mapper>

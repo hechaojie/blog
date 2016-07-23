@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="articleContent">
+
+	<resultMap id="articleContent" type="ArticleContent">
+		<id property="id" column="id"/>
+		<result property="articleId" column="article_id"/>
+		<result property="content" column="content"/>
+		<result property="contentType" column="content_type"/>
+		<result property="sort" column="sort"/>
+		<result property="createAt" column="create_at"/>
+		<result property="updateAt" column="update_at"/>
+	</resultMap>
+	
+	
+    <select id="findArticleContentByArticleId" parameterType="Long" resultMap="articleContent">
+            select * from article_content where article_id = #{articleId}
+    </select>
+    
+    <insert id="save" parameterType="ArticleContent" useGeneratedKeys="true" keyProperty="id">
+    	insert into article_content(article_id,content,content_type,sort,create_at,update_at) 
+		values(#{articleId},#{content},#{contentType},#{sort},#{createAt},#{updateAt}) 
+    </insert>
+    
+	<delete id="deleteContent" parameterType="Long">
+    	delete from article_content where article_id = #{articleId}
+    </delete>
+        
+</mapper>

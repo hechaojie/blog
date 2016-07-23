@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>何超杰的博客-技术、分享、价值</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+	<meta name="title" content="何超杰的博客-技术、分享、价值" />
+	<meta name="keywords" content="何超杰的博客-技术、分享、价值" />
+	<meta name="description" content="何超杰的博客-技术、分享、价值" />
+	<#include "/common/include.html">
+</head>
+<body>
+   <div style='margin:0 auto;display:none;'>
+   	  <img src="/images/logo_300.png"/>
+   </div>
+   <#include "/common/header.html">
+   <@headerPage currentPage="index"/>
+   <div class="content">
+	   <div class="classify_wrap">
+	   	  <div class="classify_title">分类：</div>
+	   	  <ul>
+	   	  	<#if type ??>
+	   	  		<li><a href="/article">全部</a></li>
+	   	  	<#else>
+	   	  		<li class="current"><a href="/article">全部</a></li>
+	   	  	</#if>
+	   	  	<#if articleTypeList ??>
+	   	  	<#list articleTypeList as at>
+	   	  		<#if type ?? && type ==at.id>
+	   	  			<li class="current"><a href="/article?type=${at.id!}">${at.name!}</a></li>
+	   	  		<#else>
+	   	  			<li><a href="/article?type=${at.id!}">${at.name!}</a></li>
+	   	  		</#if>
+	   	  	</#list>
+	   	  	</#if>
+	   	  </ul>
+	   	  <div class="classfiy_r">
+	   	  	<a href="/article/publish">我要发帖</a>
+	   	  </div>
+	   </div>
+	   <div class="content_panel">
+	   	   <div class="content_panel_l">
+	   	   	  <#if (articleResult.data?size > 0)>
+	   	   	  <#list articleResult.data as a>
+	   	   	  <div class="thread-item">
+		   	   	  	<div class="thread-title">
+		   	   	  		<h4>
+		   	   	  			<a href="/article/detail/${a.id!}">
+		   	   	  				<#if a.title?length gt 55>
+									${a.title?substring(0,55)}...
+								<#else>
+									${a.title!}
+								</#if>
+		   	   	  			</a>
+		   	   	  		</h4>
+		   	   	  	</div>
+		   	   	  	<div class="thread-counts">
+		   	   	  		
+		   	   	  		<#if a.recommend ?? && a.recommend == 1>
+		   	   	  		<span class="thread-article-recommend">推荐</span>
+		   	   	  		<#elseif a.recommend ?? && a.recommend == 2>
+		   	   	  		<span class="thread-article-recommend">置顶</span>
+		   	   	  		</#if>
+		   	   	  		<span class="thread-total-comment">${a.commentCount!}</span>
+		   	   	  	</div>
+	   	   	  		<p class="small_tit">
+	   	   	  			<#if a.nickname ?? >
+	   	   	  				${a.nickname!}
+	   	   	  			<#else>
+	   	   	  				匿名
+	   	   	  			</#if>
+	   	   	  			&nbsp;|&nbsp;
+	   	   	  			<#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
+						<#if a.createAt ??>
+							发布于：${a.createAt?number_to_datetime}
+						</#if>
+	   	   	  			&nbsp;| &nbsp;
+	   	   	  			${a.commentCount!}条评论
+	   	   	  		</p>
+	   	   	  </div>
+	   	   	  </#list>
+	   	   	  <!-- 分页..-->
+	   	   	  <div class="category-pager">
+	   	   	  	  <ul id="paginate_id" pageNumber="${articleResult.pagination.currPage}" totalPage="${articleResult.pagination.countPage}" totalRow="${articleResult.pagination.countSize}" type="${type!}" search_content="${search_content!}">
+	   	   	  	  	<!--
+	   	   	  	  	<li><a href="javascript:;">上一页</a></li>
+	   	   	  	  	<li class="cur"><a href="javascript:;">1</a></li>
+	   	   	  	  	<li><a href="javascript:;">2</a></li>
+	   	   	  	  	<li><a href="javascript:;">3</a></li>
+	   	   	  	  	<li><a href="javascript:;">下一页</a></li>
+	   	   	  	  	-->
+	   	   	  	  </ul>
+	   	   	  </div>
+	   	   	  <#else>
+	   	   	  	<div class="forum-none-data">暂无相关数据</div>
+	   	   	  </#if>
+	   	   </div>
+	   	   <#include "/common/right.html">
+	   </div>
+   	</div>
+   </div>
+   <#include "/common/footer.html">
+   <script type="text/javascript" src="/js/common/paginate.js?v=0.1"></script>
+   <script type="text/javascript">
+		$(function(){
+	    	var $paginate = $("#paginate_id");
+	    	$.paginate({
+    			url : "/article",
+    			cssQuery : "#paginate_id",
+    			pageNumber : Number($paginate.attr("pageNumber")),
+    			totalRow : Number($paginate.attr("totalRow")),
+    			totalPage : Number($paginate.attr("totalPage")),
+    			offsetPage : 3,
+    			pageNumberAlias : 'page',
+    			params : $paginate.attr("params"),
+    			currCss : 'color: #fff;background-color: #006dcc;'
+    		});
+	    });
+	</script>
+</body>
+</html>

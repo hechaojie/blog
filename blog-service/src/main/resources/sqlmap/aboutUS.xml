@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aboutUS">
+    
+    <resultMap id="aboutUS" type="AboutUS">
+    	<id property="id" column="id"/>
+    	<result property="type" column="type"/>
+    	<result property="desc" column="desc"/>
+    	<result property="isDelete" column="is_delete"/>
+    	<result property="createAt" column="create_at"/>
+    	<result property="updateAt" column="update_at"/>
+    </resultMap>
+    
+    <select id="findAllByCondition" parameterType="Map" resultMap="aboutUS">
+    	select * from about_us us where 1=1
+    	<if test="isDelete != null">
+    		and us.is_delete = #{isDelete}
+    	</if>
+    	order by us.create_at desc
+    </select>
+    
+</mapper>
