@@ -11,7 +11,7 @@ public class UserUtil {
 
     /**
      * 检测是否登录
-     * @param httpSession
+     * @param httpSession 
      * @return
      */
     public static boolean isLogin(HttpSession httpSession) {

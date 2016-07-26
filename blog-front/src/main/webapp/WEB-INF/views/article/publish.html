@@ -3,11 +3,21 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-	<title>发布文章</title>
+	<title>发布</title>
 	<#include "/common/include.html">
+	<style>
+		#container{
+			margin-top:10px;
+		}
+	</style>
+	<style type="text/css">  
+    pre {  
+        white-space: pre-wrap;  
+        word-wrap: break-word;  
+    }  
+</style> 
 </head>
 <body>
-	<input name="AUTH_TOKEN_PUBLISH" value="${AUTH_TOKEN_PUBLISH!}"/>
    <#include "/common/header.html">
    <@headerPage currentPage=""/>
    <div class="content">
@@ -18,9 +28,9 @@
 	   	  	<#if articleTypeList ??>
 	   	  	<#list articleTypeList as at>
 	   	  		<#if type ?? && type ==at.id>
-	   	  			<li class="current"><a href="/p/article?type=${at.id!}">${at.name!}</a></li>
+	   	  			<li class="current"><a href="/article?type=${at.id!}">${at.name!}</a></li>
 	   	  		<#else>
-	   	  			<li><a href="/p/article?type=${at.id!}">${at.name!}</a></li>
+	   	  			<li><a href="/article?type=${at.id!}">${at.name!}</a></li>
 	   	  		</#if>
 	   	  	</#list>
 	   	  	</#if>
@@ -31,42 +41,86 @@
 	   <div class="content_panel">
 	   	   <div class="content_panel_l">
 	   	       <div class="forum-editor-wrapper">
+	   	       		<#if error??>
+	   	       			<center><h3 style="color:red">${error!}</h3></center>
+	   	       		</#if>
                    <h3 class="forum-editor-heading">
-                        	发布随笔
+                        	发布
                     </h3>
-                    <div class="editor-wrap">
-                        <div class="form-group">    
-                             <input type="text"  name="title" class="ng-invalid-required" value="" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <select name="article_type"  class="ng-valid-required-se">
-                            <#if articleTypeList ??>
-	   	  					<#list articleTypeList as at>
-                            <option value="${at.id!}">${at.name!}</option>
-                            </#list>
-	   	  					</#if>
-                        </select>
-                    </div>
-                    <div class="blog-editor mt20">
-                    	<div class="blog-editor-textarea" type="1">
-                       		<textarea cols="100" rows="20" name="content" placeholder="请输入文字"></textarea>
-                    		<span>X</span>
-                    	</div>
-                    </div>
-                    <div>
+                    <form id="subForm" action="/article/saveActicle" method="post">
+                    	<input type="hidden" name="AUTH_TOKEN_PUBLISH" value="${AUTH_TOKEN_PUBLISH!}"/>
+	                    <div class="editor-wrap">
+	                        <div class="form-group">    
+	                             <input type="text"  name="title" class="ng-invalid-required" value="" placeholder="请输入标题">
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <select name="type"  class="ng-valid-required-se">
+	                            <#if articleTypeList ??>
+		   	  					<#list articleTypeList as at>
+	                            <option value="${at.id!}">${at.name!}</option>
+	                            </#list>
+		   	  					</#if>
+	                        </select>
+	                    </div>
+                   	<!-- 加载编辑器的容器 -->
+			    	<script id="container" name="content" type="text/plain">
+    				</script>
+			    <!-- 配置文件 -->
+			    <script type="text/javascript" src="/js/ueditor/ueditor.config.js"></script>
+			    <!-- 编辑器源码文件 -->
+			    <script type="text/javascript" src="/js/ueditor/ueditor.all.min.js"></script>
+			    <!-- 实例化编辑器 -->
+			    <script type="text/javascript">
+			        var ue = UE.getEditor('container',{
+			        	initialFrameHeight:300,
+			        	initialFrameWidth:720,
+			        	wordCount:false,
+			        	elementPathEnabled:false,
+			        	autoClearEmptyNode:true,
+			        	toolbars: [
+			        	           [
+									   'source', //源代码
+									   'insertcode', //代码语言
+									   'indent', //首行缩进
+			        	               'bold', //加粗
+			        	               'italic', //斜体
+			        	               'forecolor', //字体颜色
+			        	               'backcolor', //背景色
+			        	               'underline', //下划线
+			        	               'strikethrough', //删除线
+			        	               'horizontal', //分隔线
+			        	               'link', //超链接
+			        	               'simpleupload', //单图上传
+			        	               'fontfamily', //字体
+			        	               'fontsize', //字号
+			        	               'paragraph', //段落格式
+			        	               'fullscreen'//全屏
+			        	           ],
+			        	           [
+										'justifyleft', //居左对齐
+										'justifyright', //居右对齐
+										'justifycenter', //居中对齐
+										'justifyjustify', //两端对齐
+										'insertorderedlist', //有序列表
+										'insertunorderedlist',//无序列表
+										'template', //模板
+										'inserttable', //插入表格
+										'autotypeset'//自动排版
+			        	            ]
+			        	       ]
+			        });
+			    </script>   
+			    
+			    	<div class="bo-mt10">
                     	<select name="permission" class="ng-valid-required-se">
                             <option value="0">公开</option>
                             <option value="1">仅自己可见</option>
                         </select>
                     </div>
-                    <div class="blog-editor-add">
-                    	<button class="btn_submit btn-add-textarea">添加文本域</button>
-                    	<button class="btn_submit btn-add-code">添加代码</button>
-                        <button class="btn_submit btn-add-picture">添加图片栏</button>
-                    </div>
+                   </form>
                     <div class="sub_p">
-                        <button class="btn_submit">提交</button>
+                        <button class="btn_submit" onclick="$('#subForm').submit();">提交</button>
                     </div>
                </div>
 		
@@ -76,9 +130,5 @@
 	  </div>
    </div>
    <#include "/common/footer.html">
-   <script type="text/javascript" src="/js/common/jquery/jquery-browser.js"></script>
-   <script type="text/javascript" src="/js/common/jquery/ajaxfileupload.js?v=1.0"></script>
-   <script type="text/javascript" src="/js/article/posting.js?v=201601021"></script>
-  
 </body>
 </html>

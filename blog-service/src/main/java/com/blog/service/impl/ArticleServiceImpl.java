@@ -80,9 +80,13 @@ public class ArticleServiceImpl implements ArticleService{
 	@Override
 	public boolean saveArticle(Article article, List<ArticleContent> articleContents) {
 		try {
-			long articleId = articleDao.save(article);
+			article.setCreateAt(System.currentTimeMillis());
+			article.setUpdateAt(System.currentTimeMillis());
+			articleDao.save(article);
 			for(ArticleContent articleContent : articleContents){
-				articleContent.setArticleId(articleId);
+				articleContent.setArticleId(article.getId());
+				articleContent.setCreateAt(System.currentTimeMillis());
+				articleContent.setUpdateAt(System.currentTimeMillis());
 				articleContentDao.save(articleContent);
 			}
 			return true;

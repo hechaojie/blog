@@ -9,7 +9,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * 日志拦截器
- * by HECJ
  */
 public class LogInterceptor extends HandlerInterceptorAdapter {
 	

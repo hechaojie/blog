@@ -6,28 +6,39 @@
 	<#include "/common/include.html">
 </head>
 <body>
-	  <!-- 头部引用 -->
-	  <#include "/common/header.html">
-	  <@headerPage currentPage=""/>
-      <!-- 内容开始-->
-         <div class="login_wrap">
-               <div class="login_tit"><h3>重置密码</h3></div>
-				<div class="mh_bn">
-	                <input type="text" name="email" placeholder="请输入你的邮箱">
-	                <input type="password" name="passwd" placeholder="请输入新密码">
-	                <input type="password" name="repasswd" placeholder="请再次输入密码">
-	                <input type="text" name="emailCode" placeholder="请输入验证码" style="width: 120px;margin-right: 10px">
-	                <button class="get-email-code">获取邮件验证码</button>
-	                <div class="succ_bn btn_lg">
-	                	<a href="">重置密码</a>
-	                </div>
-	           		<p class="forget_password">
-	           			<a href="/login">返回登录</a>
-	           		</p>
-	            </div>
-          </div>
-      <!-- 内容结束-->
+      <div class="bo-container">
+		  <!-- 头部引用 -->
+		  <#include "/common/header.html">
+		  <@headerPage currentPage=""/>
+	      <!-- 内容开始-->
+	      <div class="bo-panel bo-radius bo-mt20">
+	         <div class="bo-panel bo-center" style="width: 50%;">
+	               <div class=" bo-text-center bo-size24" style="height: 52px;line-height: 52px;">
+	               		<h3>重置密码</h3>
+	               </div>
+					<div class="mh_bn">
+		                <input type="hidden" name="back_url" value="${back_url!}"/>
+		                <div>
+		                	<input type="text" class="bo-radius" name="email" placeholder="请输入你的邮箱">
+		                </div>
+		                <div>
+		                	<input type="password" class="bo-radius"  name="passwd" placeholder="请输入新密码">
+		                </div>
+		                <div>
+		                	 <input type="password" class="bo-radius"  name="repasswd" placeholder="请再次输入密码">
+		                </div>
+		                <div>
+		                	<input type="text" name="emailCode" class="bo-radius"  placeholder="请输入验证码" style="width: 120px;margin-right: 10px">
+		                	<button class="get-email-code ">获取邮件验证码</button>
+		                </div>
+		                <div class="succ_bn btn_lg"><a href="#">重置密码</a></div>
+		                <p class="forget_password"><a href="/login">返回登录</a></p>
+		            </div>
+	          </div>
+	       </div>
+	      <!-- 内容结束-->
       <#include "/common/footer.html">
+      </div>
       <script type="text/javascript" charset="utf-8" src="/js/user/forget_passwd.js?v=20160112"></script>
 </body>
 </html>

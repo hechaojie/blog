@@ -40,7 +40,7 @@ public class ArticleTypeServiceImpl implements ArticleTypeService{
 			if(!StringUtil.isObjectNull(params.get("id"))){
 				sqlParams.put("id", params.get("id"));
 			}
-			List<ArticleType> list = articleTypeDao.findArticleTypesByConditions(sqlParams, pagination.getCurrPage(),pagination.getPageSize());
+			List<ArticleType> list = articleTypeDao.findArticleTypesByConditions(sqlParams,pagination.startCursor(),pagination.getPageSize());
 			long total = articleTypeDao.totalArticleTypesByConditions(sqlParams);
 			
 			pagination.setCountSize(total);

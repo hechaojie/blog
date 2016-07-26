@@ -46,36 +46,6 @@
 		<property name="allowSessionOverride" value="true"/>
 	</bean>
 
-	<!-- 配置JSON视图
-     <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-       <property name="supportedMediaTypes">
-           <list>
-               <value>application/json;charset=UTF-8</value>
-           </list>
-       </property>     
-       <property name="objectMapper">
-           <bean class="org.codehaus.jackson.map.ObjectMapper">
-               <property name="dateFormat">
-                   <bean class="java.text.SimpleDateFormat">
-                       <constructor-arg index="0" type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
-                   </bean>
-               </property>
-           </bean>
-       </property>
-     </bean>
-     
-     <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter"/>
-     
-     <bean id="requestMappingHandlerAdapter" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-       <property name="messageConverters">
-           <list>
-               <ref bean="mappingJacksonHttpMessageConverter"/>
-               <ref bean="stringHttpMessageConverter"/>
-           </list>
-       </property>
-     </bean>
-     -->
-     
      <!-- 常量 -->
      <bean id="configProvider" class="com.blog.front.constant.ConfigProvider" init-method="init">
      	<!--<property name="STATIC_URL" value="${STATIC_URL}"/>-->
@@ -88,15 +58,11 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<bean class="com.blog.front.interceptor.LogInterceptor" />
-		</mvc:interceptor>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
 			<bean class="com.blog.front.interceptor.ConstantInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/p/u/**" />
-			<bean class="com.blog.front.interceptor.UserInterceptor" />
+			<mvc:mapping path="/**" />
+			<bean class="com.blog.front.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
      
@@ -106,6 +72,11 @@
         p:maxUploadSize="5400000"  
         p:uploadTempDir="upload/temps">  
     </bean>
+    
+    <!-- Spring MVC的统一异常处理 -->
+	<bean id="exceptionResolver" class="com.blog.front.exception.ExceptionHandler">
+	</bean>
+    
      
  </beans>
  

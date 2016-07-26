@@ -14,15 +14,4 @@
 		<typeAlias alias="ArticleContent" type="com.blog.core.entity.ArticleContent"/>
 		<typeAlias alias="ArticleComment" type="com.blog.core.entity.ArticleComment"/>
 	</typeAliases>
-    <mappers>  
-    	<mapper resource="sqlmap/user.xml"/>  
-        <mapper resource="sqlmap/aboutUS.xml"/>  
-        <mapper resource="sqlmap/userPasswordRecord.xml"/>  
-        <mapper resource="sqlmap/emailAuthToken.xml"/>  
-        <mapper resource="sqlmap/pUser.xml"/>  
-        <mapper resource="sqlmap/article.xml"/> 
-        <mapper resource="sqlmap/articleType.xml"/> 
-        <mapper resource="sqlmap/articleContent.xml"/> 
-        <mapper resource="sqlmap/articleComment.xml"/> 
-    </mappers>
 </configuration>

@@ -59,6 +59,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean addUser(User user) {
+		user.setCreateAt(System.currentTimeMillis());
+		user.setUpdateAt(System.currentTimeMillis());
 		userDao.save(user);
 		return true;
 	}

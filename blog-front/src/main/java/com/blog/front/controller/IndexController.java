@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.blog.core.entity.AboutUS;
 import com.blog.core.entity.User;
@@ -21,7 +20,7 @@ import com.blog.core.service.ArticleService;
 import com.blog.core.service.ArticleTypeService;
 import com.blog.core.service.UserService;
 import com.blog.front.util.UserUtil;
-import com.hecj.common.utils.ResultJson;
+import com.hecj.common.utils.StringUtil;
 import com.hecj.common.utils.encryp.MD5;
 
 @Controller
@@ -50,7 +49,8 @@ public class IndexController extends BaseController{
 	 * 登录
 	 */
 	@RequestMapping(value="/login")
-	public String login(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	public String login(String bk,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		model.addAttribute("bk", bk);
 		return "index/login";
 	}
 	
@@ -62,26 +62,32 @@ public class IndexController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value="/dologin", method=RequestMethod.POST)
-	@ResponseBody
-	public ResultJson doLogin(String email, String password, HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	public String doLogin(String email, String password,String bk, HttpServletRequest request,HttpServletResponse response,ModelMap model){
 
 		try {
 			User user = userService.findUserByEmail(email);
 			if(user == null){
-				return new ResultJson(-1l, "用户不存在");
+				model.addAttribute("_error","您输入的邮箱无效或不存在");
+				return "forward:/login";
 			}
 			
 			if(!MD5.md5crypt(password).equals(user.getPassword())){
-				return new ResultJson(-2l, "密码不正确");
+				model.addAttribute("_error","您输入的密码不正确");
+				return "forward:/login";
 			}
 			
 			// 将登陆信息存入cookie
 			UserUtil.setUser(user, request.getSession());
 			
-			return new ResultJson(200l,"success");
+			if(!StringUtil.isStrEmpty(bk)){
+				return "redirect:"+bk;
+			}
+			
+			return "redirect:/";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResultJson(-100000l,"服务器异常");
+			model.addAttribute("_error","网络繁忙，请稍后再试");
+			return "forward:/login";
 		}
 	}
 	

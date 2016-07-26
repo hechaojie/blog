@@ -16,6 +16,10 @@ public class CheckCode implements Serializable{
 	private long sendTime;
 	
 	private long invalidTime;
+	
+	public CheckCode(){
+		
+	}
 
 	public String getCode() {
 		return code;

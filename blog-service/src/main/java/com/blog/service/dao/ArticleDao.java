@@ -3,19 +3,21 @@ package com.blog.service.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.blog.core.entity.Article;
 import com.blog.core.vo.ArticleVo;
 
 public interface ArticleDao {
 
-	public List<ArticleVo> findArticlesByConditions(Map<String,Object> sqlParams,long currPage,int pageSize);
+	public List<ArticleVo> findArticlesByConditions(@Param("sqlParams")Map<String,Object> sqlParams,@Param("start")long start,@Param("size")int size);
 
-	public long totalArticlesByConditions(Map<String,Object> sqlParams);
+	public long totalArticlesByConditions(@Param("sqlParams")Map<String,Object> sqlParams);
 	
 	/**
 	 * 根据文章Id查询
 	 */
-	public Article findArticleById(long articleId);
+	public Article findArticleById(long id);
 	
 	/**
 	 * @功能描述 保存文章

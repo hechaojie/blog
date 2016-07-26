@@ -9,7 +9,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 html {
 	overflow: auto;
 	/* overflow-x: hidden; */
-	color: #000;
+	color: #333333;
 }
 
 object {
@@ -22,8 +22,9 @@ object {
 body {
 	position: relative;
 	font-size: 14px;
-	font-family: "微软雅黑";
+	font-family: "Microsoft Yahei", 微软雅黑, "Helvetica Neue", Arial, "\5b8b\4f53", sans-serif;
 	background: #eeeeee;
+	background-color: #e9ebee;
 }
 
 table {
@@ -43,7 +44,6 @@ address,caption,cite,code,dfn,em,strong,th,var { /* 	font-style:normal;
 
 ol,ul {
 	list-style: none;
-	color: #999;
 }
 
 caption,th {
@@ -79,24 +79,21 @@ legend {
 }
 
 a {
-	text-decoration: none;
 	color: #646b75;
+	text-decoration: none;
 }
 
 a:hover {
-	color: #E79E9E;
+	text-decoration: underline;
 }
 
 a:hover {
-	text-decoration: none !important;
 }
 
 a:visited {
-	text-decoration: none !important;
 }
 
 a:active {
-	text-decoration: none !important;
 }
 
 textarea {

@@ -13,14 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
 import com.blog.core.entity.Article;
@@ -34,7 +31,6 @@ import com.blog.core.service.UserService;
 import com.blog.front.util.UserUtil;
 import com.hecj.common.utils.Pagination;
 import com.hecj.common.utils.Result;
-import com.hecj.common.utils.ResultJson;
 import com.hecj.common.utils.StringUtil;
 
 @Controller
@@ -144,13 +140,13 @@ public class ArticleController extends BaseController{
 			log.error(e.getMessage());
 			e.printStackTrace();
 		}
-		return "article/blog-detail";
+		return "article/detail";
 	}
 	
 	/**
 	 * 发布帖子
 	 */
-	@RequestMapping(value="publish", method=RequestMethod.GET)
+	@RequestMapping(value="publish")
 	public String publish(HttpServletRequest request,HttpServletResponse response,ModelMap mode){
 		try {
 			
@@ -185,69 +181,56 @@ public class ArticleController extends BaseController{
 	 * @modify
 	 */
 	@RequestMapping(value="saveActicle", method=RequestMethod.POST)
-	@ResponseBody
-    public ResultJson saveActicle(int permission,String title, String articleList, int type, String AUTH_TOKEN_PUBLISH,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+    public String saveActicle(String title, String content, int type,int permission, String AUTH_TOKEN_PUBLISH,
+    		HttpServletRequest request,HttpServletResponse response,ModelMap model)throws Exception{
     	
 		User user = UserUtil.getUser(request.getSession());
-    	long userId = user.getId();
+		long userId = -1;
 		try {
 			
 			if(StringUtil.isStrEmpty(title)){
-				return new ResultJson(-1l, "请输入标题");
+				model.addAttribute("error", "请输入标题");
+				return "forward:/article/publish";
 			}
-			if(StringUtil.isStrEmpty(articleList)){
-				return new ResultJson(-1l, "请输入内容");
+			if(StringUtil.isStrEmpty(content)){
+				model.addAttribute("error", "请输入正文");
+				return "forward:/article/publish";
 			}
+			
+			userId = user.getId();
 			
 			// token验证防止恶意刷保存文章
 			if(!AUTH_TOKEN_PUBLISH.equals(request.getSession().getAttribute("AUTH_TOKEN_PUBLISH"))){
-				return new ResultJson(-1l, "token验证失败");
+				model.addAttribute("error", "提交错误，请刷新页面后重试");
+				return "forward:/article/publish";
 			}
 			request.getSession().removeAttribute("AUTH_TOKEN_PUBLISH");
 			
 			// 发布文章个数校验，每天最多发表20篇文章
 			
-			// 文章
+			// 文章主体
 			Article article = new Article();
 			article.setCommentCount(0);
 			article.setRecommend(0);
-//			article.setTitle(StringEscapeUtils.escapeHtml(title));
 			article.setTitle(HtmlUtils.htmlEscape(title));
 			article.setUserId(userId);
 			article.setType(type);
 			article.setPermission(permission);
 			article.setIsDelete(0);
 			
+			// 正文
 			List<ArticleContent> articleContents = new ArrayList<ArticleContent>();
-			// 文章内容
-			JSONArray arr = new JSONArray(articleList);
-			for(int i = 0 ; i<arr.length() ; i++){
-				JSONObject json = arr.getJSONObject(i);
-				if(StringUtil.isObjectEmpty(json.getString("content"))){
-					continue;
-				}
-				ArticleContent articleContent = new ArticleContent();
-				if(json.getInt("type") == 2){
-					String images = "";
-					String[] imageList = json.getString("content").split(",");
-					for(String image : imageList){
-						images += image+",";
-					}
-					articleContent.setContent(HtmlUtils.htmlEscape(images.substring(0, images.length()-1)));
-				} else{
-					articleContent.setContent(HtmlUtils.htmlEscape(json.getString("content")));
-				}
-				articleContent.setContentType(json.getInt("type"));
-				articleContent.setSort(i);
-				articleContents.add(articleContent);
-			}
+			ArticleContent ac = new ArticleContent();
+			ac.setContent(content);
+			articleContents.add(ac);
 			
 			articleService.saveArticle(article, articleContents);
-			return new ResultJson(200l, "success");
+			
+			return "redirect:/article";
 		} catch (Exception e) {
 			log.error(" save article error userId : "+userId);
 			e.printStackTrace();
-			return new ResultJson(-100000l, e.getMessage());
+			throw e;
 		}
 	}
 	
@@ -291,7 +274,7 @@ public class ArticleController extends BaseController{
 	}
 	
 	/**
-	 * @功能描述 个人中心-我的随笔-编辑页面
+	 * @功能描述 个人中心-编辑页面
 	 * @param request
 	 * @param response
 	 * @param mode
@@ -301,7 +284,7 @@ public class ArticleController extends BaseController{
 	 * @author hechaojie
 	 * @modify
 	 */
-	@RequestMapping(value="edit/{articleId}", method=RequestMethod.GET)
+	@RequestMapping(value="edit/{articleId}")
 	public String edit(@PathVariable Long articleId,HttpServletRequest request,HttpServletResponse response,ModelMap model){
 		
 		User user = UserUtil.getUser(request.getSession());
@@ -313,7 +296,7 @@ public class ArticleController extends BaseController{
 			
 			// 文章内容
 			List<ArticleContent> articleContentList = articleService.findArticleContentByArticleId(articleId);
-			model.addAttribute("articleContentList", articleContentList);
+			model.addAttribute("articleContent", articleContentList.get(0));
 			
 			// 查询文章类型
 			Pagination articleTypePagination = new Pagination();
@@ -328,11 +311,11 @@ public class ArticleController extends BaseController{
 			log.error(" edit error userId : "+userId);
 			e.printStackTrace();
 		}
-		return "article/blog-edit";
+		return "article/edit";
 	}
 	
 	/**
-	 * @功能描述 个人中心-我的随笔-编辑提交
+	 * @功能描述 个人中心-编辑提交
 	 * @param request
 	 * @param response
 	 * @param mode
@@ -340,64 +323,41 @@ public class ArticleController extends BaseController{
 	 * @Version		V1.0
 	 * @date		2016-1-5 下午4:55:04
 	 * @author hechaojie
+	 * @throws Exception 
 	 * @modify
 	 */
 	@RequestMapping(value="editActicle", method=RequestMethod.POST)
-	@ResponseBody
-	public ResultJson editActicle(int permission,Long id, String title, String articleList, int type,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	public String editActicle(int permission,Long id, String title, String content, int type,HttpServletRequest request,HttpServletResponse response,ModelMap model) throws Exception{
 		User user = UserUtil.getUser(request.getSession());
 		long userId = user.getId();
 		try {
-			if(StringUtil.isObjectNull(id)){
-				return new ResultJson(-1l, "文章Id为空");
-			}
 			if(StringUtil.isStrEmpty(title)){
-				return new ResultJson(-1l, "请输入标题");
+				model.addAttribute("error", "请输入标题");
+				return "forward:/article/edit/"+id;
 			}
-			if(StringUtil.isStrEmpty(articleList)){
-				return new ResultJson(-1l, "请输入内容");
+			if(StringUtil.isStrEmpty(content)){
+				model.addAttribute("error", "请输入正文");
+				return "forward:/article/edit/"+id;
 			}
-			if(StringUtil.isObjectNull(type)){
-				return new ResultJson(-3l, "请选择类型");
-			}
-			
 			// 文章
 			Article article = articleService.findArticleById(id);
 			article.setTitle(HtmlUtils.htmlEscape(title));
 			article.setType(type);
 			article.setPermission(permission);
 			
-			// 文章内容
+			// 正文
 			List<ArticleContent> articleContents = new ArrayList<ArticleContent>();
-			JSONArray arr = new JSONArray(articleList);
-			for (int i = 0; i < arr.length(); i++) {
-				JSONObject json = arr.getJSONObject(i);
-				if (StringUtil.isObjectEmpty(json.getString("content"))) {
-					continue;
-				}
-				ArticleContent articleContent = new ArticleContent();
-				if (json.getInt("type") == 2) {
-					String images = "";
-					String[] imageList = json.getString("content").split(",");
-					for (String image : imageList) {
-						images += image + ",";
-					}
-					articleContent.setContent(HtmlUtils.htmlEscape(images.substring(0, images.length() - 1)));
-				} else {
-					articleContent.setContent(HtmlUtils.htmlEscape(json.getString("content")));
-				}
-				articleContent.setContentType(json.getInt("type"));
-				articleContent.setSort(i);
-				articleContents.add(articleContent);
-			}
+			ArticleContent ac = new ArticleContent();
+			ac.setContent(content);
+			articleContents.add(ac);
 			
 			articleService.editArticle(article, articleContents);
 			
-			return new ResultJson(200l, "success");
+			return "redirect:/article/detail/"+id;
 		} catch (Exception e) {
 			log.error(" editActicle error userId : "+userId);
 			e.printStackTrace();
-			return new ResultJson(-100000l, e.getMessage());
+			throw e;
 		}
 	}
 	

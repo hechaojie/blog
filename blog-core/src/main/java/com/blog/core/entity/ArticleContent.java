@@ -14,8 +14,6 @@ public class ArticleContent implements Serializable {
 	
 	private String content;
 	
-	private Integer contentType;
-	
 	private Integer sort;
 	
 	private Long createAt;
@@ -48,14 +46,6 @@ public class ArticleContent implements Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public Integer getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(Integer contentType) {
-		this.contentType = contentType;
 	}
 
 	public Integer getSort() {

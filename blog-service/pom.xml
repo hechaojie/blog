@@ -45,7 +45,7 @@
 		<dependency>
 			<groupId>com.blog</groupId>
 			<artifactId>blog-core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -164,6 +164,14 @@
 				<filtering>true</filtering>
 				<excludes>
 					<exclude>env/*.*</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/java</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>/java/**</exclude>
+					<exclude>**/*.java</exclude>
 				</excludes>
 			</resource>
 		</resources>

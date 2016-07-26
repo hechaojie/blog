@@ -6,30 +6,29 @@
 	<#include "/common/include.html">
 </head>
 <body>
+      <div class="bo-container">
 	  <!-- 头部引用 -->
 	  <#include "/common/header.html">
 	  <@headerPage currentPage=""/>
       <!-- 内容开始-->
-        	<div class="login_wrap">
-               <div class="login_tit"><h3>用户注册</h3></div>
-			
-				<div class="mh_bn mh_bn_register">
-	              <div class="contact" >
-                     <form name="form1" method="post">
-	            <ul>
-	              <li>
-				      <input type="text" name="youremail" placeholder="请输入邮箱" onblur="checkmail()" required />
-				      <span class="tips" id="divmail"></span>
-				  </li>
-	            </ul>
-	                 </form>
-
-	                 <div class="succ_bn btn_lg"><a>注册</a></div>
-	              </div>
-                </div>
-		   </div>
+      <div class="bo-panel bo-radius bo-mt20">
+         <div class="bo-panel bo-center" style="width: 50%;">
+               <div class="bo-text-center bo-size24" style="height: 52px;line-height: 52px;">
+               		<h3>用户注册</h3>
+               </div>
+				<div class="mh_bn">
+	                <input type="hidden" name="back_url" value="${back_url!}"/>
+	               <input type="text" name="youremail" class="bo-radius" placeholder="请输入邮箱" onblur="checkmail()" required />
+				   <span class="tips" id="divmail"></span>
+	                <div class="succ_bn btn_lg">注册</div>
+	            </div>
+          </div>
+       </div>
       <!-- 内容结束-->
       <#include "/common/footer.html">
+      </div>
+      
+      
 	<script type="text/javascript" src="/js/index/register.js?v=20160105"></script>
 
 </body>

@@ -24,6 +24,7 @@ import com.hecj.common.utils.IdWorker;
 import com.hecj.common.utils.ObjectToJson;
 
 @Controller
+@RequestMapping(value="/upload")
 public class UploadController extends BaseController{
 	
 	@Resource
@@ -33,7 +34,7 @@ public class UploadController extends BaseController{
 	 * 上传图片
 	 * @return
 	 */
-	@RequestMapping(value="/p/upload/uploadFile")
+	@RequestMapping(value="uploadFile")
 	public void uploadFile(@RequestParam("uploadFile") MultipartFile file,HttpServletResponse response){
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {

@@ -2,11 +2,13 @@ package com.blog.service.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.blog.core.entity.ArticleContent;
 
 public interface ArticleContentDao {
 
-	public List<ArticleContent> findArticleContentByArticleId(long articleId);
+	public List<ArticleContent> findArticleContentByArticleId(@Param("articleId")long articleId);
 	
 	/**
 	 * @功能描述 保存文章内容
@@ -28,5 +30,5 @@ public interface ArticleContentDao {
 	 * @author hechaojie
 	 * @modify
 	 */
-	public int deleteContent(long articleId);
+	public int deleteContent(@Param("articleId")long articleId);
 }

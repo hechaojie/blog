@@ -6,26 +6,38 @@
 	<#include "/common/include.html">
 </head>
 <body>
-	
+	<div class="bo-container">
 	  <!-- 头部引用 -->
 	  <#include "/common/header.html">
 	  <@headerPage currentPage=""/>
       <!-- 内容开始-->
-         <div class="login_wrap">
-               <div class="login_tit"><h3>用户登录</h3></div>
+      <div class="bo-panel bo-radius bo-mt20">
+         <div class="bo-panel bo-center" style="width: 50%;">
+               <div class="bo-text-center bo-size24" style="height: 52px;line-height: 52px;">
+               		<h3>用户登录</h3>
+               </div>
+               <form action="/dologin" method="post">
 				<div class="mh_bn">
-	                <input type="hidden" name="back_url" value="${back_url!}"/>
+						<p>
+               		<#if _error??>
+               			<font color="red">${_error!}</font>
+               		</#if>
+               		</p>
+	                <input type="hidden" name="bk" value="${bk!}"/>
 	                <div>
-	                	<input type="text" name="email" placeholder="请输入用户名" />
+	                	<input type="text" class="bo-radius" name="email" placeholder="请输入用户名" />
 	                </div>
 	                <div>
-	                	<input type="password" name="password" placeholder="请输入密码"/>
+	                	<input type="password" class="bo-radius" name="password" placeholder="请输入密码"/>
 	                </div>
-	                <div class="succ_bn btn_lg"><a href="#">登录</a></div>
+	                <div class="succ_bn btn_lg" onclick="$('form').submit();">登录</div>
 	                <p class="forget_password"><a href="/p/to_forget_passwd_step1">忘记密码？</a></p>
 	            </div>
+	            </form>
           </div>
+       </div>
       <!-- 内容结束-->
       <#include "/common/footer.html">
+      </div>
 </body>
 </html>

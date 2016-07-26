@@ -20,6 +20,7 @@ import com.blog.core.entity.User;
 import com.blog.core.service.EmailService;
 import com.blog.core.service.UserService;
 import com.blog.front.util.CheckCode;
+import com.blog.front.util.NumberUtil;
 import com.hecj.common.utils.ResultJson;
 import com.hecj.common.utils.StringUtil;
 import com.hecj.common.utils.encryp.MD5;
@@ -241,7 +242,7 @@ public class UserController extends BaseController{
 	@ResponseBody
 	public ResultJson getEmailCode(String email, HttpServletRequest request,HttpServletResponse response,ModelMap model){
 		// 随机生成4位验证码
-		String emailCode = com.blog.front.util.NumberUtil.getRandomNumber(6);
+		String emailCode = NumberUtil.getRandomNumber(6);
 		log.info("生成的邮件验证码："+email+","+emailCode);
 		try {
 			// 60秒内不重复发送邮件

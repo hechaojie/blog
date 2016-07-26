@@ -2,6 +2,8 @@ package com.blog.service.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.blog.core.entity.UserPasswordRecord;
 /**
  * 用户历史密码
@@ -15,7 +17,7 @@ public interface UserPasswordRecordDao {
 	 * @param pageSize
 	 * @return
 	 */
-	public List<UserPasswordRecord> findUserPasswordRecordsByUserId(long userId,long currPage,int pageSize);
+	public List<UserPasswordRecord> findUserPasswordRecordsByUserId(@Param("userId")long userId,@Param("start")long start,@Param("size")int size);
 	/**
 	 * @param userPasswordRecord
 	 * @return

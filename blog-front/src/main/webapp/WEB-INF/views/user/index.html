@@ -18,8 +18,8 @@
 			</div>
 			<ul class="content-user-menu-panel">
 				<li >
-					<a href="/article/my_article" class="user-menu-curr">我的随笔</a>
-					<div class="line"></div>
+					<a href="/article/myarticle" class="user-menu-curr">我的随笔</a>
+					<div class="bo-line" style="width: 82px;margin-top: 3px;"></div>
 				</li>
 				<li>
 					<a href="#">个人资料</a>
@@ -64,5 +64,23 @@
 	</div>
 	<#include "/common/footer.html">
 	<script type="text/javascript" src="/js/common/paginate.js?v=201601052"></script>
+	<script type="text/javascript">
+		$(function(){
+	    	var $paginate = $("#paginate_id");
+	    	$.paginate({
+    			url : "/article/myarticle",
+    			cssQuery : "#paginate_id",
+    			pageNumber : Number($paginate.attr("pageNumber")),
+    			totalRow : Number($paginate.attr("totalRow")),
+    			totalPage : Number($paginate.attr("totalPage")),
+    			offsetPage : 3,
+    			pageNumberAlias : 'page',
+    			params : $paginate.attr("params"),
+    			currCss : 'color: #fff;background-color: #006dcc;'
+    		});
+	    	
+	    });
+		
+	</script>
 </body>
 </html>
