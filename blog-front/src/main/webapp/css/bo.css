@@ -401,6 +401,10 @@ textarea {
 	padding: 0 15px;
 }
 
+.article-content{
+	font-size: 16px;
+}
+
 .article-markdown h3 {
 	/*font-size: 20px;*/
 }
