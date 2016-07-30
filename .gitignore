@@ -3,4 +3,4 @@
 .settings
 logs
 target
-blog/blog-front/src/main/webapp/ueditor
+blog-front/src/main/webapp/ueditor
