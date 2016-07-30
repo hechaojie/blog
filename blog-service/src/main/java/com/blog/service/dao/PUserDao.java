@@ -13,11 +13,11 @@ public interface PUserDao {
 	
 	public long totalPUsersByConditions(Map<String,Object> params);
 
-	public PUser findPUserById(long userId);
+	public PUser findPUserById(String userId);
 	
 	public PUser findPUserByUsername(String username);
 	
-	public boolean updatePUserPasswd(@Param("userId")long userId,@Param("password")String password);
+	public boolean updatePUserPasswd(@Param("userId")String userId,@Param("password")String password);
 	
 	public long save(PUser puser);
 }

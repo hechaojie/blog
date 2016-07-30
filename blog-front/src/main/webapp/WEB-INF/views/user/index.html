@@ -1,8 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>个人中心</title>
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+  	<title>个人中心</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<#include "/common/include.html">
 </head>
 <body>
@@ -17,10 +18,6 @@
 				</a>
 			</div>
 			<ul class="content-user-menu-panel">
-				<li >
-					<a href="/article/myarticle" class="user-menu-curr">我的随笔</a>
-					<div class="bo-line" style="width: 82px;margin-top: 3px;"></div>
-				</li>
 				<li>
 					<a href="#">个人资料</a>
 				</li>
@@ -33,7 +30,7 @@
 	   	   	  	<#list articleResult.data as a>
 				<div class="content-user-content-panel-row">
 					<div class="row-title">
-						<a href="/article/detail/${a.id!}">
+						<a href="/article/detail/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">
 							<#if a.title?length gt 50>
 								${a.title?substring(0,50)}...
 							<#else>
@@ -42,7 +39,7 @@
 						</a>
 					</div>
 					<div class="row-operator">
-						<a href="/article/edit/${a.id!}">编辑</a>
+						<a href="/article/edit/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">编辑</a>
 					</div>
 					<div class="row-publish">
 						<#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
@@ -63,24 +60,22 @@
 
 	</div>
 	<#include "/common/footer.html">
-	<script type="text/javascript" src="/js/common/paginate.js?v=201601052"></script>
+	<script type="text/javascript" src="/js/common/bo-paginate.js?v=201601052"></script>
 	<script type="text/javascript">
 		$(function(){
-	    	var $paginate = $("#paginate_id");
-	    	$.paginate({
-    			url : "/article/myarticle",
-    			cssQuery : "#paginate_id",
-    			pageNumber : Number($paginate.attr("pageNumber")),
-    			totalRow : Number($paginate.attr("totalRow")),
-    			totalPage : Number($paginate.attr("totalPage")),
-    			offsetPage : 3,
-    			pageNumberAlias : 'page',
-    			params : $paginate.attr("params"),
-    			currCss : 'color: #fff;background-color: #006dcc;'
-    		});
-	    	
+		    	var $paginate = $("#paginate_id");
+		    	$.paginate({
+	    			url : "/article/myarticle",
+	    			cssQuery : "#paginate_id",
+	    			pageNumber : Number($paginate.attr("pageNumber")),
+	    			totalRow : Number($paginate.attr("totalRow")),
+	    			totalPage : Number($paginate.attr("totalPage")),
+	    			offsetPage : 3,
+	    			pageNumberAlias : 'page',
+	    			params : $paginate.attr("params"),
+	    			currCss : 'color: #fff;background-color: #006dcc;'
+	    		});
 	    });
-		
 	</script>
 </body>
 </html>

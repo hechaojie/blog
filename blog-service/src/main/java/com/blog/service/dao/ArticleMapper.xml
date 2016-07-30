@@ -53,7 +53,13 @@
     	<if test="sqlParams.isDelete != null">
     		and a.is_delete = #{sqlParams.isDelete}
     	</if>
-    	order by a.recommend desc,id desc
+    	<if test="sqlParams.startTime != null">
+    		and a.create_at &gt;= #{sqlParams.startTime}
+    	</if>
+    	<if test="sqlParams.endTime!= null">
+    		and a.create_at &lt;= #{sqlParams.endTime}
+    	</if>
+    	order by a.recommend desc,a.create_at desc
     	limit #{start},#{size}
     </select>
     
@@ -77,16 +83,22 @@
     	<if test="sqlParams.isDelete != null">
     		and a.is_delete = #{sqlParams.isDelete}
     	</if>
-    	order by a.recommend desc,id desc
+    	<if test="sqlParams.startTime != null">
+    		and a.create_at &gt;= #{sqlParams.startTime}
+    	</if>
+    	<if test="sqlParams.endTime!= null">
+    		and a.create_at &lt;= #{sqlParams.endTime}
+    	</if>
+    	order by a.create_at desc
     </select>
     
-    <select id="findArticleById" parameterType="Long" resultMap="article">
+    <select id="findArticleById" parameterType="String" resultMap="article">
     	select * from article a where a.id = #{id}
     </select>
     
-    <insert id="save" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
-		insert into article(user_id,title,type,comment_count,recommend,permission,is_delete,create_at,update_at) 
-		values(#{userId},#{title},#{type},#{commentCount},#{recommend},#{permission},#{isDelete},#{createAt},#{updateAt}) 
+    <insert id="save" parameterType="Article">
+		insert into article(id,user_id,title,type,comment_count,recommend,permission,is_delete,create_at,update_at) 
+		values(#{id},#{userId},#{title},#{type},#{commentCount},#{recommend},#{permission},#{isDelete},#{createAt},#{updateAt}) 
     </insert>
     
     <update id="update" parameterType="Article">

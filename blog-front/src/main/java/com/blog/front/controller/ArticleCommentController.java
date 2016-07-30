@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.util.HtmlUtils;
 
 import com.blog.front.controller.BaseController;
 import com.blog.front.util.UserUtil;
@@ -21,16 +19,15 @@ import com.blog.core.service.ArticleCommentService;
 import com.blog.core.service.ArticleService;
 import com.blog.core.service.ArticleTypeService;
 import com.blog.core.service.UserService;
-import com.hecj.common.utils.ResultJson;
 
 @Controller
-public class ArticleCommentController extends BaseController{
+public class ArticleCommentController extends BaseController {
 
 	private static final Log log = LogFactory.getLog(ArticleCommentController.class);
-	
+
 	@Resource
 	public UserService userService;
-	
+
 	@Resource
 	public ArticleService articleService;
 
@@ -39,39 +36,41 @@ public class ArticleCommentController extends BaseController{
 
 	@Resource
 	public ArticleCommentService articleCommentService;
-	
+
 	/**
-	 * 添加评论
+	 * 描述：添加评论
+	 * 
+	 * @author: hecj
 	 */
-	@RequestMapping(value="/p/u/article/comment/add", method=RequestMethod.POST)
-	@ResponseBody
-	public ResultJson add(Long articleId,String content,HttpServletRequest request,HttpServletResponse response,ModelMap model){
-		
+	@RequestMapping(value = "/article/comment/add", method = RequestMethod.POST)
+	public String add(String articleId, String content, HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) {
+
 		User user = UserUtil.getUser(request.getSession());
-    	long userId = user.getId();
-    	
-    	try {
-    		
-			if(articleService.findArticleById(articleId) == null){
-				return new ResultJson(-1l,"文章不存在");
+		if(user == null){
+			setMessage(request, -1, "您还没有登录，登录后再来评论吧");
+			return "common/message";
+		}
+		String userId = user.getId();
+		try {
+			if (articleService.findArticleById(articleId) == null) {
+				setMessage(request, -1, "您要评论的文章丢失了，请核实后提交");
+				return "common/message";
 			}
-			
 			ArticleComment ac = new ArticleComment();
 			ac.setArticleId(articleId);
-			ac.setContent(HtmlUtils.htmlEscape(content));
-			ac.setCreateAt(System.currentTimeMillis());
+			ac.setContent(content);
 			ac.setUserId(userId);
+			articleCommentService.insertArticleComment(ac);
 			
-			articleCommentService.insert(ac);
-			
-			return new ResultJson(200l,"success");
+			return "redirect:/article/detail/"+getArticleDetialURI(articleId);
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(" add article comment userId : "+userId);
+			log.error(" add article comment userId : " + userId);
 			e.printStackTrace();
-			return new ResultJson(-100000l, e.getMessage());
+			setMessage(request, -1, "发布评论超时，请稍后再试");
+			return "common/message";
 		}
-    	
 	}
-	
+
 }

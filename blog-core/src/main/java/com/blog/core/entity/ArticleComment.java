@@ -1,48 +1,52 @@
 package com.blog.core.entity;
 
 import java.io.Serializable;
+
 /**
- * 文章评论
+ * 描述：文章评论
+ * @author: hecj
  */
 public class ArticleComment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	private String id;
+
+	private String userId;
 	
-	private Long userId;
-	
-	private long articleId;
-	
+	private String articleId;
+
 	private String content;
+	
+	private int isDelete;
 	
 	private Long createAt;
 
 	public ArticleComment() {
 
 	}
-	
-	public Long getId() {
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public long getArticleId() {
+	public String getArticleId() {
 		return articleId;
 	}
 
-	public void setArticleId(long articleId) {
+	public void setArticleId(String articleId) {
 		this.articleId = articleId;
 	}
 
@@ -52,6 +56,14 @@ public class ArticleComment implements Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public int getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(int isDelete) {
+		this.isDelete = isDelete;
 	}
 
 	public Long getCreateAt() {

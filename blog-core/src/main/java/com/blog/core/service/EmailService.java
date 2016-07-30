@@ -1,9 +1,12 @@
 package com.blog.core.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.blog.core.email.EmailVars;
 import com.blog.core.entity.EmailAuthToken;
+import com.hecj.common.utils.Pagination;
+import com.hecj.common.utils.Result;
 
 /**
  * @功能描述 邮件业务处理接口
@@ -26,5 +29,12 @@ public interface EmailService {
 	public void sendEmail(String title, String template, List<EmailVars> emailList);
 	
 	public boolean updateEmailAuthToken(EmailAuthToken emailAuthToken);
+	
+	/**
+	 * 描述：查询邮件发送记录
+	 * @author: hecj
+	 */
+	public Result findEmailSendHistoryByCondition(Map<String, Object> params,
+			Pagination pagination);
 
 }

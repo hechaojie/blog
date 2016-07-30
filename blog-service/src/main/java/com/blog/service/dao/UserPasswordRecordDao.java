@@ -17,7 +17,7 @@ public interface UserPasswordRecordDao {
 	 * @param pageSize
 	 * @return
 	 */
-	public List<UserPasswordRecord> findUserPasswordRecordsByUserId(@Param("userId")long userId,@Param("start")long start,@Param("size")int size);
+	public List<UserPasswordRecord> findUserPasswordRecordsByUserId(@Param("userId")String userId,@Param("start")long start,@Param("size")int size);
 	/**
 	 * @param userPasswordRecord
 	 * @return

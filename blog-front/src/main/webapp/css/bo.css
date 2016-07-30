@@ -1,6 +1,125 @@
 @charset "utf-8";
 /* CSS Document */
 
+@charset "utf-8";
+/* CSS Document */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td
+	{
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	overflow: auto;
+	/* overflow-x: hidden; */
+	color: #333333;
+}
+
+object {
+	overflow: auto;
+	overflow-x: hidden;
+	position: absolute;
+	z-index: 1111;
+}
+
+body {
+	position: relative;
+	font-size: 14px;
+	font-family: "Microsoft Yahei", 微软雅黑, "Helvetica Neue", Arial, "\5b8b\4f53", sans-serif;
+	background: #eeeeee;
+	background-color: #e9ebee;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+xx
+fieldset,img {
+	border: 0;
+}
+
+address,caption,cite,code,dfn,em,strong,th,var { /* 	font-style:normal;
+	font-weight:normal; */
+	
+}
+
+ol,ul {
+	list-style: none;
+}
+
+caption,th {
+	text-align: left;
+}
+
+q:before,q:after {
+	content: '';
+}
+
+abbr,acronym {
+	border: 0;
+	font-variant: normal;
+}
+
+sup {
+	vertical-align: text-top;
+}
+
+sub {
+	vertical-align: text-bottom;
+}
+
+input,textarea,select {
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	*font-size: 100%;
+}
+
+legend {
+	color: #000;
+}
+
+a {
+	color: #646b75;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:hover {
+}
+
+a:visited {
+}
+
+a:active {
+}
+
+textarea {
+	resize: none;
+}
+
+.clear {
+	clear: both;
+}
+
+/* 设置提示文字颜色 */
+::-webkit-input-placeholder {
+	color: #838383;
+}
+
+:-moz-placeholder {
+	color: #838383;
+}
+
+.placeholder {
+	color: #ccc;
+}
+
 .line {
 	border-bottom: 1px solid #e1e1e1;
 }
@@ -18,10 +137,10 @@
 	height: 58px;
 	/*background: #555;*/
 	background: #394D88;
-	position: fixed;
+	/*position: fixed;*/
 	left: 0;
 	top: 0;
-	z-index: 200;
+	/*z-index: 200;*/
     _position: absolute;
     _top: expression_r(documentElement.scrollTop + "px");
 }
@@ -112,7 +231,6 @@
 	height: auto;
 	overflow: hidden;
 	margin: 0 auto;
-	margin-top: 58px;
 }
 
 .classify_wrap {
@@ -374,17 +492,6 @@
 	padding: 25px 20px;
 }
 
-.mh_bn input {
-	height: 48px;
-	width: 97%;
-	border: 1px solid #d4d4d4;
-	color: #333;
-	margin: 10px 0;
-	padding: 10px;
-	font-size: 16px;
-	box-sizing: border-box;
-}
-
 .succ_bn {
 	width: 40%;
 	height: 40px;
@@ -476,7 +583,7 @@ embed {
 	padding-top: 20px;
 }
 .article {
-	margin: 15px 15px 40px 15px;
+	margin: 15px 15px 15px 15px;
 }
 
 .article .article-title {
@@ -509,18 +616,6 @@ embed {
 	box-shadow: 0 0 3px #e1e1e1, inset 0 0 3px white;
 }
 
-.forum-content { /*     background: #fbfbfb;
-    -webkit-box-shadow: 0 0 3px #eeeeee, inset 0 0 3px #ffffff;
-    box-shadow: 0 0 3px #eeeeee, inset 0 0 3px #ffffff;
-    border: solid 1px #e1e1e1;
-    min-height: 178px;
-    padding: 20px;
-    margin-bottom: 20px;
-    clear: both;
-    width: 72%; */
-	margin-top: 30px;
-}
-
 .forum-comments-heading h3,.forum-newcomment-heading h3 {
 	color: #646b75;
 	margin-top: 0;
@@ -547,7 +642,6 @@ embed {
 .comment-author {
 	text-align: center;
 	padding-top: 2px;
-	padding-left: 1em;
 	position: relative;
 	display: inline-block;
 	zoom: 1;
@@ -617,9 +711,7 @@ span.forum-badge {
 }
 
 .comment-content {
-	margin-left: 1em;
-	margin-top: 6px;
-	padding: 6px;
+	padding: 0px 20px 30px 55px;
 	font-size: 16px;
 	line-height: 200%;
 }
@@ -632,7 +724,6 @@ span.forum-badge {
 	margin-top: 0;
 	font-size: 20px;
 	padding-bottom: 13px;
-	border-bottom: solid 1px #e1e1e1;
 }
 
 .comment-editor {
@@ -1068,7 +1159,7 @@ ul.content-user-menu-panel li a:hover {
     height: auto;
     overflow: hidden;
     margin: 0 auto;
-    margin-top: 58px;
+    /*margin-top: 58px;*/
 }
 
 .bo-line{
@@ -1095,6 +1186,18 @@ ul.content-user-menu-panel li a:hover {
 	margin-left: 20px;
 }
 
+.bo-ml25{
+	margin-left: 25px;
+}
+
+.bo-ml5{
+	margin-left: 5px;
+}
+
+.bo-ml10{
+	margin-left: 10px;
+}
+
 .bo-mt20{
 	margin-top: 20px;
 }
@@ -1104,6 +1207,7 @@ ul.content-user-menu-panel li a:hover {
 }
 
 .bo-center{
+	width: 100%;
 	margin: 0 auto;
 }
 
@@ -1132,7 +1236,7 @@ ul.content-user-menu-panel li a:hover {
 }
 
 .bo-h52{
-	height: 52px'
+	height: 52px;
 }
 
 .bo-size28{
@@ -1174,6 +1278,30 @@ ul.content-user-menu-panel li a:hover {
     border-radius: 6px;
     -webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
+}
+
+.bo-input{
+	height: 38px;
+    width: 300px;
+    padding: 5px 5px;
+    border: 1px solid #d4d4d4;
+	color: #333;
+	margin: 10px 0;
+	padding: 5px;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+
+.bo-error-message{
+	color:red;
+}
+
+.bo-word-break{
+	word-break: break-all;
+}
+
+.bo-image-radius{
+	border-radius: 50%;
 }
 
 /*--------UI---end--------*/

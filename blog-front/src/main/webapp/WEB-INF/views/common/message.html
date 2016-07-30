@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<title>系统信息</title>
+		<meta charset="utf-8">
+		<#include "/common/include.html">
+	</head>
+	<body>
+		<div class="bo-container">
+			<!-- 头部引用 -->
+			<#include "/common/header.html">
+				<@headerPage currentPage="" />
+				<!-- 内容开始-->
+				<div class="bo-panel bo-radius bo-mt20 bo-text-center">
+					<h3>
+	                	<#if __code == 200>
+	                		<font color="green">${__message!}</font>
+	                	<#else>
+	                		<font color="red">${__message!}</font>
+	                	</#if>
+	                </h3>
+				</div>
+				<!-- 内容结束-->
+				<#include "/common/footer.html">
+		</div>
+	</body>
+
+</html>

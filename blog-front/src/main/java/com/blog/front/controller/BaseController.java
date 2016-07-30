@@ -56,5 +56,19 @@ public class BaseController implements Controller {
 				writer.close();
 		}
 	}
+	
+	public void setMessage(HttpServletRequest request,long code, String message){
+		request.setAttribute("__code", code);
+		request.setAttribute("__message", message);
+	}
+	
+	/**
+	 * 描述：根据文章id生成简单的路由规则
+	 * yyyy/MM/dd/endId
+	 * @author: hecj
+	 */
+	protected String getArticleDetialURI(String id){
+		return id.substring(0, 4)+"/"+id.substring(4, 6)+"/"+id.substring(6, 8)+"/"+id.substring(8);
+	}
 
 }

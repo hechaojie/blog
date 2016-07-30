@@ -15,9 +15,9 @@
     	<result property="createAt" column="create_at"/>
     </resultMap>
     
-    <insert id="save" parameterType="EmailAuthToken" useGeneratedKeys="true" keyProperty="id">
-    	insert into email_auth_token(user_id,email,token,type,is_verify,valid_at,verify_at,create_at)
-    	values(#{userId},#{email},#{token},#{type},#{isVerify},#{validAt},#{verifyAt},#{createAt})
+    <insert id="save" parameterType="EmailAuthToken" useGeneratedKeys="false" keyProperty="id">
+    	insert into email_auth_token(id,user_id,email,token,type,is_verify,valid_at,verify_at,create_at)
+    	values(#{id},#{userId},#{email},#{token},#{type},#{isVerify},#{validAt},#{verifyAt},#{createAt})
     </insert>
     
     <select id="findByToken" parameterType="String" resultMap="emailAuthToken">

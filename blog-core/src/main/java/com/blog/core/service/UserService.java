@@ -6,7 +6,6 @@ import java.util.Map;
 import com.blog.core.entity.User;
 import com.hecj.common.utils.Pagination;
 import com.hecj.common.utils.Result;
-import com.hecj.common.utils.ResultJson;
 /**
  * 用户接口类
  */
@@ -45,11 +44,11 @@ public interface UserService {
 	 * @param password
 	 * @return
 	 */
-	public boolean updatePassword(long userId, String password);
+	public boolean updatePassword(String id, String password);
 	
 	/**
 	 * 根据userId查询用户
 	 */
-	public User findUserById(long userId);
+	public User findUserById(String id);
 	
 }

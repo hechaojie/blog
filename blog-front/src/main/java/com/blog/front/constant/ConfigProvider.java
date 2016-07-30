@@ -18,6 +18,10 @@ public class ConfigProvider {
 	 * 相对于URL路径
 	 */
 	public static String static_upload_file_temp_url = "";
+
+	public static int publish_article_max_num = 20;
+
+	public static int today_send_email_max_num = 20;
 	
 	private ConfigProvider(){
 		
@@ -43,4 +47,18 @@ public class ConfigProvider {
 			String static_upload_file_temp_url) {
 		ConfigProvider.static_upload_file_temp_url = static_upload_file_temp_url;
 	}
+	
+	public static void setPublish_article_max_num(
+			int publish_article_max_num) {
+		ConfigProvider.publish_article_max_num = publish_article_max_num;
+	}
+
+	public static int getToday_send_email_max_num() {
+		return today_send_email_max_num;
+	}
+
+	public static void setToday_send_email_max_num(int today_send_email_max_num) {
+		ConfigProvider.today_send_email_max_num = today_send_email_max_num;
+	}
+	
 }

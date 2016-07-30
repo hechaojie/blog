@@ -8,13 +8,13 @@ public class Article implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	private String id;
 	
-	private Long userId;
+	private String userId;
 	
 	public String title;
 	
-	private int type;
+	private String type;
 	
 	private int commentCount;
 	
@@ -32,19 +32,19 @@ public class Article implements Serializable {
 
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -56,11 +56,11 @@ public class Article implements Serializable {
 		this.title = title;
 	}
 
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 

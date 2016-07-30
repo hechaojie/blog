@@ -22,11 +22,17 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.blog.service.dao.EmailAuthTokenDao;
-import com.blog.service.util.Constant;
 import com.blog.core.email.EmailVars;
 import com.blog.core.entity.EmailAuthToken;
+import com.blog.core.entity.EmailSendHistory;
 import com.blog.core.service.EmailService;
+import com.blog.service.dao.EmailAuthTokenDao;
+import com.blog.service.dao.EmailSendHistoryDao;
+import com.blog.service.util.Constant;
+import com.hecj.common.utils.GenerateUtil;
+import com.hecj.common.utils.Pagination;
+import com.hecj.common.utils.Result;
+import com.hecj.common.utils.ResultSupport;
 
 public class EmailServiceImpl implements EmailService {
 
@@ -34,12 +40,16 @@ public class EmailServiceImpl implements EmailService {
 	
 	@Resource
 	private EmailAuthTokenDao emailAuthTokenDao;
+
+	@Resource
+	private EmailSendHistoryDao emailSendHistoryDao;
 	
 	@Resource
 	private Constant constant;
 	
 	@Override
 	public long saveEmailAuthToken(EmailAuthToken emailAuthToken) {
+		emailAuthToken.setId(GenerateUtil.generateId());
 		return emailAuthTokenDao.save(emailAuthToken);
 	}
 
@@ -88,6 +98,16 @@ public class EmailServiceImpl implements EmailService {
 			e.printStackTrace();
 		} finally{
 			httpost.releaseConnection();
+			
+			EmailSendHistory esh = new EmailSendHistory();
+			esh.setContent(template);
+			esh.setTitle(title);
+			esh.setId(GenerateUtil.generateId());
+			esh.setCreateAt(System.currentTimeMillis());
+			esh.setReciverEmail(emailList.get(0).getEmail());
+			esh.setIsDelete(0);
+			esh.setType(1);
+			emailSendHistoryDao.save(esh);
 		}
 	}
 	
@@ -128,6 +148,22 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public boolean updateEmailAuthToken(EmailAuthToken emailAuthToken) {
 		return emailAuthTokenDao.update(emailAuthToken);
+	}
+
+	@Override
+	public Result findEmailSendHistoryByCondition(Map<String, Object> params, Pagination pagination) {
+		Result result = new ResultSupport();
+		try {
+			List<EmailSendHistory> list = emailSendHistoryDao.findByCondition(params, pagination.getStartCursor(),pagination.getPageSize());
+			result.setData(list);
+			result.setPagination(pagination);
+			result.setResult(true);
+		} catch (Exception e) {
+			log.error(" params {} "+ params);
+			e.printStackTrace();
+			result.setResult(false);
+		}
+		return result;
 	}
 
 }

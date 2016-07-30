@@ -1,11 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>${article.title!}</title>
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+  	<title>${article.title!}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<#include "/common/include.html">
 	<link rel="stylesheet" type="text/css" href="/js/ueditor/third-party/prettify/prettify.css">
 	<script type="text/javascript" src="/js/ueditor/third-party/prettify/prettify.js"></script>
+	<style type="text/css">
+		.category-pager ul>li>a {
+    		padding: 3px 10px;
+    		border: 0px;
+    		color: #337ab7;
+    	}
+    	
+	</style>
 </head>
 <body>
 	<div style='margin:0 auto;display:none;'>
@@ -24,10 +33,10 @@
 	   	  	</#if>
 	   	  	<#if articleTypeList ??>
 	   	  	<#list articleTypeList as at>
-	   	  		<#if type ?? && type == at.id>
-	   	  			<li class="current"><a href="/article?type=${at.id!}">${at.name!}</a></li>
+	   	  		<#if type ?? && at.id ==type>
+	   	  			<li class="current"><a href="/article?type=${at.id!}">${(at.name)!}</a></li>
 	   	  		<#else>
-	   	  			<li><a href="/article?type=${at.id!}">${at.name!}</a></li>
+	   	  			<li><a href="/article?type=${at.id!}">${(at.name)!}</a></li>
 	   	  		</#if>
 	   	  	</#list>
 	   	  	</#if>
@@ -46,23 +55,23 @@
    					<p class="small_tit small_dek">
    						类型：
    						<#if articleTypeList ??>
-					   	  	<#list articleTypeList as at>
-					   	  		<#if article.type ?? && article.type == at.id>
-					   	  			${at.name}
-					   	  		</#if>
-					   	  	</#list>
+					   	  <#list articleTypeList as at >
+					   	  	<#if at.id==article.type>
+					   	  		${(at.name)!}
+					   	  	</#if>
+					   	  </#list>
 					   	</#if>
    						&nbsp;|&nbsp;
-   						作者：${author.nickname!}&nbsp;|&nbsp;
+   						作者：${(author.nickname)!}&nbsp;|&nbsp;
    						<#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
 						<#if article.createAt ??>
 							时间：${article.createAt?number_to_datetime}
 						</#if>
-   					&nbsp;| &nbsp;${article.commentCount!}条评论</p>
+   					&nbsp;| &nbsp;${(commentResult.pagination.countSize)!}条评论</p>
 	   	       </div>
 			   <div class="article-summary">
 					<#list articleContentList as ac> 
-						<div class="article-content">
+						<div class="article-content bo-word-break">
 							${(ac.content)!}
 						</div>
 					</#list>
@@ -77,14 +86,14 @@
 		        		</div>
 		        		<div class="forum-comments">
 		        			<!-- 一条评论stat！ -->
-		        			<#if (articleCommentList?size > 0)>
-		        			<#list articleCommentList as ac >
+		        			<#if (commentResult.data?size > 0)>
+		        			<#list commentResult.data as ac >
 		        			<div class="wt-row comment-item">
-		        				<a href="javascript:;" class="comment-author">
-		        					<span class="avatar-face">
-		        						<img src="https://wt-avatars.oss.aliyuncs.com/40/9362c5a6-596d-4078-913f-f31db2e1cc60.jpeg" alt="" />
+		        				<a href="javascript:;" class="comment-author" style="display: inline-block;height: 50px;">
+		        					<span class="avatar-face bo-pull-left">
+		        						<img class="bo-image-radius" style="width: 48px;height: 48px;" src="" alt="" onerror="this.src='/images/noimg.png'"/>
 		        					</span>
-		        					<span class="avatar-name">${ac.userId!}</span>
+		        					<span class="avatar-name bo-ml10"  style="display: inline-block;height: 50px;line-height: 20px">${(ac.email)!}</span>
 		        				</a>
 		        				<span class="top-right-corner">
 		                                    <span class="hover-hide">
@@ -101,10 +110,10 @@
 		                                        
 		                                    </span>
 		                                    
-		                                    <span class="forum-badge floor-label" id="commentf1">#${ac_index+1!}</span>
+		                                    <span class="forum-badge floor-label" id="commentf1">#${(commentResult.pagination.startCursor+ac_index+1)!}</span>
 		                        </span>
-		                        <div class="comment-content">
-		        					<p>${ac.content!}</p>
+		                        <div class="comment-content bo-word-break">
+		        					${(ac.content)!}
 		        				</div>
 		        			</div>
 		        			</#list>
@@ -112,21 +121,70 @@
 		        			<div class="forum-none-comments">暂无评论</div>
 		        			</#if>
 		        			<!-- 一条评论end！ -->
+		        			<!-- 分页..-->
+				   	   	  <div class="category-pager">
+				   	   	  	  <ul id="paginate_id" pageNumber="${(commentResult.pagination.currPage)!}" totalPage="${(commentResult.pagination.countPage)!}" totalRow="${(commentResult.pagination.countSize)!}" >
+				   	   	  	  </ul>
+				   	   	  </div>
+				   	   	  <script type="text/javascript" src="/js/common/bo-paginate.js?v=0.1"></script>
+						   <script type="text/javascript">
+								$(function(){
+								    	var $paginate = $("#paginate_id");
+								    	$.paginate({
+							    			url : "/article/detail/${article.id?substring(0,4)}/${article.id?substring(4,6)}/${article.id?substring(6,8)}/${article.id?substring(8)}",
+							    			cssQuery : "#paginate_id",
+							    			pageNumber : Number($paginate.attr("pageNumber")),
+							    			totalRow : Number($paginate.attr("totalRow")),
+							    			totalPage : Number($paginate.attr("totalPage")),
+							    			offsetPage : 3,
+							    			pageNumberAlias : 'page',
+							    			currCss : 'color: #fff;background-color: #006dcc;'
+							    		});
+							    });
+						</script>
 		        		</div>
 			   	   </div>
 			   </div>
 			   <!-- 回复 begin-->
-					<div class="forum-content">
-						<div class="forum-newcomment-wrapper">
+					<div>
+						<div class="forum-newcomment-wrapper" style="padding-left: 40px;">
 							<div class="forum-newcomment-heading">
 					            <h3>
-					                                     回复
+					                评论
 					            </h3>
 					        </div>
-					        <div >
-					        	<textarea class="comment-editor" rows=10 cols="96" placeholder="最多输入200个字符" onKeyDown='if(this.value.length>=200){event.returnValue=false}'></textarea>
-					        </div>
-					        <p class="sub_p"><button class="btn_submit">发表评论</button></p>
+					        <form action="/article/comment/add?articleId=${article.id!}" method="post">
+					        	<!--
+						        <div>
+						        	<textarea class="comment-editor" name="content" rows=10 cols="96" placeholder="最多输入200个字符" onKeyDown='if(this.value.length>=200){event.returnValue=false}'></textarea>
+						        </div>
+						        -->
+						        <!-- 加载编辑器的容器 -->
+							    <script id="container" name="content" type="text/plain">
+    							</script>
+							    <!-- 配置文件 -->
+							    <script type="text/javascript" src="/js/ueditor/ueditor.config.js"></script>
+							    <!-- 编辑器源码文件 -->
+							    <script type="text/javascript" src="/js/ueditor/ueditor.all.min.js"></script>
+							    <!-- 实例化编辑器 -->
+							    <script type="text/javascript">
+							        var ue = UE.getEditor('container',{
+							        	initialFrameHeight:200,
+							        	initialFrameWidth:620,
+							        	wordCount:false,
+							        	elementPathEnabled:false,
+							        	autoClearEmptyNode:true,
+							        	toolbars: [
+							        	           [
+													   'insertcode', //代码语言
+							        	               'link', //超链接
+							        	               'simpleupload', //单图上传
+							        	           ]
+							        	       ]
+							        });
+							    </script>   
+						        <p class="sub_p"><button class="btn_submit" onclick="$('form').submit();">发表评论</button></p>
+					        </form>
 						</div>
 					</div>
 			    <!-- 回复 end -->

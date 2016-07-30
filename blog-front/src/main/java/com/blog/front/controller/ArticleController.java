@@ -1,6 +1,7 @@
 package com.blog.front.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,14 +22,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.HtmlUtils;
 
 import com.blog.core.entity.Article;
-import com.blog.core.entity.ArticleComment;
 import com.blog.core.entity.ArticleContent;
 import com.blog.core.entity.User;
 import com.blog.core.service.ArticleCommentService;
 import com.blog.core.service.ArticleService;
 import com.blog.core.service.ArticleTypeService;
 import com.blog.core.service.UserService;
+import com.blog.front.constant.ConfigProvider;
 import com.blog.front.util.UserUtil;
+import com.hecj.common.utils.DateFormatUtil;
 import com.hecj.common.utils.Pagination;
 import com.hecj.common.utils.Result;
 import com.hecj.common.utils.StringUtil;
@@ -55,7 +57,7 @@ public class ArticleController extends BaseController{
 	 * 文章列表模块
 	 */
 	@RequestMapping(value="", method=RequestMethod.GET)
-	public String index(Long page,Long type,String sq,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	public String index(Long page,String type,String sq,HttpServletRequest request,HttpServletResponse response,ModelMap model){
 		
 		if(page == null){
 			page = 1l;
@@ -97,16 +99,20 @@ public class ArticleController extends BaseController{
 	/**
 	 * 文章详情
 	 */
-	@RequestMapping(value="detail/{articleId}", method=RequestMethod.GET)
-	public String detail(@PathVariable Long articleId,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	@RequestMapping(value="detail/{year}/{month}/{day}/{endId}", method=RequestMethod.GET)
+	public String detail(@PathVariable String year,@PathVariable String month,@PathVariable String day,@PathVariable String endId,Long page,HttpServletRequest request,HttpServletResponse response,ModelMap model){
 		
 		try {
 			
-			Article article = articleService.findArticleById(articleId);
+			if(page == null){
+				page =1l;
+			}
+			
+			Article article = articleService.findArticleById(year+month+day+endId);
 			model.addAttribute("article", article);
 			
 			// 文章内容
-			List<ArticleContent> articleContentList = articleService.findArticleContentByArticleId(articleId);
+			List<ArticleContent> articleContentList = articleService.findArticleContentByArticleId(article.getId());
 			
 			model.addAttribute("articleContentList", articleContentList);
 			
@@ -123,19 +129,13 @@ public class ArticleController extends BaseController{
 				model.addAttribute("articleTypeList", articleTypeResult.getData());
 			}
 			
-			List<ArticleComment> articleCommentList = articleCommentService.findArticleCommentByArticleId(articleId);
+			Pagination pg = new Pagination();
+			pg.setCurrPage(page);
+			pg.setPageSize(20);
+			Result commentResult = articleCommentService.findArticleCommentByArticleId(article.getId(),pg);
 			
-			model.addAttribute("articleCommentList", articleCommentList);
+			model.addAttribute("commentResult", commentResult);
 			
-			// 兼容历史转义问题
-			if(article.getId()>=71&&article.getId()<=77){
-				// 转义
-				for(ArticleContent ac : articleContentList){
-					ac.setContent(HtmlUtils.htmlEscape(ac.getContent()));
-				}
-				
-			}
-
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			e.printStackTrace();
@@ -181,11 +181,11 @@ public class ArticleController extends BaseController{
 	 * @modify
 	 */
 	@RequestMapping(value="saveActicle", method=RequestMethod.POST)
-    public String saveActicle(String title, String content, int type,int permission, String AUTH_TOKEN_PUBLISH,
+    public String saveActicle(String title, String content, String type,int permission, String AUTH_TOKEN_PUBLISH,
     		HttpServletRequest request,HttpServletResponse response,ModelMap model)throws Exception{
     	
 		User user = UserUtil.getUser(request.getSession());
-		long userId = -1;
+		String userId = "-1";
 		try {
 			
 			if(StringUtil.isStrEmpty(title)){
@@ -207,6 +207,19 @@ public class ArticleController extends BaseController{
 			request.getSession().removeAttribute("AUTH_TOKEN_PUBLISH");
 			
 			// 发布文章个数校验，每天最多发表20篇文章
+			Pagination pagination = new Pagination();
+			pagination.setCurrPage(1l);
+			pagination.setPageSize(Integer.MAX_VALUE);
+			// 查询我发布的文章
+			Map<String,Object> params = new HashMap<String,Object>();
+			params.put("userId", userId);
+			params.put("startTime", DateFormatUtil.getDayBegin(new Date()).getTime());
+			params.put("endTime", DateFormatUtil.getDayEnd(new Date()).getTime());
+			Result result = articleService.findArticlesByCondition(params, pagination);
+			if(result.getPagination().getCountSize()>=ConfigProvider.publish_article_max_num){
+				model.addAttribute("error", "当天发布文章数："+result.getPagination().getCountSize()+"，休息一下，过一会后再来吧。");
+				return "forward:/article/publish";
+			}
 			
 			// 文章主体
 			Article article = new Article();
@@ -235,7 +248,7 @@ public class ArticleController extends BaseController{
 	}
 	
 	/**
-	 * @功能描述 个人中心-我的随笔
+	 * @功能描述 个人中心
 	 * @param request
 	 * @param response
 	 * @param mode
@@ -251,7 +264,7 @@ public class ArticleController extends BaseController{
 		if(page == null){
 			page = 1l;
 		}
-		long userId = -1;
+		String userId = "-1";
 		try {
 			User user = UserUtil.getUser(request.getSession());
 	    	userId = user.getId();
@@ -284,11 +297,12 @@ public class ArticleController extends BaseController{
 	 * @author hechaojie
 	 * @modify
 	 */
-	@RequestMapping(value="edit/{articleId}")
-	public String edit(@PathVariable Long articleId,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	@RequestMapping(value="edit/{year}/{month}/{day}/{endId}")
+	public String edit(@PathVariable String year,@PathVariable String month,@PathVariable String day,@PathVariable String endId,HttpServletRequest request,HttpServletResponse response,ModelMap model){
 		
+		String articleId = year+month+day+endId;
 		User user = UserUtil.getUser(request.getSession());
-		long userId = user.getId();
+		String userId = user.getId();
 		try {
 			
 			Article article = articleService.findArticleById(articleId);
@@ -301,12 +315,14 @@ public class ArticleController extends BaseController{
 			// 查询文章类型
 			Pagination articleTypePagination = new Pagination();
 			articleTypePagination.setPageSize(100);
-			Map<String,Object> articleTypeParams = new HashMap<String,Object>();
+			Map<String, Object> articleTypeParams = new HashMap<String, Object>();
 			articleTypeParams.put("idDelete", 0);
-			Result articleTypeResult = articleTypeService.findArticleTypesByCondition(articleTypeParams, articleTypePagination);
-			if(articleTypeResult.isSuccess()){
+			Result articleTypeResult = articleTypeService.findArticleTypesByCondition(articleTypeParams,
+					articleTypePagination);
+			if (articleTypeResult.isSuccess()) {
 				model.addAttribute("articleTypeList", articleTypeResult.getData());
 			}
+						
 		} catch (Exception e) {
 			log.error(" edit error userId : "+userId);
 			e.printStackTrace();
@@ -327,17 +343,17 @@ public class ArticleController extends BaseController{
 	 * @modify
 	 */
 	@RequestMapping(value="editActicle", method=RequestMethod.POST)
-	public String editActicle(int permission,Long id, String title, String content, int type,HttpServletRequest request,HttpServletResponse response,ModelMap model) throws Exception{
+	public String editActicle(int permission,String id, String title, String content, String type,HttpServletRequest request,HttpServletResponse response,ModelMap model) throws Exception{
 		User user = UserUtil.getUser(request.getSession());
-		long userId = user.getId();
+		String userId = user.getId();
 		try {
 			if(StringUtil.isStrEmpty(title)){
 				model.addAttribute("error", "请输入标题");
-				return "forward:/article/edit/"+id;
+				return "forward:/article/edit/"+getArticleDetialURI(id);
 			}
 			if(StringUtil.isStrEmpty(content)){
 				model.addAttribute("error", "请输入正文");
-				return "forward:/article/edit/"+id;
+				return "forward:/article/edit/"+getArticleDetialURI(id);
 			}
 			// 文章
 			Article article = articleService.findArticleById(id);
@@ -353,7 +369,7 @@ public class ArticleController extends BaseController{
 			
 			articleService.editArticle(article, articleContents);
 			
-			return "redirect:/article/detail/"+id;
+			return "redirect:/article/detail/"+getArticleDetialURI(id);
 		} catch (Exception e) {
 			log.error(" editActicle error userId : "+userId);
 			e.printStackTrace();

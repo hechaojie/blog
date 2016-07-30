@@ -12,9 +12,9 @@
     	<result property="updateAt" column="update_at"/>
     </resultMap>
     
-    <insert id="save" parameterType="PUser" useGeneratedKeys="true" keyProperty="id">
-    	insert into puser(username,password,is_delete,create_at,update_at)
-    	values(#{username},#{password},#{isDelete},#{createAt},#{updateAt});
+    <insert id="save" parameterType="PUser" useGeneratedKeys="false" keyProperty="id">
+    	insert into puser(id,username,password,is_delete,create_at,update_at)
+    	values(#{id},#{username},#{password},#{isDelete},#{createAt},#{updateAt});
     </insert>
     
     <select id="findAll" resultMap="pUser">

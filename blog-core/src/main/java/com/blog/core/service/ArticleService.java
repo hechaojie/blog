@@ -37,7 +37,7 @@ public interface ArticleService {
 	 * @author hechaojie
 	 * @modify
 	 */
-	public Article findArticleById(long articleId) throws Exception;
+	public Article findArticleById(String articleId) throws Exception;
 	
 	/**
 	 * @功能描述 根据文章Id查询内容
@@ -48,7 +48,7 @@ public interface ArticleService {
 	 * @author hechaojie
 	 * @modify
 	 */
-	public List<ArticleContent> findArticleContentByArticleId(long articleId);
+	public List<ArticleContent> findArticleContentByArticleId(String articleId);
 	
 	/**
 	 * @功能描述 保存文章
@@ -59,7 +59,7 @@ public interface ArticleService {
 	 * @date		2016-1-5 上午11:40:58
 	 * @author hechaojie
 	 */
-	public boolean saveArticle(Article article, List<ArticleContent> articleContents);
+	public String saveArticle(Article article, List<ArticleContent> articleContents);
 	
 	/**
 	 * @功能描述 编辑文章

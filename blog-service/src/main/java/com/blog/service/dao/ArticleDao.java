@@ -17,7 +17,7 @@ public interface ArticleDao {
 	/**
 	 * 根据文章Id查询
 	 */
-	public Article findArticleById(long id);
+	public Article findArticleById(String id);
 	
 	/**
 	 * @功能描述 保存文章

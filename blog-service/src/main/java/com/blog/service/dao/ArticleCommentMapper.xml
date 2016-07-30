@@ -8,17 +8,36 @@
 		<result property="userId" column="user_id"/>
 		<result property="articleId" column="article_id"/>
 		<result property="content" column="content"/>
+		<result property="isDelete" column="is_delete"/>
 		<result property="createAt" column="create_at"/>
 	</resultMap>
 	
-	<insert id="insert" parameterType="articleComment" useGeneratedKeys="true" keyProperty="id">
-		insert into article_comment(user_id,article_id,content,create_at)
-		values(#{userId},#{articleId},#{content},#{createAt});
+	<resultMap id="articleCommentVo" type="com.blog.core.vo.ArticleCommentVo">
+		<id property="id" column="id"/>
+		<result property="userId" column="user_id"/>
+		<result property="email" column="email"/>
+		<result property="articleId" column="article_id"/>
+		<result property="content" column="content"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="createAt" column="create_at"/>
+	</resultMap>
+	
+	<insert id="insert" parameterType="articleComment" useGeneratedKeys="false" keyProperty="id">
+		insert into article_comment(id,user_id,article_id,content,is_delete,create_at)
+		values(#{id},#{userId},#{articleId},#{content},#{isDelete},#{createAt});
 	</insert>
 	
-    <select id="findArticleCommentByArticleId" parameterType="Long" resultMap="articleComment">
-            select * from article_comment where article_id = #{articleId}
-            order by id desc
+    <select id="findByArticleId" resultMap="articleCommentVo">
+            select ac.*,u.email from article_comment ac 
+            left join user u on (u.id=ac.user_id)
+            where ac.article_id = #{articleId}
+            order by ac.create_at asc
+            limit #{start},#{size}
+    </select>
+    
+    <select id="countByArticleId" parameterType="String" resultType="Long">
+            select count(*) from article_comment where article_id = #{articleId}
+            order by create_at asc
     </select>
     
     

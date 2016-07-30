@@ -7,22 +7,20 @@
 		<id property="id" column="id"/>
 		<result property="articleId" column="article_id"/>
 		<result property="content" column="content"/>
-		<result property="sort" column="sort"/>
 		<result property="createAt" column="create_at"/>
 		<result property="updateAt" column="update_at"/>
 	</resultMap>
 	
-	
-    <select id="findArticleContentByArticleId" parameterType="Long" resultMap="articleContent">
+    <select id="findArticleContentByArticleId" parameterType="String" resultMap="articleContent">
             select * from article_content where article_id = #{articleId}
     </select>
     
-    <insert id="save" parameterType="ArticleContent" useGeneratedKeys="true" keyProperty="id">
-    	insert into article_content(article_id,content,sort,create_at,update_at) 
-		values(#{articleId},#{content},#{sort},#{createAt},#{updateAt}) 
+    <insert id="save" parameterType="ArticleContent">
+    	insert into article_content(id,article_id,content,create_at,update_at) 
+		values(#{id},#{articleId},#{content},#{createAt},#{updateAt}) 
     </insert>
     
-	<delete id="deleteContent" parameterType="Long">
+	<delete id="deleteContent" parameterType="String">
     	delete from article_content where article_id = #{articleId}
     </delete>
         

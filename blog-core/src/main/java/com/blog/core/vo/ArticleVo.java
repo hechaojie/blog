@@ -8,9 +8,9 @@ public class ArticleVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public Long id;
+	public String id;
 	
-	public Long userId;
+	public String userId;
 	
 	public String email;
 	
@@ -18,7 +18,7 @@ public class ArticleVo implements Serializable {
 	
 	public String title;
 	
-	public int type;
+	public String type;
 	
 	public int commentCount;
 	
@@ -32,19 +32,19 @@ public class ArticleVo implements Serializable {
 
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -72,11 +72,11 @@ public class ArticleVo implements Serializable {
 		this.title = title;
 	}
 
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 

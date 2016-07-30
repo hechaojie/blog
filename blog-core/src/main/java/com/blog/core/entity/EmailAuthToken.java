@@ -9,11 +9,11 @@ public class EmailAuthToken implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	private String id;
 	/**
 	 * 用户id
 	 */
-	private Long userId;
+	private String userId;
 	/**
 	 * 邮箱
 	 */
@@ -42,16 +42,16 @@ public class EmailAuthToken implements Serializable {
 	public EmailAuthToken() {
 		super();
 	}
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getEmail() {

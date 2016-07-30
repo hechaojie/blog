@@ -46,15 +46,7 @@
 		<property name="allowSessionOverride" value="true"/>
 	</bean>
 
-     <!-- 常量 -->
-     <bean id="configProvider" class="com.blog.front.constant.ConfigProvider" init-method="init">
-     	<!--<property name="STATIC_URL" value="${STATIC_URL}"/>-->
-     	<property name="RESOURCE_URL" value="${RESOURCE_URL}"/>
-     	<property name="uploadFileTempsDir" value="${upload_file_temps_dir}"/>
-     	<property name="static_upload_file_temp_url" value="${static_upload_file_temp_url}"/>
-     </bean>
-
-	<!-- 拦截器 -p-u-->
+	<!-- 拦截器-->
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
@@ -77,6 +69,15 @@
 	<bean id="exceptionResolver" class="com.blog.front.exception.ExceptionHandler">
 	</bean>
     
+     <!-- 常量 -->
+     <bean id="configProvider" class="com.blog.front.constant.ConfigProvider" init-method="init">
+     	<!--<property name="STATIC_URL" value="${STATIC_URL}"/>-->
+     	<property name="RESOURCE_URL" value="${RESOURCE_URL}"/>
+     	<property name="uploadFileTempsDir" value="${upload_file_temps_dir}"/>
+     	<property name="static_upload_file_temp_url" value="${static_upload_file_temp_url}"/>
+     	<property name="publish_article_max_num" value="${publish_article_max_num}"/>
+     	<property name="today_send_email_max_num" value="${today_send_email_max_num}"/>
+     </bean>
      
  </beans>
  

@@ -10,6 +10,7 @@ import com.blog.core.entity.User;
 import com.blog.core.service.UserService;
 import com.blog.service.dao.EmailAuthTokenDao;
 import com.blog.service.dao.UserDao;
+import com.hecj.common.utils.GenerateUtil;
 import com.hecj.common.utils.Pagination;
 import com.hecj.common.utils.Result;
 import com.hecj.common.utils.ResultSupport;
@@ -59,6 +60,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean addUser(User user) {
+		user.setId(GenerateUtil.generateId());
 		user.setCreateAt(System.currentTimeMillis());
 		user.setUpdateAt(System.currentTimeMillis());
 		userDao.save(user);
@@ -66,13 +68,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean updatePassword(long userId, String password) {
-		return userDao.updateUserPasswd(userId, password);
+	public boolean updatePassword(String id, String password) {
+		return userDao.updateUserPasswd(id, password);
 	}
 
 	@Override
-	public User findUserById(long userId) {
-		return userDao.findUserById(userId);
+	public User findUserById(String id) {
+		return userDao.findUserById(id);
 	}
 
 }

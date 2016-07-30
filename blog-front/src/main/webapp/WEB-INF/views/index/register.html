@@ -11,25 +11,29 @@
 	  <#include "/common/header.html">
 	  <@headerPage currentPage=""/>
       <!-- 内容开始-->
-      <div class="bo-panel bo-radius bo-mt20">
-         <div class="bo-panel bo-center" style="width: 50%;">
-               <div class="bo-text-center bo-size24" style="height: 52px;line-height: 52px;">
-               		<h3>用户注册</h3>
-               </div>
-				<div class="mh_bn">
-	                <input type="hidden" name="back_url" value="${back_url!}"/>
-	               <input type="text" name="youremail" class="bo-radius" placeholder="请输入邮箱" onblur="checkmail()" required />
-				   <span class="tips" id="divmail"></span>
-	                <div class="succ_bn btn_lg">注册</div>
-	            </div>
-          </div>
-       </div>
-      <!-- 内容结束-->
+				<div class="bo-panel bo-radius bo-mt20">
+					<div class="bo-panel bo-center" style="width: 50%;">
+						<div class="bo-text-center bo-size24" style="height: 52px;line-height: 52px;">
+							<h3>用户注册</h3>
+						</div>
+						<form action="/doRegister" method="post">
+							<div class="mh_bn">
+								<div class="bo-text-center bo-error-message">
+									${__message!}
+								</div>
+								<input type="hidden" name="bk" value="${bk!}" />
+								<div class="bo-text-center">
+									<input type="text" class="bo-input" name="email" placeholder="请输入邮箱" />
+								</div>
+								<div class="bo-text-center succ_bn btn_lg" onclick="$('form').submit();">注册</div>
+								<p class="forget_password"><a href="/login">已注册，去登录</a></p>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- 内容结束-->
       <#include "/common/footer.html">
       </div>
       
-      
-	<script type="text/javascript" src="/js/index/register.js?v=20160105"></script>
-
 </body>
 </html>

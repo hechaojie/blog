@@ -55,8 +55,8 @@ public class TestServer {
 			article.setCommentCount(0);
 			article.setRecommend(0);
 			article.setTitle("ddd");
-			article.setUserId(1l);
-			article.setType(111);
+			//article.setUserId(1l);
+			//article.setType(111);
 			
 			ArticleService articleService = (ArticleService)context.getBean("articleService");
 			articleService.saveArticle(article, null);

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.service.dao.EmailSendHistoryDao">
+    <resultMap id="emailSendHistory" type="EmailSendHistory">
+    	<result property="id" column="id"/>
+    	<result property="title" column="title"/>
+    	<result property="content" column="content"/>
+    	<result property="sender" column="sender"/>
+    	<result property="senderEmail" column="sender_email"/>
+    	<result property="reciver" column="reciver"/>
+    	<result property="reciverEmail" column="reciver_email"/>
+    	<result property="type" column="type"/>
+    	<result property="isDelete" column="is_delete"/>
+    	<result property="createAt" column="create_at"/>
+    </resultMap>
+    
+    <insert id="save" parameterType="emailSendHistory" >
+    	insert into email_send_history(id,title,content,sender,sender_email,reciver,reciver_email,type,is_delete,create_at)
+    	values(#{id},#{title},#{content},#{sender},#{senderEmail},#{reciver},#{reciverEmail},#{type},#{isDelete},#{createAt})
+    </insert>
+    
+    <select id="findByCondition" resultMap="emailSendHistory">
+    	select * from email_send_history a where 1=1
+    	<if test="sqlParams.reciver != null">
+    		and reciver = #{sqlParams.reciver}
+    	</if>
+    	<if test="sqlParams.reciverEmail != null">
+    		and reciver_email = #{sqlParams.reciverEmail}
+    	</if>
+    	<if test="sqlParams.startTime != null">
+    		and a.create_at &gt;= #{sqlParams.startTime}
+    	</if>
+    	<if test="sqlParams.endTime!= null">
+    		and a.create_at &lt;= #{sqlParams.endTime}
+    	</if>
+    	limit #{start} , #{size}
+    </select>
+</mapper>
+

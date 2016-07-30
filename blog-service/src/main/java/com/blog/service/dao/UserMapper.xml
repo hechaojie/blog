@@ -14,9 +14,9 @@
     	<result property="updateAt" column="update_at"/>
     </resultMap>
     
-    <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
-    	insert into user(email,username,nickname,sex,password,create_at,update_at)
-    	values(#{email},#{username},#{nickname},#{sex},#{password},#{createAt},#{updateAt});
+    <insert id="save" parameterType="User" useGeneratedKeys="false" keyProperty="id">
+    	insert into user(id,email,username,nickname,sex,password,create_at,update_at)
+    	values(#{id},#{email},#{username},#{nickname},#{sex},#{password},#{createAt},#{updateAt});
     </insert>
     
     <select id="findAll" resultMap="user">
@@ -46,7 +46,7 @@
     	order by id desc
     </select>
     
-    <select id="findUserById" parameterType="Long" resultMap="user">
+    <select id="findUserById" parameterType="String" resultMap="user">
     	select * from user u where u.id = #{id}
     </select>
     

@@ -1,8 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-	<title>何超杰的博客  技术、分享、价值</title>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+  	<title>何超杰的博客  技术、分享、价值</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="title" content="何超杰的博客-技术、分享、价值" />
 	<meta name="keywords" content="何超杰的博客-技术、分享、价值" />
 	<meta name="description" content="何超杰的博客-技术、分享、价值" />
@@ -25,7 +26,7 @@
 	   	  	</#if>
 	   	  	<#if articleTypeList ??>
 	   	  	<#list articleTypeList as at>
-	   	  		<#if type ?? && type ==at.id>
+	   	  		<#if type ?? &&at.id ==type>
 	   	  			<li class="current"><a href="/article?type=${at.id!}">${at.name!}</a></li>
 	   	  		<#else>
 	   	  			<li><a href="/article?type=${at.id!}">${at.name!}</a></li>
@@ -44,11 +45,11 @@
 	   	   	  <div class="thread-item">
 		   	   	  	<div class="thread-title">
 		   	   	  		<h4>
-		   	   	  			<a href="/article/detail/${a.id!}">
-		   	   	  				<#if a.title?length gt 55>
+		   	   	  			<a href="/article/detail/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">
+		   	   	  				<#if a.title?? && a.title?length gt 55>
 									${a.title?substring(0,55)}...
 								<#else>
-									${a.title!}
+									${(a.title)!}
 								</#if>
 		   	   	  			</a>
 		   	   	  		</h4>
@@ -99,24 +100,22 @@
    	</div>
    </div>
    <#include "/common/footer.html">
-   <script type="text/javascript" src="/js/common/paginate.js?v=0.1"></script>
+   <script type="text/javascript" src="/js/common/bo-paginate.js?v=0.1"></script>
    <script type="text/javascript">
 		$(function(){
-	    	var $paginate = $("#paginate_id");
-	    	$.paginate({
-    			url : "/article",
-    			cssQuery : "#paginate_id",
-    			pageNumber : Number($paginate.attr("pageNumber")),
-    			totalRow : Number($paginate.attr("totalRow")),
-    			totalPage : Number($paginate.attr("totalPage")),
-    			offsetPage : 3,
-    			pageNumberAlias : 'page',
-    			params : $paginate.attr("params"),
-    			currCss : 'color: #fff;background-color: #006dcc;'
-    		});
-	    	
+		    	var $paginate = $("#paginate_id");
+		    	$.paginate({
+	    			url : "/article",
+	    			cssQuery : "#paginate_id",
+	    			pageNumber : Number($paginate.attr("pageNumber")),
+	    			totalRow : Number($paginate.attr("totalRow")),
+	    			totalPage : Number($paginate.attr("totalPage")),
+	    			offsetPage : 3,
+	    			pageNumberAlias : 'page',
+	    			params : $paginate.attr("params"),
+	    			currCss : 'color: #fff;background-color: #006dcc;'
+	    		});
 	    });
-		
 	</script>
 </body>
 </html>

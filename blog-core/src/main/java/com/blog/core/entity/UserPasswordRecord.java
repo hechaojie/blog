@@ -9,8 +9,8 @@ public class UserPasswordRecord implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	private Long userId;
+	private String id;
+	private String userId;
 	private String passwordDes;
 	private String passwordMd5;
 	private Long createAt;
@@ -19,19 +19,19 @@ public class UserPasswordRecord implements Serializable {
 		super();
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

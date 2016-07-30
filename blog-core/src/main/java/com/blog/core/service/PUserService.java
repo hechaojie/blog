@@ -37,11 +37,11 @@ public interface PUserService {
 	 * @param password
 	 * @return
 	 */
-	public boolean updatePassword(long id, String password);
+	public boolean updatePassword(String id, String password);
 	
 	/**
 	 * 根据puserId查询管理员
 	 */
-	public PUser findPUserById(long puserId);
+	public PUser findPUserById(String id);
 	
 }

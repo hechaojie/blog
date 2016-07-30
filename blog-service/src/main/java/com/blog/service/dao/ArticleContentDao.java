@@ -8,7 +8,7 @@ import com.blog.core.entity.ArticleContent;
 
 public interface ArticleContentDao {
 
-	public List<ArticleContent> findArticleContentByArticleId(@Param("articleId")long articleId);
+	public List<ArticleContent> findArticleContentByArticleId(@Param("articleId")String articleId);
 	
 	/**
 	 * @功能描述 保存文章内容
@@ -30,5 +30,5 @@ public interface ArticleContentDao {
 	 * @author hechaojie
 	 * @modify
 	 */
-	public int deleteContent(@Param("articleId")long articleId);
+	public int deleteContent(@Param("articleId")String articleId);
 }

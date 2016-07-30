@@ -15,11 +15,11 @@ public interface UserDao {
 	
 	public long totalUsersByConditions(Map<String,Object> params);
 
-	public User findUserById(long id);
+	public User findUserById(String id);
 	
 	public User findUserByEmail(String email);
 	
-	public boolean updateUserPasswd(@Param("userId")long userId,@Param("password")String password);
+	public boolean updateUserPasswd(@Param("userId")String userId,@Param("password")String password);
 	
 	public long save(User user);
 }

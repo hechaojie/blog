@@ -15,6 +15,7 @@ import com.blog.core.service.ArticleService;
 import com.blog.core.vo.ArticleVo;
 import com.blog.service.dao.ArticleContentDao;
 import com.blog.service.dao.ArticleDao;
+import com.hecj.common.utils.GenerateUtil;
 import com.hecj.common.utils.Pagination;
 import com.hecj.common.utils.Result;
 import com.hecj.common.utils.ResultSupport;
@@ -52,7 +53,13 @@ public class ArticleServiceImpl implements ArticleService{
 			if(!StringUtil.isObjectNull(params.get("isDelete"))){
 				sqlParams.put("isDelete", params.get("isDelete"));
 			}
-			List<ArticleVo> list = articleDao.findArticlesByConditions(sqlParams, pagination.getCurrPage(),pagination.getPageSize());
+			if(!StringUtil.isObjectNull(params.get("startTime"))){
+				sqlParams.put("startTime", params.get("startTime"));
+			}
+			if(!StringUtil.isObjectNull(params.get("endTime"))){
+				sqlParams.put("endTime", params.get("endTime"));
+			}
+			List<ArticleVo> list = articleDao.findArticlesByConditions(sqlParams, pagination.getStartCursor(),pagination.getPageSize());
 			long total = articleDao.totalArticlesByConditions(sqlParams);
 			
 			pagination.setCountSize(total);
@@ -68,33 +75,36 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public Article findArticleById(long articleId) {
+	public Article findArticleById(String articleId) {
 		return articleDao.findArticleById(articleId);
 	}
 
 	@Override
-	public List<ArticleContent> findArticleContentByArticleId(long articleId) {
+	public List<ArticleContent> findArticleContentByArticleId(String articleId) {
 		return articleContentDao.findArticleContentByArticleId(articleId);
 	}
 
 	@Override
-	public boolean saveArticle(Article article, List<ArticleContent> articleContents) {
+	public String saveArticle(Article article, List<ArticleContent> articleContents) {
 		try {
+			article.setId(GenerateUtil.generateId());
+			article.setRecommend(0);
 			article.setCreateAt(System.currentTimeMillis());
 			article.setUpdateAt(System.currentTimeMillis());
 			articleDao.save(article);
 			for(ArticleContent articleContent : articleContents){
+				articleContent.setId(GenerateUtil.generateId());
 				articleContent.setArticleId(article.getId());
 				articleContent.setCreateAt(System.currentTimeMillis());
 				articleContent.setUpdateAt(System.currentTimeMillis());
 				articleContentDao.save(articleContent);
 			}
-			return true;
+			return article.getId();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			e.printStackTrace();
 		}
-		return false;
+		return "-1";
 	}
 
 	@Override
@@ -108,7 +118,10 @@ public class ArticleServiceImpl implements ArticleService{
 			
 			// 插入文章内容
 			for(ArticleContent articleContent : articleContents){
+				articleContent.setId(GenerateUtil.generateId());
 				articleContent.setArticleId(article.getId());
+				articleContent.setCreateAt(System.currentTimeMillis());
+				articleContent.setUpdateAt(System.currentTimeMillis());
 				articleContentDao.save(articleContent);
 			}
 			return true;

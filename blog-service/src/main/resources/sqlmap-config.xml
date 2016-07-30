@@ -8,10 +8,12 @@
 		<typeAlias alias="AboutUS" type="com.blog.core.entity.AboutUS"/>
 		<typeAlias alias="UserPasswordRecord" type="com.blog.core.entity.UserPasswordRecord"/>
 		<typeAlias alias="EmailAuthToken" type="com.blog.core.entity.EmailAuthToken"/>
+		<typeAlias alias="EmailSendHistory" type="com.blog.core.entity.EmailSendHistory"/>
 		<typeAlias alias="PUser" type="com.blog.core.entity.PUser"/>
 		<typeAlias alias="Article" type="com.blog.core.entity.Article"/>
 		<typeAlias alias="ArticleType" type="com.blog.core.entity.ArticleType"/>
 		<typeAlias alias="ArticleContent" type="com.blog.core.entity.ArticleContent"/>
 		<typeAlias alias="ArticleComment" type="com.blog.core.entity.ArticleComment"/>
+		<typeAlias alias="ArticleCommentReply" type="com.blog.core.entity.ArticleCommentReply"/>
 	</typeAliases>
 </configuration>

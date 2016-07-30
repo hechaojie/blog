@@ -8,9 +8,9 @@ public class ArticleContent implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	private String id;
 	
-	private Long articleId;
+	private String articleId;
 	
 	private String content;
 	
@@ -24,19 +24,19 @@ public class ArticleContent implements Serializable {
 
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Long getArticleId() {
+	public String getArticleId() {
 		return articleId;
 	}
 
-	public void setArticleId(Long articleId) {
+	public void setArticleId(String articleId) {
 		this.articleId = articleId;
 	}
 

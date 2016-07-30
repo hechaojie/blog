@@ -32,12 +32,12 @@ public class PUserServiceImpl implements PUserService {
 	}
 
 	@Override
-	public boolean updatePassword(long id, String password) {
+	public boolean updatePassword(String id, String password) {
 		return false;
 	}
 
 	@Override
-	public PUser findPUserById(long puserId) {
+	public PUser findPUserById(String id) {
 		return null;
 	}
 
