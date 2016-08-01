@@ -1,81 +1,101 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-  	<title>个人中心</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<#include "/common/include.html">
-</head>
-<body>
-	<#include "/common/header.html">
-	<@headerPage currentPage="user"/>
-	<div class="content">
-		
-		<div class="content-user-menu">
-			<div class="content-user-menu-header">
-				<a href="#">
-					<span>个人中心</span>
-				</a>
-			</div>
-			<ul class="content-user-menu-panel">
-				<li>
-					<a href="#">个人资料</a>
-				</li>
-			</ul>
-		</div>
-		
-		<div class="content-user-content">
-			<div class="content-user-content-panel">
-				<#if articleResult?? && (articleResult.data?size > 0)>
-	   	   	  	<#list articleResult.data as a>
-				<div class="content-user-content-panel-row">
-					<div class="row-title">
-						<a href="/article/detail/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">
-							<#if a.title?length gt 50>
-								${a.title?substring(0,50)}...
-							<#else>
-								${a.title!}
-							</#if>
+	<head>
+		<title>个人中心</title>
+		<#include "/common/_include.html">
+		<style>
+			.navbar{
+				margin-bottom: 0px;
+			}
+			.type-title{
+				float: left;
+			    font-size: 16px;
+			    color: #5c6371;
+			    line-height: 20px;
+			}
+			
+			.article-type{
+				min-height: 90px;
+			    border-radius: 6px;
+			}
+			.article-type ul{
+				list-style-type: none;
+				max-width:900px;
+			}
+			.article-type ul li{
+				float: left;
+			    margin: 0 15px;
+			    height: 35px;
+			}
+			
+			.article-type ul li.current a {
+			    color: #000000;
+			}
+			
+			.pagination li a{
+				margin: 5px;
+			}
+			
+			.list-group{
+				-webkit-box-shadow:none;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 头部引用 -->
+		<#include "/common/_header.html">
+		<@headerPage currentPage="user"/>
+		<!--内容开始-->
+		<div class="container bo-mt20">
+			<div class="list-group">
+			<#if (articleResult.data?size> 0)>
+				<#list articleResult.data as a>
+					<div class="list-group-item">
+						<a class="list-group-item-heading" href="/article/detail/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">
+							<h4>${(a.title)!}</h4>
 						</a>
+						<div class="list-group-item-text" style="padding: 10px 0 10px 0px;">
+							<span class="pull-right">
+								<span>
+									<#setting datetime_format="yyyy-MM-dd HH:mm:ss" />
+									<#if a.createAt ??>
+										发布于：${a.createAt?number_to_datetime}
+									</#if>
+								</span>
+								<a class="btn-link" href="/article/edit/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">编辑</a>
+							</span>
+						</div>
 					</div>
-					<div class="row-operator">
-						<a href="/article/edit/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">编辑</a>
-					</div>
-					<div class="row-publish">
-						<#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
-						<span>发布于：${a.createAt?number_to_datetime}  </span>
-					</div>
-				</div>
 				</#list>
-				<!-- 分页..-->
-	   	   	    <div class="category-pager">
-	   	   	  	  <ul id="paginate_id" pageNumber="${articleResult.pagination.currPage}" totalPage="${articleResult.pagination.countPage}" totalRow="${articleResult.pagination.countSize}" >
-	   	   	  	  </ul>
-	   	   	   </div>
-	   	   	   <#else>
-	   	   	  	  <div class="forum-none-data">暂无相关数据</div>
-	   	   	   </#if>
+				<nav class="text-center">
+			  <ul class="pagination" pageNumber="${(articleResult.pagination.currPage)!}" totalPage="${(articleResult.pagination.countPage)!}" totalRow="${(articleResult.pagination.countSize)!}" type="${type!}" search_content="${search_content!}">
+			  </ul>
+			</nav>
+			<#else>
+			<div class="text-center">
+				<span>暂无相关数据</span>
 			</div>
+			</#if>
+			</div>
+			<#include "/common/_footer.html">
 		</div>
-
-	</div>
-	<#include "/common/footer.html">
-	<script type="text/javascript" src="/js/common/bo-paginate.js?v=201601052"></script>
-	<script type="text/javascript">
-		$(function(){
-		    	var $paginate = $("#paginate_id");
-		    	$.paginate({
-	    			url : "/article/myarticle",
-	    			cssQuery : "#paginate_id",
-	    			pageNumber : Number($paginate.attr("pageNumber")),
-	    			totalRow : Number($paginate.attr("totalRow")),
-	    			totalPage : Number($paginate.attr("totalPage")),
-	    			offsetPage : 3,
-	    			pageNumberAlias : 'page',
-	    			params : $paginate.attr("params"),
-	    			currCss : 'color: #fff;background-color: #006dcc;'
-	    		});
-	    });
-	</script>
-</body>
+		<!--内容结束-->
+	   <script type="text/javascript" src="/js/common/bo-paginate.js?v=0.1"></script>
+	   <script type="text/javascript">
+			$(function(){
+			    	var $paginate = $(".pagination");
+			    	$.paginate({
+		    			url : "/article/myarticle",
+		    			cssQuery : ".pagination",
+		    			pageNumber : Number($paginate.attr("pageNumber")),
+		    			totalRow : Number($paginate.attr("totalRow")),
+		    			totalPage : Number($paginate.attr("totalPage")),
+		    			offsetPage : 3,
+		    			pageNumberAlias : 'page',
+		    			params : $paginate.attr("params"),
+		    			currCss : 'color: #fff;background-color: #006dcc;'
+		    		});
+		    });
+		</script>
+	</body>
 </html>

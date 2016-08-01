@@ -1,143 +1,154 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-  	<title>编辑</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<#include "/common/include.html">
-	<style>
-		#container{
-			margin-top:10px;
-		}
-	</style>
-	<style type="text/css">  
-    pre {  
-        white-space: pre-wrap;  
-        word-wrap: break-word;  
-    }  
-</style> 
-</head>
-<body>
-   <#include "/common/header.html">
-   <@headerPage currentPage=""/>
-   <div class="content">
-	   <div class="classify_wrap">
-	   	  <div class="classify_title">分类：</div>
-	   	  <ul>
-	   	  	<li><a href="/article">全部</a></li>
-	   	  	<#if articleTypeList ??>
-	   	  	<#list articleTypeList as at>
-	   	  		<#if type ?? && type ==at.id>
-	   	  			<li class="current"><a href="/article?type=${at.id!}">${at.name!}</a></li>
-	   	  		<#else>
-	   	  			<li><a href="/article?type=${at.id!}">${at.name!}</a></li>
-	   	  		</#if>
-	   	  	</#list>
-	   	  	</#if>
-	   	  </ul>
-           <div class="classfiy_r">
-          </div>
-	   </div>
-	   <div class="content_panel">
-	   	   <div class="content_panel_l">
-	   	       <div class="forum-editor-wrapper">
-	   	       		<#if error??>
-	   	       			<center><h3 style="color:red">${error!}</h3></center>
-	   	       		</#if>
-                   <h3 class="forum-editor-heading">
-                        	编辑
-                    </h3>
-                    <form id="subForm" action="/article/editActicle?id=${(article.id)!}" method="post">
-                    	<input type="hidden" name="AUTH_TOKEN_PUBLISH" value="${AUTH_TOKEN_PUBLISH!}"/>
-	                    <div class="editor-wrap">
-	                        <div class="form-group">    
-	                             <input type="text"  name="title" class="ng-invalid-required" value="${(article.title)!}" placeholder="请输入标题">
+	<head>
+		<title>编辑</title>
+		<#include "/common/_include.html">
+		<style>
+			.navbar{
+				margin-bottom: 0px;
+			}
+			.type-title{
+				float: left;
+			    font-size: 16px;
+			    color: #5c6371;
+			    line-height: 20px;
+			}
+			
+			.article-type{
+				min-height: 90px;
+			    border-radius: 6px;
+			}
+			.article-type ul{
+				list-style-type: none;
+				max-width:900px;
+			}
+			.article-type ul li{
+				float: left;
+			    margin: 0 15px;
+			    height: 35px;
+			}
+			
+			.article-type ul li.current a {
+			    color: #000000;
+			}
+			
+			.pagination li a{
+				margin: 5px;
+			}
+			
+			.edui-editor-toolbarboxinner{
+				text-align: left;
+			}
+			
+			.list-group-item{
+				border-left: none;
+				border-right: none;
+			}
+			
+			.list-group{
+				-webkit-box-shadow:none;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 头部引用 -->
+		<#include "/common/_header.html">
+		<@headerPage currentPage="index"/>
+		<!--内容开始-->
+		<div class="container">
+			<div class="panel panel-default">
+			  <div class="panel-body article-type">
+			  	<#include "/common/_type.html">
+			  </div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+						<#if error??><div class="alert alert-danger" role="alert">${error!}</div></#if>
+						<form action="/article/editActicle?id=${(article.id)!}" class="text-center" method="post">
+							<input type="hidden" name="AUTH_TOKEN_PUBLISH" value="${AUTH_TOKEN_PUBLISH!}"/>
+							<div class="form-group">    
+	                             <input type="text" class="form-control"  name="title" value="${(article.title)!}" placeholder="请输入标题">
 	                        </div>
-	                    </div>
-	                    <div class="form-group">
-	                        <select name="type"  class="ng-valid-required-se">
-	                            <#if articleTypeList ??>
-		   	  					<#list articleTypeList as at>
-	                            <option value="${at.id!}">${at.name!}</option>
-	                            </#list>
-		   	  					</#if>
-	                        </select>
-	                    </div>
-                   	<!-- 加载编辑器的容器 -->
-			    	<script id="container" name="content" type="text/plain">
-							${(articleContent.content)!}
-    				</script>
-			    <!-- 配置文件 -->
-			    <script type="text/javascript" src="/js/ueditor/ueditor.config.js"></script>
-			    <!-- 编辑器源码文件 -->
-			    <script type="text/javascript" src="/js/ueditor/ueditor.all.min.js"></script>
-			    <!-- 实例化编辑器 -->
-			    <script type="text/javascript">
-			        var ue = UE.getEditor('container',{
-			        	initialFrameHeight:300,
-			        	initialFrameWidth:720,
-			        	wordCount:false,
-			        	elementPathEnabled:false,
-			        	autoClearEmptyNode:true,
-			        	toolbars: [
-			        	           [
-									   'source', //源代码
-									   'insertcode', //代码语言
-									   'indent', //首行缩进
-			        	               'bold', //加粗
-			        	               'italic', //斜体
-			        	               'forecolor', //字体颜色
-			        	               'backcolor', //背景色
-			        	               'underline', //下划线
-			        	               'strikethrough', //删除线
-			        	               'horizontal', //分隔线
-			        	               'link', //超链接
-			        	               'simpleupload', //单图上传
-			        	               'fontfamily', //字体
-			        	               'fontsize', //字号
-			        	               'paragraph', //段落格式
-			        	               'fullscreen'//全屏
-			        	           ],
-			        	           [
-										'justifyleft', //居左对齐
-										'justifyright', //居右对齐
-										'justifycenter', //居中对齐
-										'justifyjustify', //两端对齐
-										'insertorderedlist', //有序列表
-										'insertunorderedlist',//无序列表
-										'template', //模板
-										'inserttable', //插入表格
-										'autotypeset'//自动排版
-			        	            ]
-			        	       ]
-			        });
-			    </script>   
-			    
-			    	<div class="bo-mt10">
-                    	<select name="permission" class="ng-valid-required-se">
-                    		<#if article.permission == 0>
-                            <option value="0" selected>公开</option>
-                            <#else>
-                            <option value="0">公开</option>
-                            </#if>
-                            <#if article.permission == 1>
-                           <option value="1" selected>仅自己可见</option>
-                            <#else>
-                            <option value="1">仅自己可见</option>
-                            </#if>
-                        </select>
-                    </div>
-                   </form>
-                    <div class="sub_p">
-                        <button class="btn_submit" onclick="$('#subForm').submit();">提交</button>
-                    </div>
-               </div>
-		
-	   	   </div>
-	       <#include "/common/right.html">
-	   </div>
-	  </div>
-   </div>
-   <#include "/common/footer.html">
-</body>
+	                        <div class="form-group">  
+	                        		<select name="type"  class="form-control">
+		                            <#if articleTypeList ??>
+			   	  					<#list articleTypeList as at>
+			   	  						<#if at.id = article.type>
+		                            			<option value="${at.id!}" selected="selected">${(at.name)!}</option>
+		                            		<#else>
+		                            			<option value="${at.id!}">${(at.name)!}</option>
+		                            		</#if>
+		                            </#list>
+			   	  					</#if>
+		                        </select>
+	                        	</div>
+							<!-- 加载编辑器的容器 -->
+							<script id="container" name="content" style="text-align: -webkit-center;max-width: 720px;width: 100%;margin: 0 auto" type="text/plain">
+								${(articleContent.content)!}
+							</script>
+							<!-- 配置文件 -->
+							<script type="text/javascript" src="/js/ueditor/ueditor.config.js"></script>
+							<!-- 编辑器源码文件 -->
+							<script type="text/javascript" src="/js/ueditor/ueditor.all.min.js"></script>
+										 <!-- 实例化编辑器 -->
+						    <script type="text/javascript">
+						        var ue = UE.getEditor('container',{
+						        	initialFrameHeight:300,
+						        	wordCount:false,
+						        	elementPathEnabled:false,
+						        	autoClearEmptyNode:true,
+						        	toolbars: [
+						        	           [
+												   'source', //源代码
+												   'insertcode', //代码语言
+												   'indent', //首行缩进
+						        	               'bold', //加粗
+						        	               'italic', //斜体
+						        	               'forecolor', //字体颜色
+						        	               'backcolor', //背景色
+						        	               'underline', //下划线
+						        	               'strikethrough', //删除线
+						        	               'horizontal', //分隔线
+						        	               'link', //超链接
+						        	               'simpleupload', //单图上传
+						        	               'fontfamily', //字体
+						        	               'fontsize', //字号
+						        	               'paragraph', //段落格式
+						        	               'fullscreen'//全屏
+						        	           ],
+						        	           [
+													'justifyleft', //居左对齐
+													'justifyright', //居右对齐
+													'justifycenter', //居中对齐
+													'justifyjustify', //两端对齐
+													'insertorderedlist', //有序列表
+													'insertunorderedlist',//无序列表
+													'template', //模板
+													'inserttable', //插入表格
+													'autotypeset'//自动排版
+						        	            ]
+						        	       ]
+						        });
+						    </script>  
+							<div class="form-group" style="margin-top: 10px;">
+	                        			<select name="permission" class="form-control">
+			                    		<#if article.permission == 0>
+			                            <option value="0" selected>公开</option>
+			                            <#else>
+			                            <option value="0">公开</option>
+			                            </#if>
+			                            <#if article.permission == 1>
+			                           <option value="1" selected>仅自己可见</option>
+			                            <#else>
+			                            <option value="1">仅自己可见</option>
+			                            </#if>
+			                        </select>
+							</div>
+							<button class="btn btn-default" onclick="$('form').submit();">提交</button>
+							</div>
+						</form>
+			</div>
+			<#include "/common/_footer.html">
+		</div>
+	</body>
 </html>

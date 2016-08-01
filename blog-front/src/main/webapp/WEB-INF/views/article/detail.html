@@ -1,204 +1,185 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-  	<title>${article.title!}</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<#include "/common/include.html">
-	<link rel="stylesheet" type="text/css" href="/js/ueditor/third-party/prettify/prettify.css">
-	<script type="text/javascript" src="/js/ueditor/third-party/prettify/prettify.js"></script>
-	<style type="text/css">
-		.category-pager ul>li>a {
-    		padding: 3px 10px;
-    		border: 0px;
-    		color: #337ab7;
-    	}
-    	
-	</style>
-</head>
-<body>
-	<div style='margin:0 auto;display:none;'>
-   	  <img src="/images/logo_300.png"/>
-   </div>
-   <#include "/common/header.html">
-   <@headerPage currentPage=""/>
-   <div class="content">
-	   <div class="classify_wrap">
-	   	  <div class="classify_title">分类:</div>
-	   	  <ul>
-	   	  	<#if type ??>
-	   	  		<li><a href="/article">全部</a></li>
-	   	  	<#else>
-	   	  		<li class="current"><a href="/article">全部</a></li>
-	   	  	</#if>
-	   	  	<#if articleTypeList ??>
-	   	  	<#list articleTypeList as at>
-	   	  		<#if type ?? && at.id ==type>
-	   	  			<li class="current"><a href="/article?type=${at.id!}">${(at.name)!}</a></li>
-	   	  		<#else>
-	   	  			<li><a href="/article?type=${at.id!}">${(at.name)!}</a></li>
-	   	  		</#if>
-	   	  	</#list>
-	   	  	</#if>
-	   	  </ul>
-           <div class="classfiy_r">
-            <a href="/article/publish">我要发帖</a>
-          </div>
-	   </div>
-	   <div class="content_panel">
-	   	   <div class="content_panel_l">
-	   	       <div class="article">
-	   	       		<h3 class="article-title">
-	   	       			<input type="hidden" name="article_id" value="${article.id!}"/>
-                        <a href="javascipt:;">${article.title!}</a>
-                	 </h3>
-   					<p class="small_tit small_dek">
-   						类型：
-   						<#if articleTypeList ??>
-					   	  <#list articleTypeList as at >
-					   	  	<#if at.id==article.type>
-					   	  		${(at.name)!}
-					   	  	</#if>
-					   	  </#list>
-					   	</#if>
-   						&nbsp;|&nbsp;
-   						作者：${(author.nickname)!}&nbsp;|&nbsp;
-   						<#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
-						<#if article.createAt ??>
-							时间：${article.createAt?number_to_datetime}
-						</#if>
-   					&nbsp;| &nbsp;${(commentResult.pagination.countSize)!}条评论</p>
-	   	       </div>
-			   <div class="article-summary">
-					<#list articleContentList as ac> 
-						<div class="article-content bo-word-break">
-							${(ac.content)!}
-						</div>
-					</#list>
-				</div>
-			   
-			    <!-- 评论 -->
-			   <div class="forum-content">
-			   	   <div class="forum-comments-wrapper">
-			   	   	
-			   	   		<div class="forum-comments-heading">
-			           		 <h3>评论</h3>
-		        		</div>
-		        		<div class="forum-comments">
-		        			<!-- 一条评论stat！ -->
-		        			<#if (commentResult.data?size > 0)>
-		        			<#list commentResult.data as ac >
-		        			<div class="wt-row comment-item">
-		        				<a href="javascript:;" class="comment-author" style="display: inline-block;height: 50px;">
-		        					<span class="avatar-face bo-pull-left">
-		        						<img class="bo-image-radius" style="width: 48px;height: 48px;" src="" alt="" onerror="this.src='/images/noimg.png'"/>
-		        					</span>
-		        					<span class="avatar-name bo-ml10"  style="display: inline-block;height: 50px;line-height: 20px">${(ac.email)!}</span>
-		        				</a>
-		        				<span class="top-right-corner">
-		                                    <span class="hover-hide">
-		                                        <span ng-bind="1440409509773|fromNow" class="comment-time ng-binding">
-		                                        		<#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
-														<#if ac.createAt ??>
-															${ac.createAt?number_to_datetime}
-														</#if>
-		                                        </span>
-		                                    </span>
-		                                    
-		                                    <span class="hover-show">
-		                                        <span class="comment-reply-link"><a href="javascript:;" >回复</a></span>
-		                                        
-		                                    </span>
-		                                    
-		                                    <span class="forum-badge floor-label" id="commentf1">#${(commentResult.pagination.startCursor+ac_index+1)!}</span>
-		                        </span>
-		                        <div class="comment-content bo-word-break">
-		        					${(ac.content)!}
-		        				</div>
-		        			</div>
-		        			</#list>
-		        			<#else>
-		        			<div class="forum-none-comments">暂无评论</div>
-		        			</#if>
-		        			<!-- 一条评论end！ -->
-		        			<!-- 分页..-->
-				   	   	  <div class="category-pager">
-				   	   	  	  <ul id="paginate_id" pageNumber="${(commentResult.pagination.currPage)!}" totalPage="${(commentResult.pagination.countPage)!}" totalRow="${(commentResult.pagination.countSize)!}" >
-				   	   	  	  </ul>
-				   	   	  </div>
-				   	   	  <script type="text/javascript" src="/js/common/bo-paginate.js?v=0.1"></script>
-						   <script type="text/javascript">
-								$(function(){
-								    	var $paginate = $("#paginate_id");
-								    	$.paginate({
-							    			url : "/article/detail/${article.id?substring(0,4)}/${article.id?substring(4,6)}/${article.id?substring(6,8)}/${article.id?substring(8)}",
-							    			cssQuery : "#paginate_id",
-							    			pageNumber : Number($paginate.attr("pageNumber")),
-							    			totalRow : Number($paginate.attr("totalRow")),
-							    			totalPage : Number($paginate.attr("totalPage")),
-							    			offsetPage : 3,
-							    			pageNumberAlias : 'page',
-							    			currCss : 'color: #fff;background-color: #006dcc;'
-							    		});
-							    });
-						</script>
-		        		</div>
-			   	   </div>
-			   </div>
-			   <!-- 回复 begin-->
-					<div>
-						<div class="forum-newcomment-wrapper" style="padding-left: 40px;">
-							<div class="forum-newcomment-heading">
-					            <h3>
-					                评论
-					            </h3>
-					        </div>
-					        <form action="/article/comment/add?articleId=${article.id!}" method="post">
-					        	<!--
-						        <div>
-						        	<textarea class="comment-editor" name="content" rows=10 cols="96" placeholder="最多输入200个字符" onKeyDown='if(this.value.length>=200){event.returnValue=false}'></textarea>
-						        </div>
-						        -->
-						        <!-- 加载编辑器的容器 -->
-							    <script id="container" name="content" type="text/plain">
-    							</script>
-							    <!-- 配置文件 -->
-							    <script type="text/javascript" src="/js/ueditor/ueditor.config.js"></script>
-							    <!-- 编辑器源码文件 -->
-							    <script type="text/javascript" src="/js/ueditor/ueditor.all.min.js"></script>
-							    <!-- 实例化编辑器 -->
-							    <script type="text/javascript">
-							        var ue = UE.getEditor('container',{
-							        	initialFrameHeight:200,
-							        	initialFrameWidth:620,
-							        	wordCount:false,
-							        	elementPathEnabled:false,
-							        	autoClearEmptyNode:true,
-							        	toolbars: [
-							        	           [
-													   'insertcode', //代码语言
-							        	               'link', //超链接
-							        	               'simpleupload', //单图上传
-							        	           ]
-							        	       ]
-							        });
-							    </script>   
-						        <p class="sub_p"><button class="btn_submit" onclick="$('form').submit();">发表评论</button></p>
-					        </form>
-						</div>
+	<head>
+		<title>${(article.title)!}</title>
+		<#include "/common/_include.html">
+		<link rel="stylesheet" type="text/css" href="/js/ueditor/third-party/prettify/prettify.css">
+		<script type="text/javascript" src="/js/ueditor/third-party/prettify/prettify.js"></script>
+		<style>
+			.navbar{
+				margin-bottom: 0px;
+			}
+			.type-title{
+				float: left;
+			    font-size: 16px;
+			    color: #5c6371;
+			    line-height: 20px;
+			}
+			
+			.article-type{
+				min-height: 90px;
+			    border-radius: 6px;
+			}
+			.article-type ul{
+				list-style-type: none;
+				max-width:900px;
+			}
+			.article-type ul li{
+				float: left;
+			    margin: 0 15px;
+			    height: 35px;
+			}
+			
+			.article-type ul li.current a {
+			    color: #000000;
+			}
+			
+			.pagination li a{
+				margin: 5px;
+			}
+			
+			.edui-editor-toolbarboxinner{
+				text-align: left;
+			}
+			
+			.list-group-item{
+				border-left: none;
+				border-right: none;
+			}
+			
+			.list-group{
+				-webkit-box-shadow:none;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 头部引用 -->
+		<#include "/common/_header.html">
+		<@headerPage currentPage="index"/>
+		<!--内容开始-->
+		<div class="container">
+			<div class="panel panel-default">
+			  <div class="panel-body article-type">
+			  	<#include "/common/_type.html">
+			  </div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="text-center h4">
+						${article.title!}					
 					</div>
-			    <!-- 回复 end -->
-	   	   </div>
-	   	   <#include "/common/right.html">
-           </div>
-	   </div>
-   </div>
-   <#include "/common/footer.html">
-   <script>
-	   $(document).ready(function() {
-			$("pre").addClass("prettyprint linenums");
-			prettyPrint();
-		});
-	</script>
-</body>
+					<hr class="bo-line" />
+					<div class="text-center">
+						<span>
+							类型：
+	   						<#if articleTypeList ??>
+						   	  <#list articleTypeList as at >
+						   	  	<#if at.id==article.type>
+						   	  		${(at.name)!}
+						   	  	</#if>
+						   	  </#list>
+						   	</#if>
+						</span>
+						<span>作者：${(author.nickname)!}</span>
+						<span>
+							<#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
+							<#if article.createAt ??>
+								时间：${article.createAt?number_to_datetime}
+							</#if>
+						</span>
+						<span>
+							${(commentResult.pagination.countSize)!}条评论
+						</span>
+					</div>
+					<#list articleContentList as ac> 
+					<div class="article-content bo-word-break bo-pt20">
+						${(ac.content)!}
+					</div>
+					</#list>
+					<div class="bo-divh38">
+						<span class="h5 pull-left">评论</span>					
+					</div>
+					<div class="list-group">
+						<#if (commentResult.data?size > 0)>
+		        			<#list commentResult.data as ac >
+						<div class="list-group-item">
+							<div class="list-group-item-heading">
+								<img style="width: 48px" src="" alt="" onerror="this.src='/images/noimg.png'"/>
+								<span>${(ac.email)!}</span>
+								<span class="pull-right">
+								<#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
+									<#if ac.createAt ??>${ac.createAt?number_to_datetime}</#if>
+									#${(commentResult.pagination.startCursor+ac_index+1)!}
+								</span>
+							</div>	
+							<div class="list-group-item-text">
+								<span class="bo-comment-text">
+									${(ac.content)!}
+								</span>
+							</div>
+						</div>
+						</#list>
+						</#if>
+					</div>
+					 <nav class="text-center">
+			  			<ul class="pagination" pageNumber="${(commentResult.pagination.currPage)!}" totalPage="${(commentResult.pagination.countPage)!}" totalRow="${(commentResult.pagination.countSize)!}">
+						  </ul>
+						</nav>
+						<form action="/article/comment/add?articleId=${article.id!}" class="text-center" method="post">
+							<!-- 加载编辑器的容器 -->
+							<script id="container" name="content" style="text-align: -webkit-center;max-width: 620px;width: 100%;margin: 0 auto" type="text/plain">
+							</script>
+							<!-- 配置文件 -->
+							<script type="text/javascript" src="/js/ueditor/ueditor.config.js"></script>
+							<!-- 编辑器源码文件 -->
+							<script type="text/javascript" src="/js/ueditor/ueditor.all.min.js"></script>
+							<!-- 实例化编辑器 -->
+							<script type="text/javascript">
+								var ue = UE.getEditor('container', {
+									initialFrameHeight: 200,
+									//initialFrameWidth: 620,
+									wordCount: false,
+									elementPathEnabled: false,
+									autoClearEmptyNode: true,
+									toolbars: [
+										[
+											'insertcode', //代码语言
+											'link', //超链接
+											'simpleupload', //单图上传
+										]
+									]
+								});
+							</script>
+							<div class="bo-divh58 bo-lineh58">
+								<a class="btn btn-default" onclick="$('form').submit();">发表评论</a>
+							</div>
+						</form>
+				</div>
+			</div>
+			<#include "/common/_footer.html">
+		</div>
+		<!--内容结束-->
+	   <script type="text/javascript" src="/js/common/bo-paginate.js?v=0.1"></script>
+	   <script type="text/javascript">
+			$(function(){
+			    	var $paginate = $(".pagination");
+			    	$.paginate({
+		    			url : "/article/detail/${article.id?substring(0,4)}/${article.id?substring(4,6)}/${article.id?substring(6,8)}/${article.id?substring(8)}",
+					cssQuery : ".pagination",
+		    			pageNumber : Number($paginate.attr("pageNumber")),
+		    			totalRow : Number($paginate.attr("totalRow")),
+		    			totalPage : Number($paginate.attr("totalPage")),
+		    			offsetPage : 3,
+		    			pageNumberAlias : 'page',
+		    			currCss : 'color: #fff;background-color: #006dcc;'
+		    		});
+		    });
+		</script>
+		<script>
+		   $(document).ready(function() {
+				$("pre").addClass("prettyprint linenums");
+				prettyPrint();
+			});
+		</script>
+	</body>
 </html>

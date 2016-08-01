@@ -1,121 +1,108 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-  	<title>何超杰的博客  技术、分享、价值</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="title" content="何超杰的博客-技术、分享、价值" />
-	<meta name="keywords" content="何超杰的博客-技术、分享、价值" />
-	<meta name="description" content="何超杰的博客-技术、分享、价值" />
-	<#include "/common/include.html">
-</head>
-<body>
-   <div style='margin:0 auto;display:none;'>
-   	  <img src="/images/logo_300.png"/>
-   </div>
-   <#include "/common/header.html">
-   <@headerPage currentPage="index"/>
-   <div class="content">
-	   <div class="classify_wrap ">
-	   	  <div class="classify_title">分类：</div>
-	   	  <ul>
-	   	  	<#if type ??>
-	   	  		<li><a href="/article">全部</a></li>
-	   	  	<#else>
-	   	  		<li class="current"><a href="/article">全部</a></li>
-	   	  	</#if>
-	   	  	<#if articleTypeList ??>
-	   	  	<#list articleTypeList as at>
-	   	  		<#if type ?? &&at.id ==type>
-	   	  			<li class="current"><a href="/article?type=${at.id!}">${at.name!}</a></li>
-	   	  		<#else>
-	   	  			<li><a href="/article?type=${at.id!}">${at.name!}</a></li>
-	   	  		</#if>
-	   	  	</#list>
-	   	  	</#if>
-	   	  </ul>
-	   	  <div class="classfiy_r">
-	   	  	<a href="/article/publish">我要发帖</a>
-	   	  </div>
-	   </div>
-	   <div class="content_panel">
-	   	   <div class="content_panel_l">
-	   	   	  <#if (articleResult.data?size > 0)>
-	   	   	  <#list articleResult.data as a>
-	   	   	  <div class="thread-item">
-		   	   	  	<div class="thread-title">
-		   	   	  		<h4>
-		   	   	  			<a href="/article/detail/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">
-		   	   	  				<#if a.title?? && a.title?length gt 55>
-									${a.title?substring(0,55)}...
+	<head>
+		<title>何超杰的博客  技术、分享、价值</title>
+		<#include "/common/_include.html">
+		<style>
+			.navbar{
+				margin-bottom: 0px;
+			}
+			.type-title{
+				float: left;
+			    font-size: 16px;
+			    color: #5c6371;
+			    line-height: 20px;
+			}
+			
+			.article-type{
+				min-height: 90px;
+			    border-radius: 6px;
+			}
+			.article-type ul{
+				list-style-type: none;
+				max-width:900px;
+			}
+			.article-type ul li{
+				float: left;
+			    margin: 0 15px;
+			    height: 35px;
+			}
+			
+			.article-type ul li.current a {
+			    color: #000000;
+			}
+			
+			.pagination li a{
+				margin: 5px;
+			}
+			
+			.list-group{
+				-webkit-box-shadow:none;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 头部引用 -->
+		<#include "/common/_header.html">
+		<@headerPage currentPage="index"/>
+		<!--内容开始-->
+		<div class="container">
+			<div class="panel panel-default">
+			  <div class="panel-body article-type">
+			  	<#include "/common/_type.html">
+			  </div>
+			</div>
+			<div class="list-group">
+			<#if (articleResult.data?size> 0)>
+				<#list articleResult.data as a>
+					<div class="list-group-item">
+						<a class="list-group-item-heading" href="/article/detail/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">
+							<h4>${(a.title)!}</h4>
+						</a>
+						<div class="list-group-item-text" style="padding: 20px 0 20px 0px;">
+							<#if a.email ??>
+								${a.email!}
 								<#else>
-									${(a.title)!}
-								</#if>
-		   	   	  			</a>
-		   	   	  		</h4>
-		   	   	  	</div>
-		   	   	  	<div class="thread-counts">
-		   	   	  		
-		   	   	  		<#if a.recommend ?? && a.recommend == 1>
-		   	   	  		<span class="thread-article-recommend">推荐</span>
-		   	   	  		<#elseif a.recommend ?? && a.recommend == 2>
-		   	   	  		<span class="thread-article-recommend">置顶</span>
-		   	   	  		</#if>
-		   	   	  		<span class="thread-total-comment">${a.commentCount!}</span>
-		   	   	  	</div>
-	   	   	  		<p class="small_tit">
-	   	   	  			<#if a.nickname ?? >
-	   	   	  				${a.nickname!}
-	   	   	  			<#else>
-	   	   	  				匿名
-	   	   	  			</#if>
-	   	   	  			&nbsp;|&nbsp;
-	   	   	  			<#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
-						<#if a.createAt ??>
-							发布于：${a.createAt?number_to_datetime}
-						</#if>
-	   	   	  			&nbsp;| &nbsp;
-	   	   	  			${a.commentCount!}条评论
-	   	   	  		</p>
-	   	   	  </div>
-	   	   	  </#list>
-	   	   	  <!-- 分页..-->
-	   	   	  <div class="category-pager">
-	   	   	  	  <ul id="paginate_id" pageNumber="${articleResult.pagination.currPage}" totalPage="${articleResult.pagination.countPage}" totalRow="${articleResult.pagination.countSize}" type="${type!}" search_content="${search_content!}">
-	   	   	  	  	<!--
-	   	   	  	  	<li><a href="javascript:;">上一页</a></li>
-	   	   	  	  	<li class="cur"><a href="javascript:;">1</a></li>
-	   	   	  	  	<li><a href="javascript:;">2</a></li>
-	   	   	  	  	<li><a href="javascript:;">3</a></li>
-	   	   	  	  	<li><a href="javascript:;">下一页</a></li>
-	   	   	  	  	-->
-	   	   	  	  </ul>
-	   	   	  </div>
-	   	   	  <#else>
-	   	   	  	<div class="forum-none-data">暂无相关数据</div>
-	   	   	  </#if>
-	   	   </div>
-	   	   <#include "/common/right.html">
-	   </div>
-   	</div>
-   </div>
-   <#include "/common/footer.html">
-   <script type="text/javascript" src="/js/common/bo-paginate.js?v=0.1"></script>
-   <script type="text/javascript">
-		$(function(){
-		    	var $paginate = $("#paginate_id");
-		    	$.paginate({
-	    			url : "/article",
-	    			cssQuery : "#paginate_id",
-	    			pageNumber : Number($paginate.attr("pageNumber")),
-	    			totalRow : Number($paginate.attr("totalRow")),
-	    			totalPage : Number($paginate.attr("totalPage")),
-	    			offsetPage : 3,
-	    			pageNumberAlias : 'page',
-	    			params : $paginate.attr("params"),
-	    			currCss : 'color: #fff;background-color: #006dcc;'
-	    		});
-	    });
-	</script>
-</body>
+									匿名
+							</#if>
+							&nbsp;|&nbsp;
+							<#setting datetime_format="yyyy-MM-dd HH:mm:ss" />
+							<#if a.createAt ??>
+								发布于：${a.createAt?number_to_datetime}
+							</#if>
+							&nbsp;| &nbsp; ${a.commentCount!}条评论
+						</div>
+					</div>
+				</#list>
+				<nav class="text-center">
+			  <ul class="pagination" pageNumber="${(articleResult.pagination.currPage)!}" totalPage="${(articleResult.pagination.countPage)!}" totalRow="${(articleResult.pagination.countSize)!}" type="${type!}" search_content="${search_content!}">
+			  </ul>
+			</nav>
+			<#else>
+			<div class="text-center">
+				<span>暂无相关数据</span>
+			</div>
+			</#if>
+			</div>
+			<#include "/common/_footer.html">
+		</div>
+		<!--内容结束-->
+	   <script type="text/javascript" src="/js/common/bo-paginate.js?v=0.1"></script>
+	   <script type="text/javascript">
+			$(function(){
+			    	var $paginate = $(".pagination");
+			    	$.paginate({
+		    			url : "/article",
+		    			cssQuery : ".pagination",
+		    			pageNumber : Number($paginate.attr("pageNumber")),
+		    			totalRow : Number($paginate.attr("totalRow")),
+		    			totalPage : Number($paginate.attr("totalPage")),
+		    			offsetPage : 3,
+		    			pageNumberAlias : 'page',
+		    			params : $paginate.attr("params"),
+		    			currCss : 'color: #fff;background-color: #006dcc;'
+		    		});
+		    });
+		</script>
+	</body>
 </html>

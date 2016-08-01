@@ -62,7 +62,6 @@ public class ArticleController extends BaseController{
 		if(page == null){
 			page = 1l;
 		}
-		sq = StringEscapeUtils.escapeHtml(sq);
 		// 查询文章类型
 		Pagination articleTypePagination = new Pagination();
 		articleTypePagination.setPageSize(100);

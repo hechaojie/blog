@@ -1,0 +1,18 @@
+<div class="type-title">分类：</div>
+<ul>
+	<#if type ??>
+		<li><a href="/article">全部</a></li>
+		<#else>
+			<li class="current"><a href="/article">全部</a></li>
+	</#if>
+	<#if articleTypeList ??>
+		<#list articleTypeList as at>
+			<#if type ?? &&at.id==type>
+				<li class="current"><a href="/article?type=${at.id!}">${at.name!}</a></li>
+				<#else>
+					<li><a href="/article?type=${at.id!}">${at.name!}</a></li>
+			</#if>
+		</#list>
+	</#if>
+</ul>
+<a class="btn btn-default pull-right" href="/article/publish">我要发帖</a>

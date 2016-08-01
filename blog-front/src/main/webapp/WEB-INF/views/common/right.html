@@ -3,11 +3,11 @@
                     <!-- 搜索框。。 -->
                       <div class="sidebar-widget">
                         <h4>搜索</h4>
-                        <form class="ng-pristine ng-valid">
+                        <form class="sq ng-pristine ng-valid" action="/article" method="get">
                             <div class="input-group">
-                                <input  type="text" class="form-control" placeholder="搜索您的问题...">
+                                <input  type="text" name="sq" class="form-control" placeholder="搜索您的问题...">
                                 <span class="input-group-btn">
-                                    <button type="submit">搜 索</button>
+                                    <button type="submit" onclick="$('.sq').submit();">搜 索</button>
                                 </span>
                             </div>
                         </form>

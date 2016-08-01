@@ -2,42 +2,41 @@
 <html lang="zh-CN">
 	<head>
 		<title>登录</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<#include "/common/include.html">
+		<#include "/common/_include.html">
 	</head>
 	<body>
-		<div class="bo-container">
-			<!-- 头部引用 -->
-			<#include "/common/header.html">
-				<@headerPage currentPage="" />
-				<!-- 内容开始-->
-				<div class="bo-panel bo-radius bo-mt20">
-					<div class="bo-panel bo-center" style="width: 50%;">
-						<div class="bo-text-center bo-size24" style="height: 52px;line-height: 52px;">
-							<h3>用户登录</h3>
+		<!-- 头部引用 -->
+		<#include "/common/_header.html">
+		<@headerPage currentPage="index"/>
+		<!--内容开始-->
+		<div class="container">
+			<div class="panel panel-default bo-form">
+				<div class="panel-heading text-center">
+					<h3 class="panel-title">用户登录</h3>
+				</div>
+				<div class="panel-body">
+					<#if __message??><div class="alert alert-danger" role="alert">${__message!}</div></#if>
+					<form action="/dologin" method="post">
+						<input type="hidden" name="bk" value="${bk!}" />
+						<div class="input-group input-group-lg bo-mtb20">
+							<span class="input-group-addon">用户</span>
+							<input type="text" name="email" class="form-control" placeholder="请输入用户名" aria-describedby="basic-addon1">
 						</div>
-						<form action="/dologin" method="post">
-							<div class="mh_bn">
-								<div class="bo-text-center bo-error-message">
-									${__message!}
-								</div>
-								<input type="hidden" name="bk" value="${bk!}" />
-								<div class="bo-text-center">
-									<input type="text" class="bo-input" name="email" placeholder="请输入用户名" />
-								</div>
-								<div class="bo-text-center">
-									<input type="password" class="bo-input" name="password" placeholder="请输入密码" />
-								</div>
-								<div class="bo-text-center succ_bn btn_lg" onclick="$('form').submit();">登录</div>
-								<p class="forget_password"><a href="/forgetone">忘记密码？</a></p>
-							</div>
-						</form>
+						<div class="input-group input-group-lg bo-mtb20">
+							<span class="input-group-addon" id="basic-addon1">密码</span>
+							<input type="password" name="password" class="form-control" placeholder="请输入密码" aria-describedby="basic-addon1">
+						</div>
+						<div class="input-group bo-mtb20 text-center" style="width: 100%;" role="group" aria-label="...">
+							<button type="button" class="btn btn-default" onclick="$('form').submit();">登录</button>
+						</div>
+					</form>
+					<div>
+						<span class="pull-right"><a href="/forgetone">忘记密码</a></span>
 					</div>
 				</div>
-				<!-- 内容结束-->
-				<#include "/common/footer.html">
+			</div>
+			<#include "/common/_footer.html">
 		</div>
+		<!--内容结束-->
 	</body>
-
 </html>
