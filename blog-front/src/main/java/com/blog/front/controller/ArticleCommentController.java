@@ -49,13 +49,13 @@ public class ArticleCommentController extends BaseController {
 		User user = UserUtil.getUser(request.getSession());
 		if(user == null){
 			setMessage(request, -1, "您还没有登录，登录后再来评论吧");
-			return "common/message";
+			return "common/_message";
 		}
 		String userId = user.getId();
 		try {
 			if (articleService.findArticleById(articleId) == null) {
 				setMessage(request, -1, "您要评论的文章丢失了，请核实后提交");
-				return "common/message";
+				return "common/_message";
 			}
 			ArticleComment ac = new ArticleComment();
 			ac.setArticleId(articleId);
@@ -69,7 +69,7 @@ public class ArticleCommentController extends BaseController {
 			log.error(" add article comment userId : " + userId);
 			e.printStackTrace();
 			setMessage(request, -1, "发布评论超时，请稍后再试");
-			return "common/message";
+			return "common/_message";
 		}
 	}
 

@@ -195,13 +195,13 @@ public class IndexController extends BaseController{
 			emailService.sendEmail("注册激活邮件", "email_user_reg_auth_token", emailVars);
 			
 			setMessage(request,200,"发送注册邮件成功，快去邮箱（"+email+"）设置密码吧");
-			return "common/message";
+			return "common/_message";
 			
 		} catch (Exception e) {
 			log.error("发送注册邮件异常email："+email);
 			e.printStackTrace();
 			setMessage(request,-100000,"网络超时，请稍后再试");
-			return "common/message";
+			return "common/_message";
 		}
 	}
 	
@@ -255,30 +255,30 @@ public class IndexController extends BaseController{
 			EmailAuthToken emailAuthToken = emailService.findByToken(token);
 			if(emailAuthToken == null){
 				setMessage(request,-1,"您的认证已经过期，或重复提交，请核对后重试");
-				return "common/message";
+				return "common/_message";
 			}
 			
 			// 1.验证token状态
 			if(emailAuthToken.getIsVerify() == 1){
 				setMessage(request,-1,"您的认证已经过期，或重复提交，请核对后重试");
-				return "common/message";
+				return "common/_message";
 			}
 			
 			// 2.验证token有效期
 			Long validAt = emailAuthToken.getValidAt();
 			if (System.currentTimeMillis() > validAt.longValue()) {
 				setMessage(request,-1,"您的认证已经过期，或重复提交，请核对后重试");
-				return "common/message";
+				return "common/_message";
 			}
 			
 			if(StringUtil.isObjectEmpty(passwd)){
 				setMessage(request,-1,"您输入密码不能为空，请核对后重试");
-				return "common/message";
+				return "common/_message";
 			}
 			
 			if(!passwd.equals(repasswd)){
 				setMessage(request,-1,"您输入的两次密码不一致，请核对后重试");
-				return "common/message";
+				return "common/_message";
 			}
 			
 			// 生成用户
@@ -301,12 +301,12 @@ public class IndexController extends BaseController{
 			emailService.sendEmail("注册成功通知", "email_user_reg_success", emailVars);
 			log.info("用户注册成功token,email ："+token+","+emailAuthToken.getEmail());
 			setMessage(request,200,"恭喜您，邮箱注册成功，快去登录吧");
-			return "common/message";
+			return "common/_message";
 		} catch (Exception e) {
 			log.error("设置密码异常token："+token);
 			e.printStackTrace();
 			setMessage(request,-100000,"网络超时，请稍后再试");
-			return "common/message";
+			return "common/_message";
 		}
 	}
 
@@ -353,7 +353,7 @@ public class IndexController extends BaseController{
 			userService.updatePassword(user.getId(), MD5.md5crypt(passwd));
 			request.getSession().removeAttribute("emailCode");
 			setMessage(request,200,"您的密码找回成功，快去登录吧");
-			return "common/message";
+			return "common/_message";
 		} catch (Exception e) {
 			e.printStackTrace();
 			setMessage(request, -1,"您输入的用户不存在，请核对后重试");

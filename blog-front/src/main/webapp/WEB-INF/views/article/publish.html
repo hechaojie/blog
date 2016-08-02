@@ -3,52 +3,24 @@
 	<head>
 		<title>发布</title>
 		<#include "/common/_include.html">
-		<style>
-			.navbar{
-				margin-bottom: 0px;
-			}
-			.type-title{
-				float: left;
-			    font-size: 16px;
-			    color: #5c6371;
-			    line-height: 20px;
-			}
-			
-			.article-type{
-				min-height: 90px;
-			    border-radius: 6px;
-			}
-			.article-type ul{
-				list-style-type: none;
-				max-width:900px;
-			}
-			.article-type ul li{
-				float: left;
-			    margin: 0 15px;
-			    height: 35px;
-			}
-			
-			.article-type ul li.current a {
-			    color: #000000;
-			}
-			
-			.pagination li a{
-				margin: 5px;
-			}
-			
-			.edui-editor-toolbarboxinner{
-				text-align: left;
-			}
-			
-			.list-group-item{
-				border-left: none;
-				border-right: none;
-			}
-			
-			.list-group{
-				-webkit-box-shadow:none;
-			}
-		</style>
+<style>
+	.pagination li a {
+		margin: 5px;
+	}
+	
+	.edui-editor-toolbarboxinner {
+		text-align: left;
+	}
+	
+	.list-group-item {
+		border-left: none;
+		border-right: none;
+	}
+	
+	.list-group {
+		-webkit-box-shadow: none;
+	}
+</style>
 	</head>
 	<body>
 		<!-- 头部引用 -->
@@ -81,11 +53,13 @@
 							<!-- 加载编辑器的容器 -->
 							<script id="container" name="content" style="text-align: -webkit-center;max-width: 720px;width: 100%;margin: 0 auto" type="text/plain">
 							</script>
-							<!-- 配置文件 -->
-							<script type="text/javascript" src="/js/ueditor/ueditor.config.js"></script>
-							<!-- 编辑器源码文件 -->
+							<!-- 配置文件-->
+							<script type="text/javascript" src="/js/ueditor/ueditor.config.min.js?v=0.0.1"></script>
+							<!-- 编辑器源码文件
 							<script type="text/javascript" src="/js/ueditor/ueditor.all.min.js"></script>
-										 <!-- 实例化编辑器 -->
+							-->
+							<script type="text/javascript" src="http://apps.bdimg.com/libs/ueditor/1.4.3.1/ueditor.all.min.js"></script>
+							<!-- 实例化编辑器 -->
 						    <script type="text/javascript">
 						        var ue = UE.getEditor('container',{
 						        	initialFrameHeight:300,
