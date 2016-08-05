@@ -5,10 +5,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import com.blog.service.dao.PUserDao;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
 import com.blog.core.entity.PUser;
 import com.blog.core.service.PUserService;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
 
 public class PUserServiceImpl implements PUserService {
 

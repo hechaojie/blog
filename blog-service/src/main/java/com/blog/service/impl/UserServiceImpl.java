@@ -10,11 +10,11 @@ import com.blog.core.entity.User;
 import com.blog.core.service.UserService;
 import com.blog.service.dao.EmailAuthTokenDao;
 import com.blog.service.dao.UserDao;
-import com.hecj.common.utils.GenerateUtil;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
-import com.hecj.common.utils.ResultSupport;
-import com.hecj.common.utils.StringUtil;
+import com.hecj.common.util.GenerateUtil;
+import com.hecj.common.util.StringUtil;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
+import com.hecj.common.util.result.ResultSupport;
 
 public class UserServiceImpl implements UserService {
 

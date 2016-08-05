@@ -2,8 +2,8 @@ package com.blog.core.service;
 
 import java.util.Map;
 
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
 
 public interface ArticleTypeService {
 

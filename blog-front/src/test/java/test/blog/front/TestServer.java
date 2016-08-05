@@ -9,7 +9,7 @@ import org.springframework.web.util.HtmlUtils;
 import test.blog.front.qiniu.res.QiniuResponse;
 import test.blog.front.qiniu.service.QiniuService;
 
-import com.hecj.common.utils.HttpRequest;
+import com.hecj.common.util.http.HttpRequest;
 import com.qiniu.api.auth.digest.Mac;
 import com.qiniu.api.io.IoApi;
 import com.qiniu.api.io.PutExtra;

@@ -1,6 +1,7 @@
 package com.blog.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,10 +11,10 @@ import com.blog.core.service.ArticleCommentService;
 import com.blog.core.vo.ArticleCommentVo;
 import com.blog.service.dao.ArticleCommentDao;
 import com.blog.service.dao.ArticleCommentReplyDao;
-import com.hecj.common.utils.GenerateUtil;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
-import com.hecj.common.utils.ResultSupport;
+import com.hecj.common.util.GenerateUtil;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
+import com.hecj.common.util.result.ResultSupport;
 
 public class ArticleCommentServiceImpl implements ArticleCommentService {
 
@@ -24,10 +25,11 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
 	public ArticleCommentReplyDao articleCommentReplyDao;
 	
 	@Override
-	public Result findArticleCommentByArticleId(String articleId,Pagination pg) {
+	public Result findByConditions(Map<String,Object> p,Pagination pg) {
 		Result result = new ResultSupport();
-		List<ArticleCommentVo> list = articleCommentDao.findByArticleId(articleId,pg.getStartCursor(),pg.getPageSize());
-		long total = articleCommentDao.countByArticleId(articleId);
+		
+		List<ArticleCommentVo> list = articleCommentDao.findByConditions(p,pg.getStartCursor(),pg.getPageSize());
+		long total = articleCommentDao.countByConditions(p);
 		result.setData(list);
 		pg.setCountSize(total);
 		result.setPagination(pg);

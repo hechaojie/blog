@@ -1,6 +1,6 @@
 package test.blog.front.util;
 
-import com.hecj.common.utils.HttpRequest;
+import com.hecj.common.util.http.HttpRequest;
 
 public class HttpUtil {
 

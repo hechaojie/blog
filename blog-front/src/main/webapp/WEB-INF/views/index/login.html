@@ -26,6 +26,14 @@
 							<span class="input-group-addon" id="basic-addon1">密码</span>
 							<input type="password" name="password" class="form-control" placeholder="请输入密码" aria-describedby="basic-addon1">
 						</div>
+						<div class="input-group input-group-lg bo-mtb20 row">
+							<div class="col-xs-6 col-sm-7 col-md-8">
+								<input type="text" name="code" class="form-control" placeholder="请输入验证码" aria-describedby="basic-addon1">
+							</div>
+							<div class="col-xs-6 col-sm-5 col-md-4">
+								<img id="logincode" width="80" height="38" src="/logincode?t=${t!}&" />
+							</div>
+						</div>
 						<div class="input-group bo-mtb20 text-center" style="width: 100%;" role="group" aria-label="...">
 							<button type="button" class="btn btn-default" onclick="$('form').submit();">登录</button>
 						</div>

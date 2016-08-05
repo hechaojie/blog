@@ -27,18 +27,41 @@
 		values(#{id},#{userId},#{articleId},#{content},#{isDelete},#{createAt});
 	</insert>
 	
-    <select id="findByArticleId" resultMap="articleCommentVo">
+    <select id="findByConditions" resultMap="articleCommentVo">
             select ac.*,u.email from article_comment ac 
             left join user u on (u.id=ac.user_id)
-            where ac.article_id = #{articleId}
-            order by ac.create_at asc
+            where 1=1
+             <if test="sqlParams.articleId != null">
+	    		and ac.article_id = #{sqlParams.articleId}
+	    	</if>
+	    	<if test="sqlParams.userId != null">
+	    		and ac.user_id = #{sqlParams.userId}
+	    	</if>
+	    	<if test="sqlParams.startTime != null">
+	    		and ac.create_at &gt;= #{sqlParams.startTime}
+	    	</if>
+	    	<if test="sqlParams.endTime!= null">
+	    		and ac.create_at &lt;= #{sqlParams.endTime}
+	    	</if>
+            order by ac.create_at desc
             limit #{start},#{size}
     </select>
     
-    <select id="countByArticleId" parameterType="String" resultType="Long">
-            select count(*) from article_comment where article_id = #{articleId}
+    <select id="countByConditions" parameterType="Map" resultType="Long">
+            select count(*) from article_comment a where 1=1
+            <if test="sqlParams.articleId != null">
+	    		and a.article_id = #{sqlParams.articleId}
+	    	</if>
+	    	<if test="sqlParams.userId != null">
+	    		and a.user_id = #{sqlParams.userId}
+	    	</if>
+	    	<if test="sqlParams.startTime != null">
+	    		and a.create_at &gt;= #{sqlParams.startTime}
+	    	</if>
+	    	<if test="sqlParams.endTime!= null">
+	    		and a.create_at &lt;= #{sqlParams.endTime}
+	    	</if>
             order by create_at asc
     </select>
-    
     
 </mapper>

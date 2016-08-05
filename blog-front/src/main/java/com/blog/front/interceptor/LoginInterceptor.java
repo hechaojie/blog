@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,7 +17,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.blog.core.entity.User;
 import com.blog.front.util.MacherUtil;
-import com.hecj.common.utils.StringUtil;
+import com.blog.front.util.UserUtil;
+import com.hecj.common.util.StringUtil;
 /**
  * 描述：登录拦截器
  * @author: hecj
@@ -28,6 +30,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	private static final String LOGIN_REG = "login.reg";
 	
 	private static List<String> loginRegPool = new ArrayList<String>();
+	
+	@Resource
+	public UserUtil userUtil;
 	
 	static{
 		try {
@@ -59,7 +64,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			return super.preHandle(request, response, handler);
 		}
 		
-		User user = com.blog.front.util.UserUtil.getUser(request.getSession());
+		User user = userUtil.getUser(request.getSession());
 		if(user == null){
 			log.info("未登录，跳转到登录页面。"+fullUrl);
 			//AJAX请求

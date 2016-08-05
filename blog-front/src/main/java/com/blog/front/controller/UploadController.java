@@ -14,10 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.blog.core.service.UserService;
 import com.blog.front.constant.ConfigProvider;
-import com.hecj.common.utils.DateFormatUtil;
-import com.hecj.common.utils.FileUtils;
-import com.hecj.common.utils.IdWorker;
-import com.hecj.common.utils.ObjectToJson;
+import com.hecj.common.util.IdWorker;
+import com.hecj.common.util.date.DateFormatUtil;
+import com.hecj.common.util.file.FileUtil;
+import com.hecj.common.util.result.ObjectToJson;
 
 @Controller
 @RequestMapping(value="/upload")
@@ -34,7 +34,7 @@ public class UploadController extends BaseController{
 	public void uploadFile(@RequestParam("uploadFile") MultipartFile file,HttpServletResponse response){
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
-			String ext = FileUtils.getExt(file.getOriginalFilename());
+			String ext = FileUtil.getExt(file.getOriginalFilename());
 			String newFileName = DateFormatUtil.getCurrTimeStr()+new IdWorker(2).nextId()+"."+ext;
 			
 			file.transferTo(new File(ConfigProvider.uploadFileTempsDir+"/"+newFileName));

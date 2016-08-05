@@ -1,7 +1,7 @@
 package test.blog.front.util;
 
-import com.hecj.common.utils.StringUtil;
-import com.hecj.common.utils.encryp.Encrypt;
+import com.hecj.common.util.StringUtil;
+import com.hecj.common.util.encryp.Encrypt;
 
 public class TokenUtil {
 	

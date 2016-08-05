@@ -1,11 +1,12 @@
 package com.blog.core.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.blog.core.entity.ArticleComment;
 import com.blog.core.entity.ArticleCommentReply;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
 
 public interface ArticleCommentService {
 
@@ -13,7 +14,7 @@ public interface ArticleCommentService {
 	 * 描述：查询文章评论
 	 * @author: hecj
 	 */
-	public Result findArticleCommentByArticleId(String articleId,Pagination pg);
+	public Result findByConditions(Map<String,Object> p,Pagination pg);
 	
 	/**
 	 * 描述：保存文章评论

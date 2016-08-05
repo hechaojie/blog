@@ -30,14 +30,16 @@ import com.blog.front.constant.ConfigProvider;
 import com.blog.front.util.CheckCode;
 import com.blog.front.util.NumberUtil;
 import com.blog.front.util.UserUtil;
-import com.hecj.common.utils.DateFormatUtil;
-import com.hecj.common.utils.GenerateUtil;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.PattenUtils;
-import com.hecj.common.utils.Result;
-import com.hecj.common.utils.ResultJson;
-import com.hecj.common.utils.StringUtil;
-import com.hecj.common.utils.encryp.MD5;
+import com.hecj.common.util.GenerateUtil;
+import com.hecj.common.util.ObjectUtils;
+import com.hecj.common.util.StringUtil;
+import com.hecj.common.util.date.DateFormatUtil;
+import com.hecj.common.util.encryp.MD5;
+import com.hecj.common.util.image.ImageValidateCode;
+import com.hecj.common.util.patten.PattenUtils;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
+import com.hecj.common.util.result.ResultJson;
 
 @Controller
 public class IndexController extends BaseController{
@@ -58,6 +60,9 @@ public class IndexController extends BaseController{
 	@Resource
 	public EmailService emailService;
 	
+	@Resource
+	public UserUtil userUtil;
+	
 	/**
 	 * 网站入口
 	 */
@@ -73,6 +78,9 @@ public class IndexController extends BaseController{
 	@RequestMapping(value="/login")
 	public String login(String bk,HttpServletRequest request,HttpServletResponse response,ModelMap model){
 		model.addAttribute("bk", bk);
+		String t = DateFormatUtil.getCurrTimeStr();
+		model.addAttribute("t", t);
+		request.getSession().setAttribute(ConfigProvider.SESSION_IMAGE_CODE_TOKEN, t);
 		return "index/login";
 	}
 	
@@ -84,9 +92,20 @@ public class IndexController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value="/dologin", method=RequestMethod.POST)
-	public String doLogin(String email, String password,String bk, HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	public String doLogin(String email, String password,String code, String bk, HttpServletRequest request,HttpServletResponse response,ModelMap model){
 
 		try {
+			
+			if(StringUtil.isStrEmpty(code)){
+				setMessage(request, -1,"您输入的验证码");
+				return "forward:/login";
+			}
+			
+			if(!code.equalsIgnoreCase((String) request.getSession().getAttribute(ConfigProvider.SESSION_IMAGE_CODE))){
+				setMessage(request, -1,"您输入的验证码不正确");
+				return "forward:/login";
+			}
+			
 			User user = userService.findUserByEmail(email);
 			if(user == null){
 				setMessage(request, -1,"您输入的邮箱无效或不存在");
@@ -99,7 +118,7 @@ public class IndexController extends BaseController{
 			}
 			
 			// 将登陆信息存入cookie
-			UserUtil.setUser(user, request.getSession());
+			userUtil.setUser(user, request.getSession());
 			
 			if(!StringUtil.isStrEmpty(bk)){
 				return "redirect:"+bk;
@@ -118,7 +137,7 @@ public class IndexController extends BaseController{
 	 */
 	@RequestMapping(value="/logout")
 	public String logout(HttpServletRequest request,HttpServletResponse response){
-		UserUtil.removeUser(request.getSession());
+		userUtil.removeUser(request.getSession());
 		return "redirect:/";
 	}
 	
@@ -416,6 +435,35 @@ public class IndexController extends BaseController{
 			e.printStackTrace();
 			return new ResultJson(-100000l,"网络超时，请稍后再试");
 		}
+	}
+	
+	/**
+	 * 描述：图片验证码
+	 * @author: hecj
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/logincode",method=RequestMethod.GET)
+	public void loginCode(String t, HttpServletRequest request,HttpServletResponse response,ModelMap model) throws Exception{
+		
+		String referer=request.getHeader("referer");
+		if(StringUtil.isStrEmpty(referer) || (!referer.contains("/login") && !referer.contains("/dologin"))){
+			log.error("referer验证失败 "+referer);
+			String code = ObjectUtils.getUUID().substring(0,4);
+			ImageValidateCode.imageCode(code, request, response);
+			return;
+		}
+		
+		String session_t = (String) request.getSession().getAttribute(ConfigProvider.SESSION_IMAGE_CODE_TOKEN);
+		if(StringUtil.isStrEmpty(session_t) || !session_t.equals(t)){
+			log.error("验证失败：t,session_t "+t+","+session_t);
+			String code = ObjectUtils.getUUID().substring(0,4);
+			ImageValidateCode.imageCode(code, request, response);
+			return;
+		}
+		
+		String code = ObjectUtils.getUUID().substring(0,4);
+		ImageValidateCode.imageCode(code, request, response);
+		request.getSession().setAttribute(ConfigProvider.SESSION_IMAGE_CODE, code);
 	}
 	
 }

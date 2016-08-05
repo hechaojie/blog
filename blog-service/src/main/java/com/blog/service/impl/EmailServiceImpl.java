@@ -29,10 +29,10 @@ import com.blog.core.service.EmailService;
 import com.blog.service.dao.EmailAuthTokenDao;
 import com.blog.service.dao.EmailSendHistoryDao;
 import com.blog.service.util.Constant;
-import com.hecj.common.utils.GenerateUtil;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
-import com.hecj.common.utils.ResultSupport;
+import com.hecj.common.util.GenerateUtil;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
+import com.hecj.common.util.result.ResultSupport;
 
 public class EmailServiceImpl implements EmailService {
 

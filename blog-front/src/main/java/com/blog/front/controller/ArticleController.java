@@ -30,10 +30,10 @@ import com.blog.core.service.ArticleTypeService;
 import com.blog.core.service.UserService;
 import com.blog.front.constant.ConfigProvider;
 import com.blog.front.util.UserUtil;
-import com.hecj.common.utils.DateFormatUtil;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
-import com.hecj.common.utils.StringUtil;
+import com.hecj.common.util.StringUtil;
+import com.hecj.common.util.date.DateFormatUtil;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
 
 @Controller
 @RequestMapping(value="/article")
@@ -52,6 +52,9 @@ public class ArticleController extends BaseController{
 
 	@Resource
 	public ArticleCommentService articleCommentService;
+	
+	@Resource
+	public UserUtil userUtil;
 	
 	/**
 	 * 文章列表模块
@@ -131,7 +134,10 @@ public class ArticleController extends BaseController{
 			Pagination pg = new Pagination();
 			pg.setCurrPage(page);
 			pg.setPageSize(20);
-			Result commentResult = articleCommentService.findArticleCommentByArticleId(article.getId(),pg);
+			
+			Map<String,Object> p = new HashMap<String,Object>();
+			p.put("articleId", article.getId());
+			Result commentResult = articleCommentService.findByConditions(p,pg);
 			
 			model.addAttribute("commentResult", commentResult);
 			
@@ -183,7 +189,7 @@ public class ArticleController extends BaseController{
     public String saveActicle(String title, String content, String type,int permission, String AUTH_TOKEN_PUBLISH,
     		HttpServletRequest request,HttpServletResponse response,ModelMap model)throws Exception{
     	
-		User user = UserUtil.getUser(request.getSession());
+		User user = userUtil.getUser(request.getSession());
 		String userId = "-1";
 		try {
 			
@@ -265,7 +271,7 @@ public class ArticleController extends BaseController{
 		}
 		String userId = "-1";
 		try {
-			User user = UserUtil.getUser(request.getSession());
+			User user = userUtil.getUser(request.getSession());
 	    	userId = user.getId();
 			Pagination pagination = new Pagination();
 			pagination.setCurrPage(page);
@@ -300,7 +306,7 @@ public class ArticleController extends BaseController{
 	public String edit(@PathVariable String year,@PathVariable String month,@PathVariable String day,@PathVariable String endId,HttpServletRequest request,HttpServletResponse response,ModelMap model){
 		
 		String articleId = year+month+day+endId;
-		User user = UserUtil.getUser(request.getSession());
+		User user = userUtil.getUser(request.getSession());
 		String userId = user.getId();
 		try {
 			
@@ -343,7 +349,7 @@ public class ArticleController extends BaseController{
 	 */
 	@RequestMapping(value="editActicle", method=RequestMethod.POST)
 	public String editActicle(int permission,String id, String title, String content, String type,HttpServletRequest request,HttpServletResponse response,ModelMap model) throws Exception{
-		User user = UserUtil.getUser(request.getSession());
+		User user = userUtil.getUser(request.getSession());
 		String userId = user.getId();
 		try {
 			if(StringUtil.isStrEmpty(title)){

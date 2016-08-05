@@ -43,6 +43,11 @@ $(function() {
 			}
 		});
 	});
+	
+	// 登录验证码
+	$("#logincode").click(function(){
+		$(this).attr("src",$(this).attr("src").split("&")[0]+"&_t="+new Date().getTime());
+	});
 
 });
 

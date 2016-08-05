@@ -1,6 +1,9 @@
 package com.blog.core.entity;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.hecj.common.util.date.DateFormatUtil;
 /**
  * 文章
  */
@@ -110,6 +113,10 @@ public class Article implements Serializable {
 
 	public void setUpdateAt(Long updateAt) {
 		this.updateAt = updateAt;
+	}
+	
+	public String getCreateText(){
+		return DateFormatUtil.date2Text(new Date(this.getCreateAt()));
 	}
 	
 }

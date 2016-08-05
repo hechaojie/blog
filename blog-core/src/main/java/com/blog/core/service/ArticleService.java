@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.blog.core.entity.Article;
 import com.blog.core.entity.ArticleContent;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
 /**
  * @功能描述 文章业务处理类
  * @Version		V1.0

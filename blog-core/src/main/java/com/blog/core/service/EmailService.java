@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.blog.core.email.EmailVars;
 import com.blog.core.entity.EmailAuthToken;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
 
 /**
  * @功能描述 邮件业务处理接口

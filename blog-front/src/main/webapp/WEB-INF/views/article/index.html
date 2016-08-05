@@ -38,10 +38,7 @@
 									匿名
 							</#if>
 							&nbsp;|&nbsp;
-							<#setting datetime_format="yyyy-MM-dd HH:mm:ss" />
-							<#if a.createAt ??>
-								发布于：${a.createAt?number_to_datetime}
-							</#if>
+							${(a.createText)!}
 							&nbsp;| &nbsp; ${a.commentCount!}条评论
 						</div>
 					</div>

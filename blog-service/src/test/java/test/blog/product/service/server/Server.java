@@ -11,9 +11,9 @@ import com.blog.core.entity.EmailSendHistory;
 import com.blog.core.service.ArticleService;
 import com.blog.service.dao.ArticleDao;
 import com.blog.service.dao.EmailSendHistoryDao;
-import com.hecj.common.utils.GenerateUtil;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
+import com.hecj.common.util.GenerateUtil;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
 
 /**
  * Server

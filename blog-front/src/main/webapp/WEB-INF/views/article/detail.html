@@ -57,10 +57,7 @@
 						</span>
 						<span>作者：${(author.nickname)!}</span>
 						<span>
-							<#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
-							<#if article.createAt ??>
-								时间：${article.createAt?number_to_datetime}
-							</#if>
+							${(article.createText)!}
 						</span>
 						<span>
 							${(commentResult.pagination.countSize)!}条评论
@@ -82,8 +79,7 @@
 								<img  style="width: 48px;height: 48px;display: inline-block;" src='/images/noimg.png' alt="" onerror="this.src='/images/noimg.png'"/>
 								<span>${(ac.email)!}</span>
 								<span class="pull-right">
-								<#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
-									<#if ac.createAt ??>${ac.createAt?number_to_datetime}</#if>
+									${(ac.createText)!}
 									#${(commentResult.pagination.startCursor+ac_index+1)!}
 								</span>
 							</div>	

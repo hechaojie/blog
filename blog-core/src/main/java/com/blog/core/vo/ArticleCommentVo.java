@@ -1,6 +1,9 @@
 package com.blog.core.vo;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.hecj.common.util.date.DateFormatUtil;
 
 /**
  * 描述：文章评论
@@ -82,6 +85,10 @@ public class ArticleCommentVo implements Serializable {
 
 	public void setCreateAt(Long createAt) {
 		this.createAt = createAt;
+	}
+	
+	public String getCreateText(){
+		return DateFormatUtil.date2Text(new Date(this.getCreateAt()));
 	}
 
 }

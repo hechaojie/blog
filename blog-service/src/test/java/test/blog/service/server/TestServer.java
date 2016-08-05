@@ -14,8 +14,8 @@ import com.blog.core.entity.ArticleType;
 import com.blog.core.service.ArticleService;
 import com.blog.core.service.ArticleTypeService;
 import com.blog.service.dao.ArticleContentDao;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
 
 /**
  * Server

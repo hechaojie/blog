@@ -1,5 +1,9 @@
 package com.blog.front.controller;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,14 +15,16 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.blog.front.controller.BaseController;
-import com.blog.front.util.UserUtil;
 import com.blog.core.entity.ArticleComment;
 import com.blog.core.entity.User;
 import com.blog.core.service.ArticleCommentService;
 import com.blog.core.service.ArticleService;
 import com.blog.core.service.ArticleTypeService;
 import com.blog.core.service.UserService;
+import com.blog.front.constant.ConfigProvider;
+import com.blog.front.util.UserUtil;
+import com.hecj.common.util.date.DateFormatUtil;
+import com.hecj.common.util.result.Pagination;
 
 @Controller
 public class ArticleCommentController extends BaseController {
@@ -36,6 +42,9 @@ public class ArticleCommentController extends BaseController {
 
 	@Resource
 	public ArticleCommentService articleCommentService;
+	
+	@Resource
+	public UserUtil userUtil;
 
 	/**
 	 * 描述：添加评论
@@ -46,7 +55,7 @@ public class ArticleCommentController extends BaseController {
 	public String add(String articleId, String content, HttpServletRequest request, HttpServletResponse response,
 			ModelMap model) {
 
-		User user = UserUtil.getUser(request.getSession());
+		User user = userUtil.getUser(request.getSession());
 		if(user == null){
 			setMessage(request, -1, "您还没有登录，登录后再来评论吧");
 			return "common/_message";
@@ -57,6 +66,18 @@ public class ArticleCommentController extends BaseController {
 				setMessage(request, -1, "您要评论的文章丢失了，请核实后提交");
 				return "common/_message";
 			}
+			
+			// 校验每天评论上线
+			Map<String,Object> p = new HashMap<String,Object>();
+			p.put("startTime", DateFormatUtil.getDayBegin(new Date()).getTime());
+			p.put("endTime", DateFormatUtil.getDayEnd(new Date()).getTime());
+			p.put("userId", userId);
+			long total = articleCommentService.findByConditions(p, new Pagination(1)).getPagination().getCountSize();
+			if (total >= ConfigProvider.publish_article_comment_max_num) {
+				setMessage(request, -1, "您的评论太频繁了，休息一下再来评论吧");
+				return "common/_message";
+			}
+			
 			ArticleComment ac = new ArticleComment();
 			ac.setArticleId(articleId);
 			ac.setContent(content);

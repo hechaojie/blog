@@ -12,10 +12,10 @@ import org.apache.commons.logging.LogFactory;
 import com.blog.core.entity.ArticleType;
 import com.blog.core.service.ArticleTypeService;
 import com.blog.service.dao.ArticleTypeDao;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
-import com.hecj.common.utils.ResultSupport;
-import com.hecj.common.utils.StringUtil;
+import com.hecj.common.util.StringUtil;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
+import com.hecj.common.util.result.ResultSupport;
 
 public class ArticleTypeServiceImpl implements ArticleTypeService{
 

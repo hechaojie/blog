@@ -15,11 +15,11 @@ import com.blog.core.service.ArticleService;
 import com.blog.core.vo.ArticleVo;
 import com.blog.service.dao.ArticleContentDao;
 import com.blog.service.dao.ArticleDao;
-import com.hecj.common.utils.GenerateUtil;
-import com.hecj.common.utils.Pagination;
-import com.hecj.common.utils.Result;
-import com.hecj.common.utils.ResultSupport;
-import com.hecj.common.utils.StringUtil;
+import com.hecj.common.util.GenerateUtil;
+import com.hecj.common.util.StringUtil;
+import com.hecj.common.util.result.Pagination;
+import com.hecj.common.util.result.Result;
+import com.hecj.common.util.result.ResultSupport;
 
 public class ArticleServiceImpl implements ArticleService{
 

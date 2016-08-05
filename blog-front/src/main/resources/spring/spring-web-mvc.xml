@@ -76,7 +76,10 @@
      	<property name="uploadFileTempsDir" value="${upload_file_temps_dir}"/>
      	<property name="static_upload_file_temp_url" value="${static_upload_file_temp_url}"/>
      	<property name="publish_article_max_num" value="${publish_article_max_num}"/>
+     	<property name="publish_article_comment_max_num" value="${publish_article_comment_max_num}"/>
      	<property name="today_send_email_max_num" value="${today_send_email_max_num}"/>
+     	<property name="referer" value="${referer}"/>
+     	<property name="env" value="${env}"/>
      </bean>
      
  </beans>
