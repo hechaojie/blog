@@ -21,11 +21,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
-import com.blog.core.email.EmailVars;
-import com.blog.core.entity.EmailAuthToken;
-import com.blog.core.entity.EmailSendHistory;
-import com.blog.core.service.EmailService;
+import com.blog.service.EmailService;
+import com.blog.service.core.email.EmailVars;
+import com.blog.service.core.entity.EmailAuthToken;
+import com.blog.service.core.entity.EmailSendHistory;
 import com.blog.service.dao.EmailAuthTokenDao;
 import com.blog.service.dao.EmailSendHistoryDao;
 import com.blog.service.util.Constant;
@@ -33,7 +34,7 @@ import com.hecj.common.util.GenerateUtil;
 import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;
 import com.hecj.common.util.result.ResultSupport;
-
+@Service("emailService")
 public class EmailServiceImpl implements EmailService {
 
 	private static final Log log = LogFactory.getLog(EmailServiceImpl.class);

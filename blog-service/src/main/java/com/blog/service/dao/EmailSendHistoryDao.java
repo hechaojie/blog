@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.blog.core.entity.EmailSendHistory;
+import com.blog.service.core.entity.EmailSendHistory;
 public interface EmailSendHistoryDao {
 	
 	/**

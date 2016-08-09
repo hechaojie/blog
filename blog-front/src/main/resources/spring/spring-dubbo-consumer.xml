@@ -12,17 +12,17 @@
 	
 	<dubbo:registry protocol="zookeeper" address="${zookeeper}" />
 	
-	<dubbo:reference id="userService" interface="com.blog.core.service.UserService" />
+	<dubbo:reference id="userService" interface="com.blog.service.UserService" />
 	
-	<dubbo:reference id="articleService" interface="com.blog.core.service.ArticleService" />
+	<dubbo:reference id="articleService" interface="com.blog.service.ArticleService" />
 	
-	<dubbo:reference id="articleTypeService" interface="com.blog.core.service.ArticleTypeService" />
+	<dubbo:reference id="articleTypeService" interface="com.blog.service.ArticleTypeService" />
 	
-	<dubbo:reference id="articleCommentService" interface="com.blog.core.service.ArticleCommentService" />
+	<dubbo:reference id="articleCommentService" interface="com.blog.service.ArticleCommentService" />
 
-	<dubbo:reference id="aboutUSService" interface="com.blog.core.service.AboutUSService" />
+	<dubbo:reference id="aboutUSService" interface="com.blog.service.AboutUSService" />
 
-	<dubbo:reference id="emailService" interface="com.blog.core.service.EmailService" />
+	<dubbo:reference id="emailService" interface="com.blog.service.EmailService" />
 	
 
 </beans>

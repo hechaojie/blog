@@ -17,18 +17,18 @@
 
 	<!-- dubbo service -->
 	
-	<dubbo:service interface="com.blog.core.service.UserService" ref="userService" />
+	<dubbo:service interface="com.blog.service.UserService" ref="userService" />
 
-	<dubbo:service interface="com.blog.core.service.AboutUSService" ref="aboutUSService" />
+	<dubbo:service interface="com.blog.service.AboutUSService" ref="aboutUSService" />
 
-	<dubbo:service interface="com.blog.core.service.EmailService" ref="emailService" />
+	<dubbo:service interface="com.blog.service.EmailService" ref="emailService" />
 	
-	<dubbo:service interface="com.blog.core.service.PUserService" ref="pUserService" />
+	<dubbo:service interface="com.blog.service.PUserService" ref="pUserService" />
 	
-	<dubbo:service interface="com.blog.core.service.ArticleService" ref="articleService" />
+	<dubbo:service interface="com.blog.service.ArticleService" ref="articleService" />
 	
-	<dubbo:service interface="com.blog.core.service.ArticleTypeService" ref="articleTypeService" />
+	<dubbo:service interface="com.blog.service.ArticleTypeService" ref="articleTypeService" />
 
-	<dubbo:service interface="com.blog.core.service.ArticleCommentService" ref="articleCommentService" />
+	<dubbo:service interface="com.blog.service.ArticleCommentService" ref="articleCommentService" />
 	
 </beans>

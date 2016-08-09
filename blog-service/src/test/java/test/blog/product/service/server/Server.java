@@ -6,9 +6,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.blog.core.entity.Article;
-import com.blog.core.entity.EmailSendHistory;
-import com.blog.core.service.ArticleService;
+import com.blog.service.ArticleService;
+import com.blog.service.core.entity.Article;
+import com.blog.service.core.entity.EmailSendHistory;
 import com.blog.service.dao.ArticleDao;
 import com.blog.service.dao.EmailSendHistoryDao;
 import com.hecj.common.util.GenerateUtil;

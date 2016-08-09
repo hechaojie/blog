@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.blog.core.entity.ArticleComment;
-import com.blog.core.vo.ArticleCommentVo;
+import com.blog.service.core.entity.ArticleComment;
+import com.blog.service.core.vo.ArticleCommentVo;
 
 public interface ArticleCommentDao {
 

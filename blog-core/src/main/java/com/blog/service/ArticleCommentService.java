@@ -1,10 +1,10 @@
-package com.blog.core.service;
+package com.blog.service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.blog.core.entity.ArticleComment;
-import com.blog.core.entity.ArticleCommentReply;
+import com.blog.service.core.entity.ArticleComment;
+import com.blog.service.core.entity.ArticleCommentReply;
 import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;
 

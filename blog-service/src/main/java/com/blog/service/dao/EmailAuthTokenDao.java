@@ -1,6 +1,6 @@
 package com.blog.service.dao;
 
-import com.blog.core.entity.EmailAuthToken;
+import com.blog.service.core.entity.EmailAuthToken;
 
 public interface EmailAuthTokenDao {
 	

@@ -5,10 +5,12 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import com.blog.core.entity.ArticleComment;
-import com.blog.core.entity.ArticleCommentReply;
-import com.blog.core.service.ArticleCommentService;
-import com.blog.core.vo.ArticleCommentVo;
+import org.springframework.stereotype.Service;
+
+import com.blog.service.ArticleCommentService;
+import com.blog.service.core.entity.ArticleComment;
+import com.blog.service.core.entity.ArticleCommentReply;
+import com.blog.service.core.vo.ArticleCommentVo;
 import com.blog.service.dao.ArticleCommentDao;
 import com.blog.service.dao.ArticleCommentReplyDao;
 import com.hecj.common.util.GenerateUtil;
@@ -16,6 +18,7 @@ import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;
 import com.hecj.common.util.result.ResultSupport;
 
+@Service("articleCommentService")
 public class ArticleCommentServiceImpl implements ArticleCommentService {
 
 	@Resource

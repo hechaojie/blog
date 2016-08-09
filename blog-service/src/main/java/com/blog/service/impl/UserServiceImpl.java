@@ -6,8 +6,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import com.blog.core.entity.User;
-import com.blog.core.service.UserService;
+import org.springframework.stereotype.Service;
+
+import com.blog.service.UserService;
+import com.blog.service.core.entity.User;
 import com.blog.service.dao.EmailAuthTokenDao;
 import com.blog.service.dao.UserDao;
 import com.hecj.common.util.GenerateUtil;
@@ -15,7 +17,7 @@ import com.hecj.common.util.StringUtil;
 import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;
 import com.hecj.common.util.result.ResultSupport;
-
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
 	@Resource

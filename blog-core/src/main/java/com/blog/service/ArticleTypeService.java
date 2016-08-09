@@ -1,4 +1,4 @@
-package com.blog.core.service;
+package com.blog.service;
 
 import java.util.Map;
 

@@ -15,9 +15,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.blog.core.entity.User;
 import com.blog.front.util.MacherUtil;
 import com.blog.front.util.UserUtil;
+import com.blog.service.core.entity.User;
 import com.hecj.common.util.StringUtil;
 /**
  * 描述：登录拦截器

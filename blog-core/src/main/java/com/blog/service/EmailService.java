@@ -1,10 +1,10 @@
-package com.blog.core.service;
+package com.blog.service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.blog.core.email.EmailVars;
-import com.blog.core.entity.EmailAuthToken;
+import com.blog.service.core.email.EmailVars;
+import com.blog.service.core.entity.EmailAuthToken;
 import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;
 

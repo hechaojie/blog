@@ -1,8 +1,8 @@
-package com.blog.core.service;
+package com.blog.service;
 
 import java.util.Map;
 
-import com.blog.core.entity.PUser;
+import com.blog.service.core.entity.PUser;
 import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;
 /**

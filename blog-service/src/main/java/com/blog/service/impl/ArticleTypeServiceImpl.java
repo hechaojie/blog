@@ -8,15 +8,16 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Service;
 
-import com.blog.core.entity.ArticleType;
-import com.blog.core.service.ArticleTypeService;
+import com.blog.service.ArticleTypeService;
+import com.blog.service.core.entity.ArticleType;
 import com.blog.service.dao.ArticleTypeDao;
 import com.hecj.common.util.StringUtil;
 import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;
 import com.hecj.common.util.result.ResultSupport;
-
+@Service("articleTypeService")
 public class ArticleTypeServiceImpl implements ArticleTypeService{
 
 	private static final Log log = LogFactory.getLog(ArticleTypeService.class);

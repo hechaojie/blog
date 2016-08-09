@@ -1,27 +1,23 @@
-package com.blog.core.entity;
+package com.blog.service.core.entity;
 
 import java.io.Serializable;
+
 /**
- * 文章内容
+ * 管理员表
  */
-public class ArticleContent implements Serializable {
+public class PUser implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private String id;
-	
-	private String articleId;
-	
-	private String content;
-	
-	private Integer sort;
-	
+	private String username;
+	private String password;
+	private int isDelete;
 	private Long createAt;
-
 	private Long updateAt;
 
-	public ArticleContent() {
-
+	public PUser() {
+		super();
 	}
 
 	public String getId() {
@@ -32,28 +28,28 @@ public class ArticleContent implements Serializable {
 		this.id = id;
 	}
 
-	public String getArticleId() {
-		return articleId;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setArticleId(String articleId) {
-		this.articleId = articleId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getContent() {
-		return content;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public Integer getSort() {
-		return sort;
+	public int getIsDelete() {
+		return isDelete;
 	}
 
-	public void setSort(Integer sort) {
-		this.sort = sort;
+	public void setIsDelete(int isDelete) {
+		this.isDelete = isDelete;
 	}
 
 	public Long getCreateAt() {

@@ -8,8 +8,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.blog.front.constant.ConfigProvider;
 import com.blog.front.util.UserUtil;
+import com.blog.service.core.entity.User;
 import com.hecj.common.util.http.RequestContext;
-import com.blog.core.entity.User;
 
 public class ConstantInterceptor extends HandlerInterceptorAdapter {
 

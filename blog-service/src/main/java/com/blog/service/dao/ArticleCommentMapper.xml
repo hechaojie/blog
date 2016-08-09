@@ -12,7 +12,7 @@
 		<result property="createAt" column="create_at"/>
 	</resultMap>
 	
-	<resultMap id="articleCommentVo" type="com.blog.core.vo.ArticleCommentVo">
+	<resultMap id="articleCommentVo" type="ArticleCommentVo">
 		<id property="id" column="id"/>
 		<result property="userId" column="user_id"/>
 		<result property="email" column="email"/>

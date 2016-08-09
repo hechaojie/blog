@@ -1,4 +1,4 @@
-package com.blog.core.entity;
+package com.blog.service.core.entity;
 
 import java.io.Serializable;
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.blog.core.entity.ArticleContent;
+import com.blog.service.core.entity.ArticleContent;
 
 public interface ArticleContentDao {
 

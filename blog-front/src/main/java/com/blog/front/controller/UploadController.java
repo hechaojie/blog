@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.blog.core.service.UserService;
 import com.blog.front.constant.ConfigProvider;
+import com.blog.service.UserService;
 import com.hecj.common.util.IdWorker;
 import com.hecj.common.util.date.DateFormatUtil;
 import com.hecj.common.util.file.FileUtil;

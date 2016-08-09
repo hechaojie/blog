@@ -16,7 +16,7 @@
 		<result property="updateAt" column="update_at"/>
 	</resultMap>
 	
-	<resultMap id="articleVo" type="com.blog.core.vo.ArticleVo">
+	<resultMap id="articleVo" type="ArticleVo">
 		<id property="id" column="id"/>
 		<result property="userId" column="user_id"/>
 		<result property="email" column="email"/>

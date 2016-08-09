@@ -1,4 +1,4 @@
-package com.blog.core.email;
+package com.blog.service.core.email;
 
 import java.io.Serializable;
 import java.util.HashMap;

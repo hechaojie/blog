@@ -8,11 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.blog.core.entity.Article;
-import com.blog.core.entity.ArticleContent;
-import com.blog.core.entity.ArticleType;
-import com.blog.core.service.ArticleService;
-import com.blog.core.service.ArticleTypeService;
+import com.blog.service.ArticleService;
+import com.blog.service.ArticleTypeService;
+import com.blog.service.core.entity.Article;
+import com.blog.service.core.entity.ArticleContent;
+import com.blog.service.core.entity.ArticleType;
 import com.blog.service.dao.ArticleContentDao;
 import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;

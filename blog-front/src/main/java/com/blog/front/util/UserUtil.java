@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.util.Base64;
-import com.blog.core.entity.User;
-import com.blog.core.service.UserService;
+import com.blog.service.UserService;
+import com.blog.service.core.entity.User;
 import com.hecj.common.util.ObjectUtils;
 import com.hecj.common.util.http.RequestContext;
 

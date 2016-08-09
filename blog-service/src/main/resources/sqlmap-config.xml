@@ -4,16 +4,19 @@
     "http://mybatis.org/dtd/mybatis-3-config.dtd">  
 <configuration>
 	<typeAliases>
-		<typeAlias alias="User" type="com.blog.core.entity.User"/>
-		<typeAlias alias="AboutUS" type="com.blog.core.entity.AboutUS"/>
-		<typeAlias alias="UserPasswordRecord" type="com.blog.core.entity.UserPasswordRecord"/>
-		<typeAlias alias="EmailAuthToken" type="com.blog.core.entity.EmailAuthToken"/>
-		<typeAlias alias="EmailSendHistory" type="com.blog.core.entity.EmailSendHistory"/>
-		<typeAlias alias="PUser" type="com.blog.core.entity.PUser"/>
-		<typeAlias alias="Article" type="com.blog.core.entity.Article"/>
-		<typeAlias alias="ArticleType" type="com.blog.core.entity.ArticleType"/>
-		<typeAlias alias="ArticleContent" type="com.blog.core.entity.ArticleContent"/>
-		<typeAlias alias="ArticleComment" type="com.blog.core.entity.ArticleComment"/>
-		<typeAlias alias="ArticleCommentReply" type="com.blog.core.entity.ArticleCommentReply"/>
+		<typeAlias alias="User" type="com.blog.service.core.entity.User"/>
+		<typeAlias alias="AboutUS" type="com.blog.service.core.entity.AboutUS"/>
+		<typeAlias alias="UserPasswordRecord" type="com.blog.service.core.entity.UserPasswordRecord"/>
+		<typeAlias alias="EmailAuthToken" type="com.blog.service.core.entity.EmailAuthToken"/>
+		<typeAlias alias="EmailSendHistory" type="com.blog.service.core.entity.EmailSendHistory"/>
+		<typeAlias alias="PUser" type="com.blog.service.core.entity.PUser"/>
+		<typeAlias alias="Article" type="com.blog.service.core.entity.Article"/>
+		<typeAlias alias="ArticleType" type="com.blog.service.core.entity.ArticleType"/>
+		<typeAlias alias="ArticleContent" type="com.blog.service.core.entity.ArticleContent"/>
+		<typeAlias alias="ArticleComment" type="com.blog.service.core.entity.ArticleComment"/>
+		<typeAlias alias="ArticleCommentReply" type="com.blog.service.core.entity.ArticleCommentReply"/>
+		
+		<typeAlias alias="ArticleCommentVo" type="com.blog.service.core.vo.ArticleCommentVo"/>
+		<typeAlias alias="ArticleVo" type="com.blog.service.core.vo.ArticleVo"/>
 	</typeAliases>
 </configuration>

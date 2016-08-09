@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.blog.core.entity.PUser;
+import com.blog.service.core.entity.PUser;
 
 public interface PUserDao {
 	

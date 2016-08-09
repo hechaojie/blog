@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.blog.core.entity.UserPasswordRecord;
+import com.blog.service.core.entity.UserPasswordRecord;
 /**
  * 用户历史密码
  */

@@ -5,10 +5,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import com.blog.service.dao.AboutUSDao;
-import com.blog.core.entity.AboutUS;
-import com.blog.core.service.AboutUSService;
+import org.springframework.stereotype.Service;
 
+import com.blog.service.AboutUSService;
+import com.blog.service.core.entity.AboutUS;
+import com.blog.service.dao.AboutUSDao;
+
+@Service("aboutUSService")
 public class AboutUSServiceImpl implements AboutUSService {
 
 	@Resource

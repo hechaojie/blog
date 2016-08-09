@@ -4,12 +4,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
+import com.blog.service.PUserService;
+import com.blog.service.core.entity.PUser;
 import com.blog.service.dao.PUserDao;
 import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;
-import com.blog.core.entity.PUser;
-import com.blog.core.service.PUserService;
-
+@Service("pUserService")
 public class PUserServiceImpl implements PUserService {
 
 	@Resource

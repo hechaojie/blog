@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.blog.core.entity.Article;
-import com.blog.core.vo.ArticleVo;
+import com.blog.service.core.entity.Article;
+import com.blog.service.core.vo.ArticleVo;
 
 public interface ArticleDao {
 
