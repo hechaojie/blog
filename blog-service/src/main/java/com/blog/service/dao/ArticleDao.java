@@ -40,4 +40,10 @@ public interface ArticleDao {
 	 * @modify
 	 */
 	public int update(Article article);
+	
+	/**
+	 * 描述：根据文章ids查询
+	 * @author: hecj
+	 */
+	public List<ArticleVo> findArticleByIds(@Param("ids")List<String> ids);
 }

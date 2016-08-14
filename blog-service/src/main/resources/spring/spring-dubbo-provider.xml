@@ -31,4 +31,6 @@
 
 	<dubbo:service interface="com.blog.service.ArticleCommentService" ref="articleCommentService" />
 	
+	<dubbo:service interface="com.blog.solr.SolrService" ref="solrService" />
+	
 </beans>

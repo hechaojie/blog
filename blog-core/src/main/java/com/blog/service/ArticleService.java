@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.blog.service.core.entity.Article;
 import com.blog.service.core.entity.ArticleContent;
+import com.blog.service.core.vo.ArticleVo;
 import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;
 /**
@@ -72,4 +73,9 @@ public interface ArticleService {
 	 */
 	public boolean editArticle(Article article, List<ArticleContent> articleContents);
 	
+	/**
+	 * 描述：根据文章ids查询
+	 * @author: hecj
+	 */
+	public List<ArticleVo> findArticleByIds(List<String> ids);
 }

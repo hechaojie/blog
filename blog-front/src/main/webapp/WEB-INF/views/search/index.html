@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>检索结果</title>
+		<#include "/common/_include.html">
+	</head>
+	<body>
+		<!-- 头部引用 -->
+		<#include "/common/_header.html">
+		<@headerPage currentPage="index"/>
+		<!--内容开始-->
+		<div class="container">
+			<div class="page">
+				<div class="panel-heading bo-pt20">为您找到的相关结果为<em>${(result.pagination.countSize)!}</em>条</div>
+				<div class="panel-body">
+					<div class="list-group">
+						<#if articleList??>
+						<#list articleList as a>
+						<div class="list-group-item">
+							<div class="list-group-item-heading">
+								<a class="se-title" href="/article/detail/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">
+									${(a.title)!}
+								</a>
+							</div>
+							<div class="list-group-item-text bo-break-word">
+								${(a.content)!}
+							</div>
+						</div>
+						</#list>
+						</#if>
+					</div>
+				</div>
+				<nav class="text-center">
+					<ul class="pagination" pageNumber="${(result.pagination.currPage)!}" totalPage="${(result.pagination.countPage)!}" totalRow="${(result.pagination.countSize)!}" params="&sq=${sq!}">
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!--内容结束-->
+		<#include "/common/_footer.html">
+	   <script type="text/javascript" src="/js/common/bo-paginate.min.js?v=0.0.1"></script>
+	   <script type="text/javascript">
+			$(function(){
+			    	var $paginate = $(".pagination");
+			    	$.paginate({
+		    			url : "/search",
+		    			cssQuery : ".pagination",
+		    			pageNumber : Number($paginate.attr("pageNumber")),
+		    			totalRow : Number($paginate.attr("totalRow")),
+		    			totalPage : Number($paginate.attr("totalPage")),
+		    			offsetPage : 3,
+		    			pageNumberAlias : 'page',
+		    			params : $paginate.attr("params"),
+		    			currCss : 'color: #fff;background-color: #006dcc;'
+		    		});
+		    });
+		</script>
+	</body>
+</html>

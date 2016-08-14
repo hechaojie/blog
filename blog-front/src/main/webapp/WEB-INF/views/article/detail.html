@@ -64,7 +64,7 @@
 						</span>
 					</div>
 					<#list articleContentList as ac> 
-					<div class="article-content bo-word-break bo-pt20">
+					<div class="article-content bo-break-word	 bo-pt20">
 						${(ac.content)!}
 					</div>
 					</#list>
@@ -129,9 +129,9 @@
 						</form>
 				</div>
 			</div>
-			<#include "/common/_footer.html">
 		</div>
 		<!--内容结束-->
+		<#include "/common/_footer.html">
 	   <script type="text/javascript" src="/js/common/bo-paginate.min.js?v=0.0.1"></script>
 	   <script type="text/javascript">
 			$(function(){

@@ -52,6 +52,10 @@
 	line-height: 58px;
 }
 
+.bo-break-word {
+	word-wrap: break-word;
+}
+
 .navbar {
 	margin-bottom: 0px;
 }
@@ -79,6 +83,22 @@
 	height: 35px;
 }
 
+.se-title {
+	color: #261CDC;
+	font-weight: normal;
+	font-size: medium;
+	text-decoration: underline;
+}
+
 .article-type ul li.current a {
 	color: #000000;
+}
+
+.pagination li a {
+	margin: 5px;
+}
+
+ol.linenums {
+	white-space: pre-wrap;
+	min-width: 680px;
 }

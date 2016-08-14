@@ -79,12 +79,10 @@ public class ArticleController extends BaseController{
 		Pagination articlePagination = new Pagination();
 		articlePagination.setCurrPage(page);
 		Map<String,Object> articleParams = new HashMap<String,Object>();
-		if(!StringUtil.isObjectNull(type)){
+		if(!StringUtil.isStrEmpty(type)){
 			articleParams.put("type", type);
 		}
-		if(!StringUtil.isStrEmpty(sq)){
-			articleParams.put("title", sq);
-		}
+
 		articleParams.put("permission", 0);
 		articleParams.put("isDelete", 0);
 		Result articleResult= articleService.findArticlesByCondition(articleParams, articlePagination);

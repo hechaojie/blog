@@ -41,6 +41,7 @@
     	<property name="sendcloudApiKey" value="${sendcloud_apiKey}"/>
     	<property name="sendcloudFromMail" value="${sendcloud_from_mail}"/>
     	<property name="sendcloudFromname" value="${sendcloud_from_name}"/>
+    	<property name="solrServer" value="${solr_server}"/>
     </bean>
 	
 </beans>

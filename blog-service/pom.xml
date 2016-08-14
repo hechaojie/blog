@@ -52,7 +52,8 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.4</version>
+			<version>4.10</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -94,28 +95,6 @@
   			<version>1.2</version>
 		</dependency>
 		
-		<!-- solr beigin -->
-		<dependency>
-			<artifactId>solr-core</artifactId>
-			<groupId>org.apache.solr</groupId>
-			<version>1.4.0</version>
-			<type>jar</type>
-		</dependency>
-
-		<dependency>
-			<artifactId>solr-solrj</artifactId>
-			<groupId>org.apache.solr</groupId>
-			<version>1.4.0</version>
-			<type>jar</type>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.apache.solr</groupId>
-		    <artifactId>solr-solrj</artifactId>
-		    <version>4.8.1</version>
-		</dependency>
-		<!-- solr end -->
-
 		<!-- zkclient -->
 		<dependency>
 			<groupId>com.github.sgroschupf</groupId>

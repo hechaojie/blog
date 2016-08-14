@@ -21,6 +21,8 @@ public class ArticleVo implements Serializable {
 	
 	public String title;
 	
+	public String content;
+	
 	public String type;
 	
 	public int commentCount;
@@ -73,6 +75,14 @@ public class ArticleVo implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public String getType() {

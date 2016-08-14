@@ -22,6 +22,7 @@
 		<result property="email" column="email"/>
 		<result property="nickname" column="nickname"/>
 		<result property="title" column="title"/>
+		<result property="content" column="content"/>
 		<result property="type" column="type"/>
 		<result property="commentCount" column="comment_count"/>
 		<result property="recommend" column="recommend"/>
@@ -104,6 +105,17 @@
     <update id="update" parameterType="Article">
     	update article set title=#{title},type=#{type},permission=#{permission},update_at=#{updateAt} where id = #{id}
     </update>
+    
+    <select id="findArticleByIds" resultMap="articleVo" parameterType="java.util.List">
+		select a.*,u.email,u.nickname,ac.content from article a 
+		left join user u on (u.id = a.user_id)
+		left join article_content ac on (ac.article_id=a.id)
+		where 1=1
+    	and a.id in 
+    	<foreach collection="ids" item="id" separator="," open="(" close=")">
+    		#{id}
+    	</foreach>
+    </select>
     
     
 </mapper>

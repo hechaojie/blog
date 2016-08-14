@@ -24,5 +24,6 @@
 
 	<dubbo:reference id="emailService" interface="com.blog.service.EmailService" />
 	
-
+	<dubbo:reference id="solrService" interface="com.blog.solr.SolrService" />
+	
 </beans>

@@ -20,6 +20,15 @@
 			<artifactId>hecj-common-utils</artifactId>
 			<version>0.0.5-SNAPSHOT</version>
 		</dependency>
+		
+		<!-- solr beigin -->
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+			<version>4.8.1</version>
+		</dependency>
+		<!-- solr end -->
+		
 	</dependencies>
 
 	<build>

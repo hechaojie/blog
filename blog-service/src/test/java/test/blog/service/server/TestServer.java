@@ -1,9 +1,13 @@
 package test.blog.service.server;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -14,6 +18,8 @@ import com.blog.service.core.entity.Article;
 import com.blog.service.core.entity.ArticleContent;
 import com.blog.service.core.entity.ArticleType;
 import com.blog.service.dao.ArticleContentDao;
+import com.blog.service.util.Constant;
+import com.blog.solr.SolrService;
 import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;
 
@@ -27,8 +33,13 @@ public class TestServer {
 	ClassPathXmlApplicationContext context = null;
 	@Before
 	public void before(){
-		String[] configs = new String[] { "spring/spring-*.xml" };
+		String[] configs = new String[] { "spring/spring-context.xml" };
 		context = new ClassPathXmlApplicationContext(configs);
+	}
+	
+	@Test
+	public void test(){
+		System.out.println(1);
 	}
 	
 	@Test
@@ -82,6 +93,39 @@ public class TestServer {
 		} catch (Exception e) {
 			log.error("server start error : " + e.getMessage());
 			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void test04(){
+		try {
+			
+			ArticleService articleService = (ArticleService)context.getBean("articleService");
+			List<String> ids = new ArrayList<String>();
+			ids.add("20160730020542695768");
+			articleService.findArticleByIds(ids);	
+			
+		} catch (Exception e) {
+			log.error("server start error : " + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Test
+	public void test05(){
+		try {
+			Constant.solrServer = "http://solr.hechaojie.com/solr";
+			
+			SolrService solrService = (SolrService)context.getBean("solrService");
+			System.out.println(solrService);
+
+			Result sdl = solrService.searchArticle("*", 1, 20);
+			System.out.println(sdl.getPagination().getCountSize());
+		} catch (Exception e) {
+			log.error("server start error : " + e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
 	}
 }

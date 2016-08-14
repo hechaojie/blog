@@ -132,4 +132,10 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		return false;
 	}
+
+	@Override
+	public List<ArticleVo> findArticleByIds(List<String> ids) {
+
+		return articleDao.findArticleByIds(ids);
+	}
 }
