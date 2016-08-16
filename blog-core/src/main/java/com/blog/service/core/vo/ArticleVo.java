@@ -17,7 +17,7 @@ public class ArticleVo implements Serializable {
 	
 	public String email;
 	
-	public String nickname;
+	public String username;
 	
 	public String title;
 	
@@ -61,14 +61,6 @@ public class ArticleVo implements Serializable {
 		this.email = email;
 	}
 	
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -125,6 +117,14 @@ public class ArticleVo implements Serializable {
 		this.updateAt = updateAt;
 	}
 	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getCreateText(){
 		return DateFormatUtil.date2Text(new Date(this.getCreateAt()));
 	}

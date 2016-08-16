@@ -1,13 +1,12 @@
 package test.blog.service.server;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrDocumentList;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -20,6 +19,7 @@ import com.blog.service.core.entity.ArticleType;
 import com.blog.service.dao.ArticleContentDao;
 import com.blog.service.util.Constant;
 import com.blog.solr.SolrService;
+import com.hecj.common.util.date.DateFormatUtil;
 import com.hecj.common.util.result.Pagination;
 import com.hecj.common.util.result.Result;
 
@@ -127,5 +127,11 @@ public class TestServer {
 			e.printStackTrace();
 			throw e;
 		}
+	}
+	
+	@Test
+	public void test06(){
+		Date d = DateFormatUtil.parse("2016-2-1 15:10:13", "yyyy-MM-dd HH:mm:ss");
+		System.out.println(d.getTime());
 	}
 }

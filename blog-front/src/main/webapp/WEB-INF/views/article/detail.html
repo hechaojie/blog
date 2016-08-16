@@ -55,7 +55,7 @@
 						   	  </#list>
 						   	</#if>
 						</span>
-						<span>作者：${(author.nickname)!}</span>
+						<span>作者：${(author.username)!}</span>
 						<span>
 							${(article.createText)!}
 						</span>
@@ -77,7 +77,7 @@
 						<div class="list-group-item">
 							<div class="list-group-item-heading">
 								<img  style="width: 48px;height: 48px;display: inline-block;" src='/images/noimg.png' alt="" onerror="this.src='/images/noimg.png'"/>
-								<span>${(ac.email)!}</span>
+								<span>${(ac.username)!}</span>
 								<span class="pull-right">
 									${(ac.createText)!}
 									#${(commentResult.pagination.startCursor+ac_index+1)!}

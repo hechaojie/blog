@@ -16,6 +16,7 @@
 		<id property="id" column="id"/>
 		<result property="userId" column="user_id"/>
 		<result property="email" column="email"/>
+		<result property="username" column="username"/>
 		<result property="articleId" column="article_id"/>
 		<result property="content" column="content"/>
 		<result property="isDelete" column="is_delete"/>
@@ -28,7 +29,7 @@
 	</insert>
 	
     <select id="findByConditions" resultMap="articleCommentVo">
-            select ac.*,u.email from article_comment ac 
+            select ac.*,u.email,u.username from article_comment ac 
             left join user u on (u.id=ac.user_id)
             where 1=1
              <if test="sqlParams.articleId != null">

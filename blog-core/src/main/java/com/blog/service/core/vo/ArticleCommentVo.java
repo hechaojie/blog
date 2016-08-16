@@ -19,6 +19,8 @@ public class ArticleCommentVo implements Serializable {
 	
 	private String email;
 	
+	private String username;
+	
 	private String articleId;
 
 	private String content;
@@ -87,6 +89,14 @@ public class ArticleCommentVo implements Serializable {
 		this.createAt = createAt;
 	}
 	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getCreateText(){
 		return DateFormatUtil.date2Text(new Date(this.getCreateAt()));
 	}

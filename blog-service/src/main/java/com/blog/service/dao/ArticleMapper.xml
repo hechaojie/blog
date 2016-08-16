@@ -20,7 +20,7 @@
 		<id property="id" column="id"/>
 		<result property="userId" column="user_id"/>
 		<result property="email" column="email"/>
-		<result property="nickname" column="nickname"/>
+		<result property="username" column="username"/>
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
 		<result property="type" column="type"/>
@@ -35,7 +35,7 @@
     </select>
     
     <select id="findArticlesByConditions" resultMap="articleVo" >
-    	select a.*,u.email,u.nickname from article a left join user u on (u.id = a.user_id) where 1=1
+    	select a.*,u.email,u.username from article a left join user u on (u.id = a.user_id) where 1=1
     	<if test="sqlParams.title != null">
     		and a.title like #{sqlParams.title}
     	</if>
