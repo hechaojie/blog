@@ -152,6 +152,11 @@
 		   $(document).ready(function() {
 				$("pre").addClass("prettyprint linenums");
 				prettyPrint();
+				
+				// 图片最大100%
+				$.each($('.article-content img'),function(i,o){
+					$(o).css('max-width','100%');
+				});
 			});
 		</script>
 	</body>
