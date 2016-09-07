@@ -23,19 +23,9 @@
 			<div class="list-group">
 			<#if (articleResult.data?size> 0)>
 				<#list articleResult.data as a>
-					<div class="list-group-item">
-						<a class="list-group-item-heading bo-title" href="/article/detail/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">${(a.title)!}</a>
-						<div class="list-group-item-text">
-							<span>
-								<#if a.username ??>
-									${a.username!}
-								<#else>
-									匿名
-								</#if>
-							</span>
-							|
-							<span>${(a.createText)!}</span>
-						</div>
+					<div class="list-group-item bo-divh46">
+						<a class="bo-title pull-left" style="width: 80%;" href="/article/detail/${a.id?substring(0,4)}/${a.id?substring(4,6)}/${a.id?substring(6,8)}/${a.id?substring(8)}">${(a.title)!}</a>
+						<span class="pull-right text-right" style="min-width: 68px;">${(a.createText)!}</span>
 					</div>
 				</#list>
 				<nav class="text-center">

@@ -44,6 +44,10 @@
 	height: 58px;
 }
 
+.bo-divh46 {
+	height: 46px;
+}
+
 .bo-divh38 {
 	height: 38px;
 }
@@ -88,6 +92,8 @@
 	font-weight: normal;
 	font-size: medium;
 	text-decoration: underline;
+	/*超出文本点点点*/
+	display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 
 .article-type ul li.current a {

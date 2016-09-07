@@ -49,6 +49,11 @@ $(function() {
 		$(this).attr("src",$(this).attr("src").split("&")[0]+"&_t="+new Date().getTime());
 	});
 
+	bo.autoTitleWidth();
+	// 动态计算title的长度 
+	$(window).resize(function() {
+		bo.autoTitleWidth();
+	});
 });
 
 
@@ -69,4 +74,13 @@ function changeCheckCodeFun(){
 		$(".send-email-code").attr("disabled","disabled");
 		$(".send-email-code").text("已发送（"+check_num+"）");
 	}
+}
+
+var bo = bo || {};
+// 动态计算标题宽度
+bo.autoTitleWidth = function() {
+	var w = $('.bo-title').parent().css('width');
+	if(!w)return;
+	w = w.replace("px", "");
+	$('.bo-title').css('width', w - 68 - 25 - 8);
 }
